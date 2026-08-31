@@ -86,6 +86,6 @@ const dispose = seam.onActivity((entry) => { /* 介入记录 */ })
 
 ## 文档
 
-- 定位与全部实验证据：仓库根 `README.md`
+- 定位与全部实验证据：仓库根 `README.md`（English）/ `README.zh-CN.md`（简体中文）
 - 自定义配置：`docs/custom-config.md`、`docs/adr/0007-runtime-exposure-timing.md`
 - 介入与成本记录：`docs/status/`

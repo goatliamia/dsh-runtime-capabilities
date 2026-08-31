@@ -32,6 +32,6 @@ dsh plugin add dsh-runtime-progress-<version>.tgz
 
 ## 文档
 
-- 机制与证据：仓库根 `README.md`
+- 机制与证据：仓库根 `README.md`（English）/ `README.zh-CN.md`（简体中文）
 - 贡献边界：`docs/contribution.md`
 - 实验记录：`docs/status/runtime-*.md`

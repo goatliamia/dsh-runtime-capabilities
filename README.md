@@ -1,128 +1,130 @@
 # DSH Runtime
 
-**面向 DeepSeek Harness 的实验性 Runtime / Harness 能力集合。**
+[English](README.md) | [简体中文](README.zh-CN.md)
+
+**An experimental Runtime / Harness capability set for DeepSeek Harness.**
 
 > **Agent = Model + Harness**
 
-这个仓库并不是在定义一个完整的 Universal Runtime。
+This repository does not attempt to define a complete Universal Runtime.
 
-它来自一个更简单的问题：
+It starts from a much simpler question:
 
-> **当一个 Agent 在真实环境中反复遇到问题时，其中有多少部分已经确定到"不应该继续由模型负责"？**
+> **When an Agent repeatedly runs into problems in a real environment, how much of it is already deterministic enough that the model should no longer be responsible for it?**
 
-如果一个能力真的需要，它可以作为 Plugin 被加载。
+If a capability is genuinely needed, it can be loaded as a Plugin.
 
-如果不需要，不加载。
+If not, it isn't loaded.
 
-如果你有不同的理解，可以实现自己的 Plugin。
+If you understand the problem differently, implement your own Plugin.
 
-这里提供的是一个尽可能小的承接位置，以及已经在真实 DeepSeek Harness 场景中被验证过的一些机制和实验材料。
-
----
-
-## 为什么会有这个项目？
-
-今天的 Agent 已经可以很好地理解任务、进行推理、调用工具、探索环境、修改文件并完成复杂工作。
-
-但在真实运行中，仍然会不断出现另一类问题：
-
-* Agent 反复发现同一个已经确定的环境状态；
-* 一个动作已经确定不合法，但模型仍然尝试执行；
-* 工具连续返回相同错误，Agent 继续 retry；
-* 一个状态尚未满足，Agent 只能反复 probe / poll；
-* 一个已经在上一 Session 中确定的项目状态，在新的 Session 中又从零开始发现；
-* 任务最终完成了，但执行过程中已经破坏了环境的不变量；
-* 一个 Plugin 在加载或启动阶段失败，甚至影响整个 Host。
-
-这些问题并不都属于 Model。
-
-很多时候，程序已经知道答案。
-
-问题只是：
-
-> **这个答案还停留在 Agent 的推理空间里。**
-
-于是模型需要自己发现、自己记住、自己相信、自己约束自己。
-
-这未必是最合适的责任分配方式。
+What is offered here is the thinnest possible landing point, plus a set of mechanisms and experimental material that have been validated in real DeepSeek Harness scenarios.
 
 ---
 
-# 从一个问题开始：什么不应该继续留在文本里？
+## Why does this project exist?
 
-最初并没有一个叫 Runtime 的完整设计。
+Today's Agents can already understand tasks, reason, call tools, explore environments, modify files, and complete complex work.
 
-更接近的出发点是：
+But in real runs, another class of problems keeps appearing:
 
-> 有哪些东西已经足够确定，不应该继续依赖 Prompt、Context 或模型自身的自我约束？
+* The Agent repeatedly re-discovers the same already-determined environment state;
+* An action is deterministically invalid, yet the model keeps trying to execute it;
+* A tool keeps returning the same error, and the Agent keeps retrying;
+* A state is not yet satisfied, and the Agent can only probe / poll repeatedly;
+* A project state already established in a previous Session is re-discovered from scratch in a new Session;
+* The task completes, but invariants of the environment were broken along the way;
+* A Plugin fails during load or startup, sometimes affecting the whole Host.
 
-真实 DSH 运行随后暴露出了几个非常不同的答案：
+These problems do not all belong to the Model.
+
+Very often, the program already knows the answer.
+
+The issue is only that:
+
+> **The answer still lives inside the Agent's reasoning space.**
+
+So the model has to discover it, remember it, believe it, and constrain itself.
+
+That is not necessarily the best allocation of responsibility.
+
+---
+
+# Starting from one question: what should no longer live in text?
+
+Initially there was no complete design called Runtime.
+
+A closer starting point was:
+
+> What has become deterministic enough that it should no longer depend on Prompts, Context, or the model's own self-restraint?
+
+Real DSH runs then exposed several very different answers:
 
 ```text
-确定不允许做
+Deterministically not allowed
 → Guard
 
-未来一定会变化
+It will change in the future
 → Commitment + Delta
 
-已经没有进展
+No progress anymore
 → Circuit
 
-没有变化
+No change
 → Silence
 
-确定事实跨越 Session
+Deterministic facts across Sessions
 → Persistence
 
-需要模型知道
+The model needs to know
 → Exposure
 ```
 
-因此 Runtime 并不是最初定义好的答案。
+So Runtime is not an answer that was defined up front.
 
-它更像是：
+It is closer to:
 
-> **当某类确定性能力被提取出来以后，一个自然的 Plugin 承接位置。**
+> **A natural landing point for a Plugin, once a class of deterministic capability has been extracted.**
 
 ---
 
-# Runtime 不是什么
+# What Runtime is not
 
-Runtime 不是另一个 Agent。
+Runtime is not another Agent.
 
-不是一个新的 Reasoner。
+Not a new Reasoner.
 
-不是"把更多环境信息塞进 Context"。
+Not "pushing more environment information into Context".
 
-也不是一个要求所有 DSH 用户都采用的统一架构。
+Not a unified architecture every DSH user must adopt.
 
-尤其不是：
+And especially not:
 
 ```text
 Runtime
-→ 收集全部状态
-→ 每轮注入
-→ 让模型自己记住
-→ 再由模型决定是否遵守
+→ collect all state
+→ inject every turn
+→ let the model remember
+→ let the model decide whether to comply
 ```
 
-实验明确提示，这条方向并不总是有效。
+Experiments explicitly suggest this direction does not always work.
 
-我们更倾向于：
+We lean toward:
 
 ```text
 Model
-→ 负责真正的不确定性
+→ owns genuine uncertainty
 
 Harness / Runtime
-→ 负责程序已经能够确定的部分
+→ owns what the program can already determine
 ```
 
 ---
 
-# Runtime 在哪里？
+# Where does Runtime live?
 
-Runtime 主要存在于 Agent 执行循环的两个边界。
+Runtime mainly lives on the two boundaries of the Agent execution loop.
 
 ```text
                          Model
@@ -157,60 +159,60 @@ Runtime 主要存在于 Agent 执行循环的两个边界。
                       next Reason
 ```
 
-因此：
+Therefore:
 
-**执行前**，Runtime 可以决定一个确定性动作是否有资格进入真实世界。
+**Before execution**, Runtime can decide whether a deterministic action is allowed to enter the real world at all.
 
-**执行后**，Runtime 可以观察真实状态是否发生了值得跨越认知边界的变化。
+**After execution**, Runtime can observe whether reality changed in a way worth crossing the cognition boundary.
 
-这两个方向分别回答：
+These two directions answer, respectively:
 
-> **"这个动作能不能发生？"**
+> **"Can this action happen?"**
 
-以及：
+and:
 
-> **"现实现在发生了什么变化？"**
+> **"What has reality changed into now?"**
 
 ---
 
-# 目前实验得到的机制
+# Mechanisms obtained from experiments so far
 
-## 1. Guard：知识不等于合规
+## 1. Guard: knowledge is not compliance
 
-在真实 DSH 场景中，构造：
+In a real DSH scenario, we constructed:
 
 ```text
 required_by_host = true
 ```
 
-模型在已经探测到这个事实之后，仍然尝试 unload。
+The model, after having already probed this fact, still attempted to unload.
 
-无 Runtime Guard：
+Without Runtime Guard:
 
 ```text
 worldCorrect = 0%
 ```
 
-加入 Guard：
+With Guard:
 
 ```text
-第一次拒绝
-→ action 不进入 executor
+first rejection
+→ the action never enters the executor
 
 worldCorrect = 100%
 ```
 
-这说明：
+This shows:
 
-> **如果 Harness 已经可以确定一个动作不成立，最可靠的约束位置是执行边界，而不是模型上下文。**
+> **If the Harness can already determine that an action is invalid, the most reliable place for the constraint is the execution boundary — not the model context.**
 
 ---
 
-## 2. 教学式拒绝：拒绝本身可以成为下一轮 reasoning 的输入
+## 2. Teaching-style rejection: the rejection itself becomes input for the next reasoning round
 
-Guard 并不是简单返回一个 opaque failure。
+Guard does not simply return an opaque failure.
 
-实验中使用非常小的、确定性的拒绝描述：
+The experiments use a very small, deterministic rejection description:
 
 ```text
 fact
@@ -219,35 +221,35 @@ temporal
 next
 ```
 
-在受控实验中，没有任何 `(fact, action)` 组合出现第二次教学拒绝。
+In the controlled experiments, no `(fact, action)` combination ever produced a second teaching rejection.
 
-因此目前的观察是：
+So the current observation is:
 
-> **一次结构良好的确定性拒绝，可以让模型在下一轮重新规划，而不必把 enforcement 重新交给模型。**
+> **One well-structured deterministic rejection lets the model re-plan in the next round, without handing enforcement back to the model.**
 
-这里需要注意：
+One caveat:
 
-这不是一个普遍的"模型从一次错误中永久学习"的定律。
+This is not a universal law that "a model permanently learns from one mistake".
 
-它只是一个在受控场景中观察到的 Harness 行为。
+It is a Harness behavior observed under controlled conditions.
 
 ---
 
-## 3. Commitment + Delta：临时错误与永久错误不同
+## 3. Commitment + Delta: temporary errors are different from permanent ones
 
-如果：
+If:
 
 ```text
 ready = false
 ```
 
-但未来一定会变成：
+but it will deterministically become:
 
 ```text
 ready = true
 ```
 
-那么单纯 Guard 会产生：
+then a plain Guard produces:
 
 ```text
 reject
@@ -256,46 +258,48 @@ reject
 → probe
 ```
 
-实验中加入：
+In the experiment, we added:
 
 ```text
 Commitment:
-状态改变后会通知你。
+you will be notified when the state changes.
 ```
 
-真正发生变化时：
+When the change actually happened:
 
 ```text
 mounted → ready
 ```
 
-只发送：
+only a:
 
 ```text
 Delta
 ```
 
-结果：
+was sent.
+
+Result:
 
 ```text
-拒绝后复核
+re-checks after rejection
 3.0 → 1.67
 
 payload
 172k → 130k
 ```
 
-v4pro 上方向一致。
+Same direction on v4pro.
 
-所以：
+So:
 
-> **"现在不成立"和"永远不成立"应该是不同的 Runtime 语义。**
+> **"Not true now" and "never true" should be different Runtime semantics.**
 
 ---
 
-## 4. Circuit：重复失败不一定需要被模型再次理解
+## 4. Circuit: repeated failure does not always need to be re-understood by the model
 
-E4b 针对的是：
+E4b targeted:
 
 ```text
 same tool
@@ -305,16 +309,16 @@ same error fingerprint
 no meaningful progress
 ```
 
-结果：
+Results:
 
-| 指标      | 无 Circuit | Circuit | Circuit + Delta |
-| ------- | --------: | ------: | --------------: |
-| 失败尝试    |      3.33 |    3.00 |        **2.00** |
-| 开断后尝试   |      1.33 |    1.00 |           **0** |
-| steps   |      9.00 |    5.00 |        **3.67** |
-| payload |   286,747 |  76,696 |      **53,005** |
+| Metric              | No Circuit | Circuit | Circuit + Delta |
+| ------------------- | ---------: | ------: | --------------: |
+| Failed attempts     |       3.33 |    3.00 |        **2.00** |
+| Attempts after open |       1.33 |    1.00 |           **0** |
+| Steps               |       9.00 |    5.00 |        **3.67** |
+| Payload             |    286,747 |  76,696 |      **53,005** |
 
-方向上：
+Directionally:
 
 ```text
 failed attempts   ↓ 40%
@@ -322,7 +326,7 @@ steps             ↓ 59%
 payload           ↓ 81%
 ```
 
-更重要的是，E7 创造任务又发现了一种此前没有专门设计的循环：
+More importantly, the E7 creative task surfaced a loop that no one had designed for in advance:
 
 ```text
 tool denied
@@ -332,64 +336,64 @@ tool denied
 → ...
 ```
 
-这说明 Circuit 更值得被理解为：
+This suggests Circuit is better understood as:
 
 > **No-progress detection**
 
-而不是某个特定 MCP / flaky error 的补丁。
+rather than a patch for one specific MCP / flaky error.
 
 ---
 
-## 5. Silence：存在，不等于应该暴露
+## 5. Silence: existing is not the same as being exposed
 
-这是目前非常重要的一条原则。
+This is one of the most important principles here.
 
-如果 Runtime state 没有发生有意义的变化：
+If Runtime state has not changed meaningfully:
 
 ```text
 no change
 → no emission
 ```
 
-Runtime 可以一直存在并观察，但不需要不断告诉模型：
+Runtime can exist and observe the whole time, without telling the model over and over:
 
 ```text
-"我还在。"
-"当前还是 ready。"
-"还是 ready。"
-"还是 ready。"
+"I'm still here."
+"Still ready."
+"Still ready."
+"Still ready."
 ```
 
-因此：
+Therefore:
 
-> **Runtime 可以很活跃，而 Model-facing context 仍然保持安静。**
+> **Runtime can be very active while the model-facing context stays quiet.**
 
 ---
 
-## 6. Persistence：跨 Session 的确定事实可以持续存在
+## 6. Persistence: deterministic facts can survive across Sessions
 
-E6 中：
+In E6:
 
 ```text
 baseline
-→ 不持久化
+→ no persistence
 
 none
-→ 持久化，但默认沉默
+→ persisted, but silent by default
 
 pickup
-→ 持久化 + 主动注入
+→ persisted + proactively injected
 ```
 
-结果：
+Results:
 
-|          | probes |  payload |
+|          | Probes |  Payload |
 | -------- | -----: | -------: |
 | baseline |      7 |    1.51M |
 | none     |   5.33 |    1.24M |
 | pickup   |      5 | **732k** |
 
-v4pro 中：
+On v4pro:
 
 ```text
 baseline
@@ -399,62 +403,62 @@ pickup
 3 probes / 133k payload
 ```
 
-这里得到一个重要区分：
+This yields an important distinction:
 
 > **Persistence ≠ Exposure**
 
-状态可以保留下来。
+State may be retained.
 
-不代表每个 Session 都应该自动把它注入模型。
+That does not mean every Session should automatically inject it.
 
-更不代表每次都应该重复告诉模型。
+Even less that it should be repeated every time.
 
 ---
 
-# 我们也验证了一些"不应该做"的事情
+# We also validated some things that should NOT be done
 
-这些负结果同样属于项目的重要成果。
+These negative results are just as much a part of the project's outcome.
 
-## 正事实不值得反复注入
+## Positive facts are not worth re-injecting
 
-如果模型本来就能从 tool schema / 当前 environment 中看到：
+If the model can already see from the tool schema / current environment:
 
 ```text
 tool surface
 plugin state
 ```
 
-再把同样事实注入一次，没有稳定收益。
+re-injecting the same fact yields no stable benefit.
 
-某些生命周期场景里甚至会诱发更多复核。
+In some lifecycle scenarios it even triggers more re-checks.
 
 ---
 
-## Injection 不等于 Enforcement
+## Injection is not Enforcement
 
-E3 中：
+In E3:
 
 ```text
 ready → disabled
 ```
 
-模型已经被明确告知：
+The model was explicitly told:
 
 ```text
 disabled
 ```
 
-但仍然可以继续调用。
+and still kept calling.
 
-因此：
+Therefore:
 
-> **Context 可以提供知识，但不能替代执行边界。**
+> **Context can provide knowledge, but it cannot replace the execution boundary.**
 
 ---
 
-## Provenance 不会自动让模型相信 Runtime
+## Provenance does not automatically buy trust
 
-我们测试了：
+We tested whether:
 
 ```text
 authority
@@ -462,9 +466,9 @@ revision
 fingerprint
 ```
 
-是否能降低拒绝后的复核。
+reduces re-checks after rejection.
 
-结果：
+Results:
 
 ```text
 v4flash:
@@ -476,11 +480,11 @@ plain = 0.5
 authority = 0.5
 ```
 
-因此目前结论：
+So the current conclusion:
 
-> **Provenance 不购买 trust。**
+> **Provenance does not purchase trust.**
 
-这些信息更适合作为：
+These fields are better suited for:
 
 ```text
 revision
@@ -489,200 +493,200 @@ reconciliation
 arbitration
 ```
 
-而不是作为"让模型相信我"的提示。
+than as a hint of "believe me".
 
 ---
 
-# 最重要的场景实验：Runtime 会不会损害创造？
+# The most important scenario experiment: does Runtime hurt creation?
 
-我们不希望 Runtime 通过减少所有行为来换取"稳定"。
+We do not want Runtime to buy "stability" by reducing all behavior.
 
-因此使用开放式创造任务，要求真实交付可执行 artifact。
+So we used an open-ended creation task requiring a real, runnable artifact.
 
-同一个模型、同一个任务、同一个环境，只改变 Harness composition：
+Same model, same task, same environment — only the Harness composition changed:
 
 |                  |    Off | Minimal |     Strict |
 | ---------------- | -----: | ------: | ---------: |
-| steps            |     20 |      24 |         20 |
-| 耗时               |   186s |    204s |       148s |
-| 有效创作动作           |     11 |  **21** |         12 |
-| 世界被破坏            |  **是** |       否 |          否 |
-| artifact 可运行     |      ✓ |       ✓ |          ✓ |
-| input tokens     | 135.9k |  139.3k |  **83.6k** |
-| reasoning tokens |  31.8k |   29.3k |  **24.5k** |
+| Steps            |     20 |      24 |         20 |
+| Time             |   186s |    204s |       148s |
+| Creative actions |     11 |  **21** |         12 |
+| World broken     |  **Yes** |       No |          No |
+| Artifact runs    |      ✓ |       ✓ |          ✓ |
+| Input tokens     | 135.9k |  139.3k |  **83.6k** |
+| Reasoning tokens |  31.8k |   29.3k |  **24.5k** |
 | cacheRead        | 2.666M |  2.683M | **1.897M** |
 
-这里最重要的不是某个 N=1 的百分比。
+The most important thing here is not any single N=1 percentage.
 
-更重要的结构是：
+The more important structure is:
 
 ```text
-创造仍然发生
+creation still happens
 +
-确定性越界被阻止
+deterministic overreach is blocked
 +
-确定性死路可以被切掉
+deterministic dead ends can be cut
 ```
 
-在另一组创造实验中，加入 Circuit 后，模型的创造路径仍然保留，而重复错误路径被切除。
+In another set of creative runs, adding Circuit preserved the model's creative path while pruning the repeated-error path.
 
-因此目前更准确的表述是：
+So the more accurate statement is:
 
-> **Runtime 可以把 execution waste 与 creation 分开。**
+> **Runtime can separate execution waste from creation.**
 
-它不需要替模型决定：
+It does not need to decide for the model:
 
 ```text
-怎么创作
-选哪种方案
-应该写什么
+how to create
+which approach to take
+what to write
 ```
 
-它只需要处理：
+It only handles:
 
 ```text
-这个动作已经确定不成立
-这条路径已经没有进展
-现实状态确实发生了变化
+this action is deterministically invalid
+this path has no progress left
+reality has actually changed
 ```
 
 ---
 
-# 四象限：用户可以错，Harness 仍然可以保护现实
+# Four quadrants: the user can be wrong, and the Harness can still protect reality
 
-进一步把 Prompt 正误与 Harness 强弱放在一起：
+Putting Prompt correctness and Harness strength on the two axes:
 
-|         | Prompt 正确 | Prompt 错误 |
-| ------- | --------- | --------- |
-| Minimal | A         | B         |
-| Strict  | C         | D         |
+|         | Prompt correct | Prompt wrong |
+| ------- | -------------- | ------------ |
+| Minimal | A              | B            |
+| Strict  | C              | D            |
 
-目前得到：
+What we have so far:
 
-### A：正确 Prompt × Minimal
+### A: correct Prompt × Minimal
 
-正常任务完成，worldCorrect。
+Task completes normally, worldCorrect.
 
-### B：错误 Prompt × Minimal
+### B: wrong Prompt × Minimal
 
-用户要求卸载 Host 必需插件。
+The user asks to unload a Host-required plugin.
 
-结果：
+Result:
 
 ```text
-拒绝
+rejection
 +
-世界保持正确
+world stays correct
 ```
 
-甚至最低限度的 Runtime 已经足够守住这个边界。
+Even the most minimal Runtime is enough to hold this boundary.
 
-### C：正确 Prompt × Strict
+### C: correct Prompt × Strict
 
-创造性动作数量：
+Creative action count:
 
 ```text
 10 = 10
 ```
 
-没有观察到 Strict 切掉正常创造。
+Strict was not observed to cut normal creation.
 
-### D：错误 Prompt × Strict
+### D: wrong Prompt × Strict
 
-最值得记住的是：
+The most memorable result:
 
 ```text
 task success = 0
 worldCorrect = 1
 ```
 
-用户目标本身是错误的。
+The user's goal itself was wrong.
 
-Harness 没有：
-
-```text
-替用户重新定义目标
-```
-
-也没有：
+The Harness did not:
 
 ```text
-让错误目标破坏现实
+redefine the goal for the user
 ```
 
-而是：
+nor did it:
+
+```text
+let the wrong goal destroy reality
+```
+
+Instead:
 
 ```text
 reject
 → preserve world
 ```
 
-D1 进一步验证了事实性错误：
+D1 further verified factual errors:
 
 ```text
-用户认为 ready
-现实并不是 ready
+the user believes ready
+reality is not ready
 ```
 
-Runtime 让错误假设最终被真实状态纠正，而不是让错误直接进入执行。
+Runtime let the wrong assumption be corrected by the real state, instead of letting the error enter execution directly.
 
-因此目前在这个场景里，最清晰的一条原则是：
+So in this scenario, the clearest principle is:
 
-> **Harness 应该约束现实边界，而不是替用户决定意图。**
+> **A Harness should enforce reality, not replace user intent.**
 
 ---
 
-# 成本：真正需要优化的是 Agent trajectory
+# Cost: what really needs optimizing is the Agent trajectory
 
-最开始，我们倾向于把 Runtime 成本理解成：
+At first, we tended to think of Runtime cost as:
 
 ```text
 Runtime added context
-→ token increased
+→ tokens increased
 ```
 
-实际数据让这个认识发生了变化。
+Real data changed this understanding.
 
-DSH 的真实 usage 显示：
+DSH's real usage shows:
 
-> **cacheReadTokens 是 Agent trajectory 成本的重要组成部分。**
+> **cacheReadTokens are a major part of Agent trajectory cost.**
 
-一个额外的 model turn，不只是多出一次 reasoning。
+One extra model turn is not just one extra reasoning pass.
 
-它还意味着：
+It also means:
 
 ```text
-再次提交历史
+submitting history again
 +
-再次读取前缀 KV
+re-reading the prefix KV
 +
-再次产生 output / reasoning
+producing output / reasoning again
 ```
 
-因此：
+Therefore:
 
-> **减少一个本来不应该发生的 Model turn，往往比优化 Runtime 自身增加的几百个字符更重要。**
+> **Eliminating one model turn that should never have happened usually matters more than optimizing the few hundred characters Runtime itself adds.**
 
-历史轨迹回溯后：
+After retroactively decoding the historical trajectories:
 
 ```text
 E4b Circuit
-→ cacheRead 方向下降 55–62%
+→ cacheRead directionally down 55–62%
 
 E6 pickup
-→ flash 约 -63%
-→ v4pro 约 -89%
+→ about -63% on flash
+→ about -89% on v4pro
 
-E7 创造场景
-→ Circuit 方向减少约 45%
+E7 creative scenario
+→ Circuit directionally down about 45%
 
 mode-level Strict
-→ 相比 Off，cacheRead 方向下降约 49%
+→ cacheRead directionally down about 49% vs Off
 ```
 
-这些数字来自不同实验、不同场景和小样本运行，不应当被理解成通用的性能承诺。
+These numbers come from different experiments, different scenarios, and small-sample runs, and should not be read as universal performance promises.
 
-真正值得保留的是成本结构：
+What is worth keeping is the cost structure:
 
 ```text
 Better trajectory
@@ -691,39 +695,39 @@ Better trajectory
 → lower model-side cost
 ```
 
-因此 Runtime 的经济价值不应该只看：
+So the economic value of Runtime should not be measured only by:
 
-> "Runtime 自己输出了多少 token。"
+> "How many tokens did Runtime itself emit?"
 
-更应该看：
+but rather by:
 
-> **"它消灭了多少不必要的 Agent work。"**
+> **"How much unnecessary Agent work did it eliminate?"**
 
 ---
 
 # Agent = Model + Harness
 
-如果：
+If:
 
 $$
 Agent = Model + Harness
 $$
 
-那么 Harness 就不仅仅是"给模型一些工具"。
+then Harness is not just "giving the model some tools".
 
-它还决定：
+It also decides:
 
 ```text
-什么可以执行
-什么不应该执行
-什么已经发生
-什么需要被通知
-什么没有必要被通知
-什么路径已经没有进展
-什么状态应该跨 Session 保留
+what may execute
+what must not execute
+what has happened
+what needs to be announced
+what does not need to be announced
+which path has no progress left
+which state should survive across Sessions
 ```
 
-因此一个更完整的理解是：
+So a more complete understanding is:
 
 ```text
 Model
@@ -739,21 +743,21 @@ Harness
 → continuity
 ```
 
-这并不意味着 Harness 越大越好。
+This does not mean the bigger the Harness, the better.
 
-恰恰相反：
+Quite the opposite:
 
-> **好的 Harness 是把已经确定的部分接住，而不是不断创造新的确定性管理系统。**
+> **A good Harness catches what is already determined, instead of constantly building new determinism-management systems.**
 
 ---
 
-# "一切皆 Plugin"为什么重要？
+# Why does "everything is a Plugin" matter?
 
-这个项目没有把 Runtime 当成 DSH Core 的新中心化 subsystem。
+This project does not turn Runtime into a new centralized subsystem of DSH Core.
 
-原因很简单：
+The reason is simple:
 
-如果某个确定性能力真的值得存在，它应该尽量拥有自己的边界。
+if a deterministic capability really deserves to exist, it should own its boundary as much as possible.
 
 ```text
 DSH
@@ -764,52 +768,52 @@ DSH
  └── ...
 ```
 
-因此：
+Therefore:
 
-> **插件化提供的真正价值之一，是给"被提取出来的确定性"一个独立存在的位置。**
+> **One of the real values of the plugin model is giving "extracted determinism" an independent place to exist.**
 
-这并不意味着所有东西都应该 Plugin 化。
+This does not mean everything should be a Plugin.
 
-它只是让我们能够：
+It only allows us to:
 
 ```text
-发现确定性
-→ 提取
-→ 独立实现
-→ 按需加载
-→ 独立关闭
-→ 独立替换
+discover determinism
+→ extract
+→ implement independently
+→ load on demand
+→ disable independently
+→ replace independently
 ```
 
-而不是：
+instead of:
 
 ```text
-发现一个问题
-→ 修改 Core
-→ 所有人都必须承担
+discover a problem
+→ modify Core
+→ everyone must carry it
 ```
 
 ---
 
-# 我们不打算定义 Universal Runtime
+# We are not trying to define a Universal Runtime
 
-这个仓库现在只有一个非常克制的目标：
+This repository has only one very restrained goal:
 
-> **提供一个足够薄的 Runtime extension point，以及几个经过真实实验的参考机制。**
+> **Provide a thin enough Runtime extension point, plus a few reference mechanisms validated by real experiments.**
 
-未来一个用户可能需要：
+One future user may need:
 
 ```text
 runtime-mcp
 ```
 
-另一个可能需要：
+another may need:
 
 ```text
 runtime-workspace
 ```
 
-还有人可能需要：
+and still others may need:
 
 ```text
 runtime-project
@@ -817,96 +821,91 @@ runtime-progress
 runtime-lifecycle
 ```
 
-这些没有必要由这个仓库预先规定。
+None of these need to be pre-ordained by this repository.
 
-甚至有人可能认为：
+Someone may even conclude:
 
-> "这个问题根本不应该由 Runtime 解决。"
+> "This problem should not be solved by Runtime at all."
 
-这也是一个合理答案。
+That is also a legitimate answer.
 
 ---
 
-# Presets 只是组合，不是标准
+# Presets are compositions, not standards
 
-当前仓库包含的 preset 是为了降低第一次使用的门槛，而不是定义"正确的 Runtime"。
+The presets included here exist to lower the cost of the first try — not to define the "correct" Runtime.
 
-它们最终可以理解成 capability composition：
+Ultimately they can be understood as capability compositions:
 
 ```text
 Minimal
-→ 最小确定性承接
+→ the smallest deterministic landing point
 
 Strict
-→ 更高程度的 Runtime responsibility
+→ a higher degree of Runtime responsibility
 
 Goal
-→ 面向确定性目标状态的实验能力
+→ experimental capability for deterministic target states
 
 Custom
-→ 用户自行组合
+→ compose it yourself
 ```
 
-Preset 不应该成为新的 Agent 类型。
+A preset should not become a new Agent type.
 
-它只是：
+It is only:
 
-> **一组默认 capability 的组合。**
+> **A default combination of capabilities.**
 
 ---
 
-# 模式与通用场景
+# Modes and common scenarios
 
-## Minimal（默认）
+## Minimal (default)
 
-**场景**：绝大多数技术用户的日常会话——编码、调试、小工具开发。你不想配置任何东西，只希望"确定不该继续的事"被程序接住。
+**Scenario**: everyday sessions for most technical users — coding, debugging, small tooling. You want zero configuration, and you only want "things that are deterministically settled" to be handled by the program.
 
-**做什么**：Guard（已知非法动作 → 一次教学拒绝）+ Circuit（重复失败无进展 → 熔断）+ 关键变更通知（承诺兑现 / circuit 开断）。其余时候完全沉默。
+**What it does**: Guard (known-invalid action → one teaching rejection) + Circuit (repeated failure with no progress → open) + critical-change notifications (fulfilled commitments / circuit open-close). Silent the rest of the time.
 
-> 中文：日常开发会话的默认选择；只处理确定不该继续的事，绝不主动打扰。
-> EN: The default for everyday coding sessions — handles only what is deterministically settled, and stays silent otherwise.
+> The default for everyday coding sessions — handles only what is deterministically settled, and stays silent otherwise.
 
 ## Strict
 
-**场景**：高稳定性环境——生产配置、长期运行会话、多插件协作。你需要更强的强制力，愿意接受"Agent 自由度略降"的代价。
+**Scenario**: high-stability environments — production configs, long-running sessions, multi-plugin collaboration. You need stronger enforcement and accept slightly reduced Agent freedom in exchange.
 
-**做什么**：Minimal 全部 + Persistence（确定事实跨会话保留）。freshness / 长期 stale 权威尚无证据，默认不开。
+**What it does**: everything in Minimal + Persistence (deterministic facts retained across Sessions). Freshness / long-term stale authority has no evidence yet and stays off by default.
 
-> 中文：高稳定性场景；在 Minimal 之上增加事实持久化，用更强强制力换更多确定性。
-> EN: High-stability environments — adds persistence on top of Minimal; stronger enforcement in exchange for slightly reduced agent freedom.
+> High-stability environments — adds persistence on top of Minimal; stronger enforcement in exchange for slightly reduced agent freedom.
 
 ## Goal
 
-**场景**：你明确知道"环境应该处于什么状态"——例如 MCP 必须 ready、某插件必须激活。你只需要 Runtime 保证这个目标状态，而不是替你完成任何策略性工作。
+**Scenario**: you know exactly what state the environment should be in — e.g. an MCP must be ready, a plugin must be active. You only want Runtime to guarantee that target state, not to do any strategic work for you.
 
-**做什么**：窄版 Goal = announce（转移发生时通告）+ guard（未满足时拒绝）。运行时执行式修复（reconcile）属 Experimental，默认关闭；凡需要"选哪个方案"的，回 Agent。
+**What it does**: narrow Goal = announce (notification on transitions) + guard (reject while unmet). Runtime-executed repair (reconcile) is Experimental and off by default; anything that requires "choosing an approach" goes back to the Agent.
 
-> 中文：当你有一个明确的环境目标状态时使用；只通告与守卫，不执行修复，不做策略选择。
-> EN: For an explicit target environment state — announce + guard only; never repairs, never chooses strategy (that stays with the Agent).
+> For an explicit target environment state — announce + guard only; never repairs, never chooses strategy (that stays with the Agent).
 
 ## Custom
 
-**场景**：开发者想自己组合能力，或用配置文件精确控制。
+**Scenario**: you want to compose capabilities yourself, or control them precisely through a config file.
 
-**做什么**：Guard / Circuit / Critical delta / Persistence / Query / Goal 六项自由勾选（设置页），或直接手写 `settings.yaml` 的 `runtime-seam.capabilities`（见 `docs/custom-config.md`）。
+**What it does**: Guard / Circuit / Critical delta / Persistence / Query / Goal — check whichever you want in the settings page, or hand-write `runtime-seam.capabilities` in `settings.yaml` (see `docs/custom-config.md`).
 
-> 中文：自行组合能力；UI 勾选与手写 settings.yaml 等价。
-> EN: Compose your own capability set — UI checkboxes and hand-written settings.yaml are equivalent.
+> Compose your own capability set — UI checkboxes and hand-written settings.yaml are equivalent.
 
 ## Off
 
-**场景**：基线对照，或你暂时不需要任何 Runtime。
+**Scenario**: the baseline for comparison, or when you don't need any Runtime for now.
 
-> 中文：完全不装载 Runtime；实验中的对照基线。
-> EN: No runtime at all — the experimental baseline.
+> No runtime at all — the experimental baseline.
 
 ---
 
-# 一个非常重要的原则：Runtime 大部分时间应该保持沉默
+# One very important principle: Runtime should stay silent most of the time
 
-Runtime state 的存在，不意味着 Runtime 必须持续向模型解释自己。
+The existence of Runtime state does not mean Runtime must keep explaining itself to the model.
 
-因此我们倾向于：
+So we lean toward:
 
 ```text
 No change
@@ -922,11 +921,11 @@ Repeated no-progress
 → Circuit
 ```
 
-换句话说：
+In other words:
 
-> **Runtime 可以拥有很多内部状态，但不应该拥有与之等量的模型可见状态。**
+> **Runtime may hold a lot of internal state, but it should not hold an equal amount of model-visible state.**
 
-这也是为什么：
+This is also why these boundaries matter so much:
 
 ```text
 Persistence ≠ Exposure
@@ -934,13 +933,11 @@ Authority ≠ Intervention
 Execution ≠ Report
 ```
 
-这些边界如此重要。
-
 ---
 
-# Prompt 也应该有自己的责任边界
+# Prompts should have their own boundary of responsibility too
 
-很多成熟的 Agent 工程实践已经开始强调：
+Much mature Agent engineering practice already emphasizes:
 
 ```text
 Intent
@@ -949,30 +946,30 @@ Deliverable
 Acceptance
 ```
 
-这些信息非常重要。
+This information is very important.
 
-这个项目并不认为应该把 Prompt 写得更弱。
+This project does not believe Prompts should be written weaker.
 
-相反：
+On the contrary:
 
-> **任务目标、交付物、验收条件越清楚越好。**
+> **The clearer the task goal, deliverable, and acceptance criteria, the better.**
 
-但 Prompt 定义的是：
-
-```text
-我想做什么
-```
-
-而 Harness 可以负责：
+But the Prompt defines:
 
 ```text
-现实是什么
-什么动作允许进入现实
-现实什么时候变化
-什么时候已经没有继续尝试的意义
+what I want to do
 ```
 
-于是一个更干净的责任划分是：
+while the Harness can own:
+
+```text
+what reality is
+which actions may enter reality
+when reality changes
+when continuing makes no sense anymore
+```
+
+So a cleaner division of responsibility is:
 
 ```text
 Human
@@ -990,66 +987,66 @@ Host
 
 ---
 
-# 错误是允许存在的
+# Errors are allowed
 
-用户可以写错。
+The user can be wrong.
 
-模型可以判断错。
+The model can misjudge.
 
-Plugin 也可以实现错。
+A Plugin can be mis-implemented.
 
-一个好的 Harness 并不意味着它能够替所有人"找到真正正确的意图"。
+A good Harness does not mean it can find "the truly correct intent" for everyone.
 
-它更应该保证：
+It should rather guarantee:
 
-> **错误停留在它应该停留的责任层，不要穿透到一个可以被确定性防止的现实边界。**
+> **Errors stay in the responsibility layer they belong to, and do not pierce a reality boundary that determinism could have protected.**
 
-因此：
+Therefore:
 
 ```text
 User intent
-可以错
+may be wrong
 
 Model reasoning
-可以错
+may be wrong
 
 Deterministic world
-不能因为前两者出错而被任意破坏
+must not be arbitrarily destroyed because the first two were wrong
 ```
 
-这也是四象限实验中 D 的核心观察。
+This is also the core observation of quadrant D.
 
 ---
 
-# 实验方法
+# Experimental method
 
-这个仓库的实验并不是为了先证明一个理论，再强行寻找场景。
+The experiments here are not "prove a theory first, then force a scenario".
 
-更接近这样的循环：
+They are closer to this loop:
 
 ```text
-真实 DSH 问题
+real DSH problem
        ↓
-真实 trajectory
+real trajectory
        ↓
-观察摩擦
+observe friction
        ↓
-找到其中已经确定的部分
+find the part that is already deterministic
        ↓
-提出最小机制
+propose a minimal mechanism
        ↓
 A/B / controlled experiment
        ↓
-保留 / 淘汰
+keep / discard
 ```
 
-例如 E7 一开始只关注：
+For example, E7 started from:
 
 ```text
 flaky retry
 ```
 
-但逐事件读取轨迹后又发现：
+but reading the trajectory event by event also revealed:
 
 ```text
 deny
@@ -1058,37 +1055,37 @@ deny
 → retry
 ```
 
-于是产生了第二类 no-progress pattern。
+which produced a second kind of no-progress pattern.
 
-这类发现是实验的一部分。
+Discoveries like this are part of the experiment.
 
-因此：
+Therefore:
 
-> **Trajectory 不只是实验结果，也是下一次实验的输入。**
+> **A trajectory is not just an experiment result; it is also the input for the next experiment.**
 
 ---
 
-# 证据与限制
+# Evidence and limitations
 
-这个仓库包含完整的实验材料、历史轨迹和真实 token 使用数据。
+This repository contains the full experimental material, historical trajectories, and real token usage data.
 
-目前已经完成：
+Completed so far:
 
 ```text
 100+ session runs
 2 models
-真实 DSH Host
-隔离 profile
-真实 usage reconstruction
+real DSH Host
+isolated profiles
+real usage reconstruction
 ```
 
-但很多行为实验的单个场景仍然是小样本。
+But many behavior experiments are still small-sample per scenario.
 
-因此我们明确区分：
+So we explicitly distinguish:
 
-### 机制级结论
+### Mechanism-level conclusions
 
-例如：
+For example:
 
 ```text
 Guard can block before execution.
@@ -1096,22 +1093,22 @@ Circuit can prevent repeated execution.
 State changes can trigger Delta.
 ```
 
-这些是最强证据。
+These are the strongest evidence.
 
-### 场景级观察
+### Scenario-level observations
 
-例如：
+For example:
 
 ```text
-Strict 在这个创造场景中缩短 trajectory。
-Pickup 在这个跨 Session 场景中明显降低 payload。
+Strict shortened the trajectory in this creative scenario.
+Pickup significantly reduced payload in this cross-Session scenario.
 ```
 
-这些是有价值的真实工程结果，但不应该被外推成普遍规律。
+These are valuable real engineering results, but should not be extrapolated into universal laws.
 
-### 尚未建立的结论
+### Conclusions not yet established
 
-我们不会因为某个实验结果漂亮，就宣布：
+We will not announce, just because some result looks good:
 
 ```text
 Runtime always improves agents.
@@ -1120,15 +1117,15 @@ More state is always useful.
 More provenance creates more trust.
 ```
 
-恰恰相反，实验已经给出了这些方向的反例。
+On the contrary, the experiments already produced counterexamples in those directions.
 
 ---
 
-# 社区问题
+# Community problems
 
-这个项目来自真实的 DeepSeek Harness 摩擦。
+This project comes from real DeepSeek Harness friction.
 
-当前实验对应的社区问题包括但不限于：
+The community problems mapped to the current experiments include, among others:
 
 ```text
 MCP stale / expired sessions
@@ -1141,65 +1138,65 @@ Cross-session project state
 Plugin load-time failure isolation
 ```
 
-具体 issue/discussion 映射见：
+For the specific issue/discussion mapping, see:
 
 ```text
 evidence/community-map.md
 ```
 
-这里不把某个 Plugin 宣传成这些问题的唯一解。
+This project does not advertise any single Plugin as the one answer to these problems.
 
-目标只是：
+The goal is only:
 
-> **把真实问题与已经验证过的 Harness capability 对齐。**
+> **To align real problems with Harness capabilities that have already been validated.**
 
 ---
 
 # Plugin Contribution
 
-如果想贡献一个 Runtime / Harness capability，首先回答：
+If you want to contribute a Runtime / Harness capability, first answer:
 
 ```text
-1. 这个能力解决什么真实的 DSH 问题？
+1. What real DSH problem does this capability solve?
 
-2. 哪一部分已经是 deterministic 的？
+2. Which part is already deterministic?
 
-3. 为什么这一部分不应该继续由模型负责？
+3. Why should this part no longer be the model's responsibility?
 
-4. Runtime 应该在什么时候介入？
+4. When should Runtime intervene?
 
-5. 什么情况下应该保持 silence？
+5. When should it stay silent?
 
-6. Runtime state 如何判断 stale / changed？
+6. How does Runtime state decide stale / changed?
 
-7. Plugin 自己失败时，能否不拖垮 Host？
+7. If the Plugin itself fails, can it avoid dragging down the Host?
 
-8. Plugin 能否被 disable / uninstall / recover？
+8. Can the Plugin be disabled / uninstalled / recovered?
 ```
 
-最重要的一问：
+The most important question:
 
-> **这个抽象是不是由真实摩擦逼出来的？**
+> **Is this abstraction forced out by real friction?**
 
-如果只是：
+If the answer is only:
 
-> "也许以后会需要。"
+> "Maybe we'll need it someday."
 
-那么最好先不要加入新的核心抽象。
+then it is better not to add a new core abstraction yet.
 
-完整清单见 `docs/contribution.md`。
+The full checklist is in `docs/contribution.md`.
 
 ---
 
-# Plugin 安全边界
+# Plugin safety boundary
 
-Runtime Plugin 也属于 DSH Plugin。
+A Runtime Plugin is still a DSH Plugin.
 
-因此：
+Therefore:
 
-> **Runtime 自己不能成为新的单点故障。**
+> **Runtime itself must not become a new single point of failure.**
 
-至少应该考虑：
+At minimum, consider:
 
 ```text
 boot-time failure
@@ -1212,11 +1209,11 @@ credential handling
 unrelated plugin survival
 ```
 
-特别是：
+In particular:
 
-> **Runtime 不是解决所有 Plugin failure 的地方。**
+> **Runtime is not the place to solve every Plugin failure.**
 
-如果问题发生在：
+If a problem occurs in:
 
 ```text
 Plugin discovery
@@ -1224,16 +1221,18 @@ Plugin activation
 Host boot
 ```
 
-那么它可能属于 Host / Plugin lifecycle，而不是 Runtime。
+then it likely belongs to the Host / Plugin lifecycle, not Runtime.
 
-这类问题应该在 Plugin contract、Host isolation 和开发工具链中解决。
+Those problems should be solved in Plugin contracts, Host isolation, and developer tooling.
 
 ---
 
-# 当前仓库结构
+# Repository structure
 
 ```text
 dsh-runtime/
+├── README.md
+├── README.zh-CN.md
 │
 ├── core/
 │   └── runtime-seam/
@@ -1262,15 +1261,15 @@ dsh-runtime/
 └── scripts/
 ```
 
-其中：
+Where:
 
 ```text
 core/
 ```
 
-应尽可能稳定。
+should stay as stable as possible.
 
-而：
+While:
 
 ```text
 plugins/
@@ -1278,44 +1277,44 @@ experiments/
 evidence/
 ```
 
-应该允许随着真实使用不断增长。
+should be allowed to keep growing with real usage.
 
 ---
 
-# 当前状态
+# Current status
 
-这是一个**实验性项目**。
+This is an **experimental project**.
 
-目前已经完成：
+Completed so far:
 
-* Runtime seam 原型；
-* Minimal / Strict / Goal / Custom preset 骨架；
-* Guard / Circuit / State / Delta / Persistence 等实验；
-* flash + v4pro 的关键机制交叉验证；
-* 真实 token / cacheRead 回溯；
-* 四象限 Prompt × Harness 场景实验；
-* 实验材料与本地环境信息脱敏；
-* Plugin failure pitfalls 与 contribution boundary。
+* Runtime seam prototype;
+* Minimal / Strict / Goal / Custom preset skeletons;
+* Guard / Circuit / State / Delta / Persistence experiments;
+* cross-validation of the key mechanisms on flash + v4pro;
+* real token / cacheRead reconstruction;
+* four-quadrant Prompt × Harness scenario experiments;
+* desensitized experimental material and local environment info;
+* Plugin failure pitfalls and the contribution boundary.
 
-后续重点不是继续证明"Runtime 存不存在价值"。
+The next focus is not to keep proving "whether Runtime has value".
 
-而是：
+It is:
 
-> **把已经有证据的机制打磨成可以真正被加载、组合、关闭和替换的 Plugin。**
+> **To polish the mechanisms that already have evidence into Plugins that can truly be loaded, composed, disabled, and replaced.**
 
 ---
 
-# 最后：为什么是 Plugin？
+# Finally: why a Plugin?
 
-因为我们并不认为已经知道 Agent 的最终结构应该是什么。
+Because we do not believe we already know what the final structure of an Agent should be.
 
-这个项目只是观察到了一个很具体的事实：
+This project only observed one very concrete fact:
 
-> **真实 Agent 运行中，有些工作已经足够确定，不值得继续占用模型的推理空间。**
+> **In real Agent runs, some work is already deterministic enough that it is not worth occupying the model's reasoning space.**
 
-如果这些工作可以被独立出来，那么最自然的方式不是把它们全部塞回 Core。
+If that work can be separated out, the most natural way is not to stuff it all back into Core.
 
-而是：
+It is:
 
 ```text
 Real friction
@@ -1329,41 +1328,41 @@ Plugin
 Harness
 ```
 
-今天可能是 Runtime。
+Today it may be Runtime.
 
-明天可能是别的东西。
+Tomorrow it may be something else.
 
-不需要预先知道。
+We don't need to know in advance.
 
 ---
 
-# 一个暂时足够简单的原则
+# A principle that is simple enough for now
 
 ```text
-如果模型仍然需要判断，
-让模型判断。
+If the model still needs to judge,
+let the model judge.
 
-如果程序已经知道答案，
-不要让模型重复发现。
+If the program already knows the answer,
+don't make the model rediscover it.
 
-如果现实已经确定不允许，
-不要让模型决定能不能执行。
+If reality has deterministically said no,
+don't let the model decide whether it can execute.
 
-如果现实没有变化，
-不要告诉模型。
+If reality has not changed,
+don't tell the model.
 
-如果一条路径已经没有进展，
-不要让它无限继续。
+If a path has no progress left,
+don't let it continue forever.
 
-如果状态已经存在，
-不意味着必须重新注入。
+If a state already exists,
+that does not mean it must be re-injected.
 
-如果用户的意图可能错，
-保护现实，但不要替用户重新定义意图。
+If the user's intent may be wrong,
+protect reality, but don't redefine the user's intent.
 ```
 
 > **Agent = Model + Harness**
 
-这个仓库只是在探索：
+This repository only explores:
 
-> **Harness 究竟应该接住哪一部分。**
+> **Which part the Harness should actually catch.**
