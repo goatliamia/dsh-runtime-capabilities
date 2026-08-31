@@ -1,0 +1,4 @@
+# Test-only fixture bundle: insert the fixture host plugin.
+- insert:
+    - id: runtime-fixture
+      name: 'dsh-runtime-fixture'

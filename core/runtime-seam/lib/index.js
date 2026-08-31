@@ -23,7 +23,7 @@ import {
 } from "./core.mjs";
 
 export const name = "dsh-runtime-seam";
-export const inject = ["tools", "settings"];
+export const inject = ["tools", "settings", "commands"];
 
 const API_PREFIX = "/api/runtime-seam";
 const STATE_DIR = join(process.env.DSH_HOME ?? join(homedir(), ".dsh"), "plugins", "dsh-runtime-seam");
@@ -34,6 +34,7 @@ const SETTINGS_SCHEMA = Schema.object({
   preset: Schema.union(PRESET_NAMES.map((value) => Schema.const(value))).default("minimal"),
   authority: Schema.boolean().default(false),
   circuitThreshold: Schema.number().default(2),
+  capabilities: Schema.dict(Schema.any()).default({}),
   experimental: Schema.object({
     autoPickupInjection: Schema.boolean().default(false),
     broadExposure: Schema.boolean().default(false),
@@ -72,6 +73,7 @@ export function apply(ctx, _config) {
   const circuit = new CircuitTracker({ threshold: 2 });
   const guardRules = new Map(); // action -> rule
   const commitments = new Map(); // factPath -> { desired }
+  const goalRecords = new Map(); // factPath -> goal record (view + dispose)
   const activity = [];
   const pendingDeltas = []; // messages to inject at the next pre-step
   let sessionId = null;
@@ -79,7 +81,10 @@ export function apply(ctx, _config) {
   let teachingFailures = 0;
 
   const recordActivity = (kind, data) => {
-    const entry = activityRecord(kind, data);
+    const payload = { ...data };
+    // A payload field must never clobber the record kind.
+    delete payload.kind;
+    const entry = activityRecord(kind, payload);
     activity.push(entry);
     if (activity.length > ACTIVITY_CAP) activity.shift();
     for (const listener of activityListeners) {
@@ -100,9 +105,11 @@ export function apply(ctx, _config) {
     } catch {
       settings = { preset: "minimal" };
     }
+    const preset = settings.preset ?? "minimal";
+    const customCaps = settings.capabilities ?? {};
     return {
       settings,
-      capabilities: resolvePreset(settings.preset ?? "minimal", {}),
+      capabilities: resolvePreset(preset, preset === "custom" ? customCaps : {}),
     };
   };
 
@@ -129,7 +136,10 @@ export function apply(ctx, _config) {
     if (!configNow().persistence) return;
     try {
       mkdirSync(STATE_DIR, { recursive: true });
-      writeFileSync(STATE_FILE, JSON.stringify({ savedAt: new Date().toISOString(), facts: registry.toJSON() }, null, 2));
+      writeFileSync(
+        STATE_FILE,
+        JSON.stringify({ savedAt: new Date().toISOString(), facts: registry.toJSON() }, null, 2),
+      );
     } catch {
       /* persistence must never fail the run */
     }
@@ -151,6 +161,12 @@ export function apply(ctx, _config) {
             });
           }
         }
+        for (const goal of goalRecords.values()) {
+          if (goal.factPath === path) {
+            goal.state = value === goal.desired ? "satisfied" : "pending";
+            recordActivity("goal", { factPath: path, desired: goal.desired, state: goal.state });
+          }
+        }
         persist();
       }
       return result;
@@ -166,17 +182,43 @@ export function apply(ctx, _config) {
      * rules) — it NEVER executes the transition itself; runtime-executed
      * reconcile stays behind the experimental switch.
      */
-    registerGoal: ({ factPath, desired }) => {
+    registerGoal: ({ factPath, desired, transitionNote = null }) => {
       const dispose = seam.commit({ factPath, desired });
-      recordActivity("goal", { factPath, desired });
       const current = registry.fact(factPath);
-      return {
-        current: current?.value ?? null,
+      const goal = {
+        factPath,
         desired,
+        transitionNote,
         state: current?.value === desired ? "satisfied" : "pending",
-        dispose,
+        declaredAt: new Date().toISOString(),
+        dispose: () => {
+          goalRecords.delete(factPath);
+          dispose();
+        },
       };
+      goalRecords.set(factPath, goal);
+      recordActivity("goal", { factPath, desired, state: goal.state });
+      return goal;
     },
+    removeGoal: (factPath) => {
+      const record = goalRecords.get(factPath);
+      if (!record) return false;
+      try {
+        record.dispose();
+      } catch {
+        /* dispose must be silent */
+      }
+      recordActivity("goal-removed", { factPath });
+      return true;
+    },
+    goals: () =>
+      [...goalRecords.values()].map(({ factPath, desired, transitionNote, state, declaredAt }) => ({
+        factPath,
+        desired,
+        transitionNote,
+        state,
+        declaredAt,
+      })),
     registerGuard: ({ action, factPath, predicate, predicateText, temporal = false, promise = false }) => {
       if (guardRules.has(action)) throw new Error(`runtime-seam: guard already registered for ${action}`);
       guardRules.set(action, { action, factPath, predicate, predicateText, temporal, promise });
@@ -234,6 +276,9 @@ export function apply(ctx, _config) {
     const text = (result?.content ?? [])
       .map((block) => (block?.type === "text" ? block.text : ""))
       .join("");
+    // A guard denial is a teaching outcome, not a tool failure: it must never
+    // open a circuit (caught by the mode test, 2026-09-01).
+    if (text.includes("[action-rejected]")) return;
     const outcome = circuit.observeFailure(toolName, text, Number(settingsNow().circuitThreshold) || 2);
     if (outcome.opened) {
       const factPath = `capabilities.${toolName}.state`;
@@ -270,7 +315,7 @@ export function apply(ctx, _config) {
       if (capabilities.delta === "none") return decision;
       for (const delta of pendingDeltas.splice(0)) {
         if (capabilities.delta === "critical" && delta.kind !== "committed-delta" && delta.kind !== "circuit-open") continue;
-        recordActivity("delta", { kind: delta.kind, path: delta.fact?.path, step: currentStep });
+        recordActivity("delta", { type: delta.kind, path: delta.fact?.path, step: currentStep });
         messages.push({
           id: `rtx-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
           role: "user",
@@ -283,6 +328,58 @@ export function apply(ctx, _config) {
       return decision;
     }
   });
+
+  // ---- /runtime-goal command: surfaces in the "+" trigger menu and the
+  // slash input, matching the official /goal convention. ----
+  ctx.effect(() =>
+    ctx.commands.register({
+      name: "runtime-goal",
+      description: "declare or view a Runtime goal (environment fact -> desired value)",
+      input: {
+        hint: "[<factPath> <desired> [transition-note] | remove <factPath> | clear]",
+      },
+      handler: (invocation) => {
+        const raw = String(invocation?.rawInput ?? "").trim();
+        const parts = raw.split(/\s+/).filter(Boolean);
+        const render = () => {
+          const goals = seam.goals();
+          const lines = goals.length
+            ? goals.map((goal) => `- ${goal.factPath} → ${String(goal.desired)} (${goal.state === "satisfied" ? "satisfied" : "pending"})`).join("\n")
+            : "- (none)";
+          return `Runtime goals:\n${lines}\n\n用法: /runtime-goal <factPath> <desired> [transition-note]\n      /runtime-goal remove <factPath>  /runtime-goal clear`;
+        };
+        if (!parts.length) return { kind: "success", text: render() };
+        if (parts[0] === "remove" && parts[1]) {
+          const removed = seam.removeGoal(parts[1]);
+          return removed
+            ? { kind: "success", text: `已移除 Runtime 目标 ${parts[1]}。` }
+            : { kind: "error", text: `没有找到目标 ${parts[1]}。\n${render()}` };
+        }
+        if (parts[0] === "clear") {
+          for (const goal of seam.goals()) seam.removeGoal(goal.factPath);
+          return { kind: "success", text: "已清除全部 Runtime 目标。" };
+        }
+        if (parts.length >= 2) {
+          const desiredRaw = parts[1];
+          let desired;
+          if (desiredRaw === "true") desired = true;
+          else if (desiredRaw === "false") desired = false;
+          else if (desiredRaw !== "" && !Number.isNaN(Number(desiredRaw))) desired = Number(desiredRaw);
+          else desired = desiredRaw;
+          const goal = seam.registerGoal({
+            factPath: parts[0],
+            desired,
+            transitionNote: parts.slice(2).join(" ") || null,
+          });
+          return {
+            kind: "success",
+            text: `已声明 Runtime 目标：${goal.factPath} → ${String(goal.desired)}（当前 ${goal.state === "satisfied" ? "已满足" : "等待中"}）。`,
+          };
+        }
+        return { kind: "error", text: `无法解析。\n${render()}` };
+      },
+    }),
+  );
 
   // ---- activity + config route for the client ("Why did Runtime intervene?")
   // webServer does not exist in headless profiles: the seam must stay
@@ -302,6 +399,7 @@ export function apply(ctx, _config) {
               preset: settingsNow().preset,
               capabilities: configNow(),
               activity: [...activity].slice(-50).reverse(),
+              goals: seam.goals(),
               teachingFailures,
               facts: registry.list().map((fact) => ({
                 path: fact.path,
@@ -327,11 +425,58 @@ export function apply(ctx, _config) {
             const chunks = [];
             for await (const chunk of req) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
             const body = chunks.length ? JSON.parse(Buffer.concat(chunks).toString("utf8")) : {};
+            // Custom mode: capability toggles live in the settings namespace
+            // (settings.yaml) so users can also hand-edit the file.
+            if (body.preset === "custom" && body.capabilities && typeof body.capabilities === "object") {
+              const patch = {};
+              for (const key of ["guard", "circuit", "persistence", "query", "goal"]) {
+                if (typeof body.capabilities[key] === "boolean") patch[key] = body.capabilities[key];
+              }
+              if (body.capabilities.delta === "critical" || body.capabilities.delta === "none") {
+                patch.delta = body.capabilities.delta;
+              }
+              await ctx.settings.update("runtime-seam", { preset: "custom", capabilities: patch });
+              return writeJson(res, 200, { ok: true, data: { preset: "custom", capabilities: patch } });
+            }
             if (typeof body.preset === "string" && PRESET_NAMES.includes(body.preset)) {
               await ctx.settings.update("runtime-seam", { preset: body.preset });
               return writeJson(res, 200, { ok: true, data: { preset: body.preset } });
             }
             return writeJson(res, 400, { ok: false, error: "invalid-preset" });
+          } catch {
+            return writeJson(res, 400, { ok: false, error: "bad-request" });
+          }
+        },
+      }),
+    );
+    ctx.effect(() =>
+      webServer.register({
+        kind: "exact",
+        path: `${API_PREFIX}/goals`,
+        handler: async (req, res) => {
+          if (req.method !== "POST") return writeJson(res, 405, { ok: false, error: "method-not-allowed" });
+          if (!trustedRequest(req)) return writeJson(res, 403, { ok: false, error: "forbidden" });
+          try {
+            const chunks = [];
+            for await (const chunk of req) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+            const body = chunks.length ? JSON.parse(Buffer.concat(chunks).toString("utf8")) : {};
+            if (body.action === "add") {
+              if (typeof body.factPath !== "string" || !body.factPath.trim()) {
+                return writeJson(res, 400, { ok: false, error: "factPath-required" });
+              }
+              const goal = seam.registerGoal({
+                factPath: body.factPath.trim(),
+                desired: body.desired ?? null,
+                transitionNote: typeof body.transitionNote === "string" ? body.transitionNote : null,
+              });
+              return writeJson(res, 200, { ok: true, data: goal });
+            }
+            if (body.action === "remove") {
+              if (typeof body.factPath !== "string") return writeJson(res, 400, { ok: false, error: "factPath-required" });
+              const removed = seam.removeGoal(body.factPath);
+              return writeJson(res, 200, { ok: true, data: { removed } });
+            }
+            return writeJson(res, 400, { ok: false, error: "invalid-action" });
           } catch {
             return writeJson(res, 400, { ok: false, error: "bad-request" });
           }

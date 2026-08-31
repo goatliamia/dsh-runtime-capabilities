@@ -1,0 +1,25 @@
+{
+  "name": "dsh-runtime-fixture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Test-only fixture for dsh-runtime-seam mode validation: registers domain facts, teaching guards, and a flaky tool through the real seam API.",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dsh-runtime-seam": "file:D:/projects/runtime/dsh-runtime/core/runtime-seam"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
