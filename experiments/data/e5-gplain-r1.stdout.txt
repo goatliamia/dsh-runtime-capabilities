@@ -1,0 +1,2 @@
+﻿exp_run was rejected 鈥?the host fact `plugins.exp_runner.state = "disabled"` contradicts the session snapshot's "ready", so no run occurred; the rejection was recorded in `e5-gplain-r1.result.txt`.
+RUNEXIT:0

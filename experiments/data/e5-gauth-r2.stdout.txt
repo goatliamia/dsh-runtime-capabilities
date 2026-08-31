@@ -1,0 +1,2 @@
+﻿exp_run was called once and rejected because the host reports plugins.exp_runner.state = "disabled" (not ready as the session preamble claimed), so the action-rejected error was saved to e5-gauth-r2.result.txt.
+RUNEXIT:0

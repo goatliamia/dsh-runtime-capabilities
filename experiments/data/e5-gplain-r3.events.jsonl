@@ -1,0 +1,8 @@
+{"t":"2026-08-31T13:59:51.724Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","whitelist":["pwsh","str_replace_editor","exp_probe","exp_run"],"deniedGlobals":["exp_unload","exp_activate","exp_flaky","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T13:59:51.799Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_probe","exp_run","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T13:59:51.800Z","turn":1,"step":1,"type":"model-call","chars":12766,"toolCount":4}
+{"t":"2026-08-31T13:59:53.673Z","turn":1,"step":1,"type":"guard-rejection","action":"exp_run","reason":"[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\npredicate: exp_run requires state == ready\ntemporal: no\nnext: this action is not valid from this host; drop it"}
+{"t":"2026-08-31T13:59:53.674Z","turn":1,"step":1,"type":"tool-result","name":"exp_run","isError":true}
+{"t":"2026-08-31T13:59:53.694Z","turn":1,"step":2,"type":"model-call","chars":14139,"toolCount":4}
+{"t":"2026-08-31T13:59:55.473Z","turn":1,"step":2,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T13:59:55.486Z","turn":1,"step":3,"type":"model-call","chars":15584,"toolCount":4}

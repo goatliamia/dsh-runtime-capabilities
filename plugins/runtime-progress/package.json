@@ -1,0 +1,38 @@
+{
+  "name": "dsh-runtime-progress",
+  "version": "0.1.0",
+  "description": "Reference runtime-* plugin: no-progress circuit policy on top of the runtime seam (host-only).",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "runtime"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOUR_ORG/dsh-runtime.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dsh-runtime-seam": "file:D:/projects/runtime/dsh-runtime/core/runtime-seam",
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

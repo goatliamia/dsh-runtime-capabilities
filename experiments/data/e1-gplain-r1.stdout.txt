@@ -1,0 +1,2 @@
+﻿Unload failed: exp_plugin_a is required by the host (`plugins.exp_plugin_a.required_by_host = true`), so the runtime rejected the unload. Wrote `cannot` to `e1-gplain-r1.result.txt`.
+RUNEXIT:0

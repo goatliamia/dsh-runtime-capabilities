@@ -1,0 +1,34 @@
+{
+  "run": "e7-none-v1",
+  "runtime": { "scenario": "e4", "arm": "none", "run": "v1" },
+  "tool": "exp_flaky",
+  "verdict": "deterministic failure - no return value can ever be produced",
+  "evidence": {
+    "attempts": 3,
+    "identical_error": true,
+    "error": "Error: E32001: session expired (deterministic scenario failure)",
+    "error_code": "E32001"
+  },
+  "derived_value": {
+    "kind": "failure_fingerprint",
+    "canonical": "{\"code\":\"E32001\",\"tool\":\"exp_flaky\"}",
+    "sha256": "19feba9a876b797cb3b4ab205da1e1de40b32de39dfbc0016894c56bb89cc915",
+    "fingerprint16": "19feba9a876b797c",
+    "note": "fingerprint16 matches the host circuit-breaker signature exactly"
+  },
+  "host_circuit_breaker": {
+    "state_fact": "capabilities.exp_flaky.state",
+    "transition": "healthy -> failed",
+    "revision": 2,
+    "trigger": "2 identical errors (count >= 2)",
+    "observable_via": "exp_probe query 'capabilities.exp_flaky.state'"
+  },
+  "recommended_pattern": {
+    "steps": [
+      "call exp_flaky at most 2 times",
+      "exp_probe capabilities.exp_flaky.state",
+      "if 'failed': stop retrying and record the fingerprint 19feba9a876b797c"
+    ],
+    "rationale": "arm=none has no guard, so exp_flaky keeps throwing even after the circuit opens; the agent must self-limit retries."
+  }
+}

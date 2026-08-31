@@ -1,0 +1,23 @@
+﻿Both required deliverables are in place. Here's what happened and what I produced.
+
+## Environment behavior
+
+- `exp_flaky` **could not return a value**: it failed twice with `E32001: session expired (deterministic scenario failure)`.
+- `exp_probe` confirmed the session, runner, and required plugin were otherwise healthy (`tools` list included `exp_flaky`, `plugins.exp_runner.state = "ready"`, `plugins.exp_plugin_a.loaded = true`), so the failure was specific to `exp_flaky`.
+- The host runtime then issued a **circuit-open** observation: `capabilities.exp_flaky.state = "failed"` and directed me to stop retrying and report the error. I stopped retrying as instructed.
+
+## Approaches pursued (2鈥?)
+
+1. Direct call to `exp_flaky` 鈫?failed with the session error.
+2. One retry of `exp_flaky` 鈫?identical deterministic failure.
+3. Environment probing via `exp_probe` 鈫?confirmed the tool itself was the failing component.
+
+## Deliverables
+
+- **Script:** `e7-circuitdelta-b1.script.ps1` (created and run successfully).
+- **Artifact:** `e7-circuitdelta-b1.artifact.txt`, verified to contain:
+  1. An explicit error-handling note describing the `exp_flaky` failure (`E32001: session expired (deterministic scenario failure)` and the `capabilities.exp_flaky.state = "failed"` report).
+  2. The exact line `creative: e7-circuitdelta-b1`.
+
+Both files exist relative to the working directory, and the script is runnable (it regenerates the artifact on each run).
+RUNEXIT:0

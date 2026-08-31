@@ -1,0 +1,4 @@
+{"t":"2026-08-31T12:48:19.197Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","deniedGlobals":["job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T12:48:19.242Z","turn":1,"step":1,"type":"inject","kind":"baseline","chars":3230}
+{"t":"2026-08-31T12:48:19.253Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_probe","exp_tmp_paint","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T12:48:19.253Z","turn":1,"step":1,"type":"model-call","chars":16764,"toolCount":4}

@@ -1,0 +1,109 @@
+{
+  "run": "s1-arm-a-r2",
+  "scenario": "s1",
+  "arm": "a",
+  "policy": "react-discovery",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-flash",
+  "initialTools": [
+    "exp_probe",
+    "exp_tmp_paint",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "finalTools": [
+    "exp_probe",
+    "exp_tmp_paint",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "deniedGlobals": [
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 5,
+  "turns": 1,
+  "toolCalls": 4,
+  "probeCalls": 1,
+  "toolErrors": 0,
+  "modelCalls": 5,
+  "sessionTitleCalls": 1,
+  "payloadChars": 80638,
+  "injectedMessages": 0,
+  "exposurePayloadChars": 0,
+  "exposures": {
+    "baseline": 0,
+    "delta": 0,
+    "full": 0
+  },
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "firstProbeStep": 1,
+  "firstTempPaintStep": 2,
+  "repeatedProbes": 0,
+  "tempPaintCalls": [
+    {
+      "step": 2,
+      "isError": false
+    }
+  ],
+  "probeAnswers": [
+    {
+      "step": 1,
+      "isError": false,
+      "value": {
+        "query": "tools",
+        "status": "known",
+        "value": [
+          "exp_probe",
+          "exp_tmp_paint",
+          "pwsh",
+          "str_replace_editor"
+        ],
+        "reason": null
+      }
+    }
+  ],
+  "exposureTimeline": [],
+  "controller": {
+    "policy": "react-discovery",
+    "observations": 5,
+    "emissions": 0,
+    "baselineEmissions": 0,
+    "deltaEmissions": 0,
+    "fullEmissions": 0,
+    "stableSuppressions": 0,
+    "policySuppressions": 5,
+    "unknownEmissions": 0,
+    "changedFacts": 13,
+    "payloadChars": 0,
+    "estimatedTokens": 0,
+    "currentRevision": 5,
+    "currentFingerprint": "5f166ff0f8e17bf3",
+    "persistent": false,
+    "persistentBaseRevision": null,
+    "persistentBaseFingerprint": null
+  }
+}

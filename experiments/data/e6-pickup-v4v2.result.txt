@@ -1,0 +1,2 @@
+plugins.exp_plugin_x.state is "ready".
+dependencies.current_host is unknown (host_did_not_expose_fact), value null.

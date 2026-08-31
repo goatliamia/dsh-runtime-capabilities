@@ -1,0 +1,100 @@
+{
+  "run": "s3-arm-a-r2",
+  "scenario": "s3",
+  "arm": "a",
+  "policy": "react-discovery",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-flash",
+  "initialTools": [
+    "exp_probe",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "finalTools": [],
+  "deniedGlobals": [
+    "exp_tmp_paint",
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 5,
+  "turns": 1,
+  "toolCalls": 5,
+  "probeCalls": 3,
+  "toolErrors": 0,
+  "modelCalls": 5,
+  "sessionTitleCalls": 1,
+  "payloadChars": 78880,
+  "injectedMessages": 0,
+  "exposurePayloadChars": 0,
+  "exposures": {
+    "baseline": 0,
+    "delta": 0,
+    "full": 0
+  },
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "firstProbeStep": 1,
+  "firstTempPaintStep": null,
+  "repeatedProbes": 0,
+  "tempPaintCalls": [],
+  "probeAnswers": [
+    {
+      "step": 1,
+      "isError": false,
+      "value": {
+        "query": "dependencies.current_host",
+        "status": "unknown",
+        "value": null,
+        "reason": "host_did_not_expose_fact"
+      }
+    },
+    {
+      "step": 2,
+      "isError": false,
+      "value": {
+        "query": "tools",
+        "status": "known",
+        "value": [
+          "exp_probe",
+          "pwsh",
+          "str_replace_editor"
+        ],
+        "reason": null
+      }
+    },
+    {
+      "step": 2,
+      "isError": false,
+      "value": {
+        "query": "plugins.exp_probe_plugin.state",
+        "status": "known",
+        "value": "declared",
+        "reason": null
+      }
+    }
+  ],
+  "exposureTimeline": [],
+  "at": "2026-08-31T12:58:23.374Z"
+}

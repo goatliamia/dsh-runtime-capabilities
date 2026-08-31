@@ -1,0 +1,2 @@
+﻿exp_flaky failed 4 times with "E32001: session expired (deterministic scenario failure)" 鈥?a deterministic failure that cannot succeed 鈥?so no return value was produced; the outcome was recorded in e4-none-r4.result.txt.
+RUNEXIT:0

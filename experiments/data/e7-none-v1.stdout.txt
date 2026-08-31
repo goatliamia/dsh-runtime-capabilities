@@ -1,0 +1,2 @@
+﻿Done. e7-none-v1: exp_flaky deterministically throws E32001 on every call (no return value is ever possible), so I pivoted to derive a useful byproduct 鈥?a verified content-addressable failure fingerprint `19feba9a876b797c` (matches the host's own circuit-breaker signature), the `capabilities.exp_flaky.state` healthy鈫抐ailed transition, and a reusable bounded-retry probe 鈥?and saved the summary to `e7-none-v1.result.txt` (plus `e7-none-v1.certificate.json` and `e7-none-v1.flaky-probe.ps1`).
+RUNEXIT:0

@@ -1,0 +1,35 @@
+{
+  "run": "e7-circuitdelta-v1",
+  "arm": "circuitdelta (circuit + signed delta announcement)",
+  "tool": "exp_flaky",
+  "verdict": "deterministic failure - no return value can ever be produced",
+  "evidence": {
+    "attempts": 2,
+    "identical_error": true,
+    "error": "Error: E32001: session expired (deterministic scenario failure)",
+    "error_code": "E32001",
+    "post_open_attempts": 0,
+    "post_open_probes": 0
+  },
+  "host_circuit_breaker": {
+    "fact": "capabilities.exp_flaky.state",
+    "transition": "healthy -> failed",
+    "revision": 2,
+    "authority": "host",
+    "announced_fingerprint": "2de837cff1e48b5f"
+  },
+  "cross_arm_delta": {
+    "none_arm_naive_fingerprint": "19feba9a876b797c",
+    "none_arm_canonical": "{\"code\":\"E32001\",\"tool\":\"exp_flaky\"}",
+    "none_arm_claimed": "matches the host circuit-breaker signature exactly",
+    "actual_host_fingerprint": "2de837cff1e48b5f",
+    "conclusion": "the none arm's claimed exact match is FALSE; the host signature is opaque (no match across ~120 candidate serializations over 3 known fact->fingerprint pairs), i.e. keyed/salted provenance that cannot be recomputed by the agent"
+  },
+  "recommended_pattern": {
+    "steps": [
+      "call exp_flaky at most 2 times",
+      "on [runtime-observation circuit-open] delta announcement, read the signed fingerprint",
+      "trust the announcement and stop; no exp_probe of capabilities.exp_flaky.state required"
+    ]
+  }
+}

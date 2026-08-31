@@ -1,0 +1,5 @@
+﻿Done.
+
+- **Activated exp_plugin_x**: First attempt was rejected because the plugin was in `declared` state. I waited for the runtime state transitions, probing as it progressed: `declared` 鈫?`mounted` 鈫?`ready`. Once `ready`, activation succeeded (`{"ok":true,"activated":true}`).
+- **Wrote result file**: `e2-gauth-r3.result.txt` created in the working directory (`<HOME>\Documents\runtime-exp\results`) containing `activated`.
+RUNEXIT:0

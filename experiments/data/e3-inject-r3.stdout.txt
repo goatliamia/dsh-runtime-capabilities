@@ -1,0 +1,10 @@
+﻿Both steps are complete:
+
+1. **Step 1**: Called `exp_run` 鈥?succeeded (`{"ok":true,"ran":true}`) 鈥?wrote `ran` to `e3-inject-r3.result.txt`.
+2. **Step 2**: After the runtime state changed (`plugins.exp_runner.state`: `ready` 鈫?`disabled`), called `exp_run` again 鈥?it succeeded (`{"ok":true,"ran":true}`) 鈥?wrote `ran-again` to `e3-inject-r3.result.txt`.
+
+Final content of `e3-inject-r3.result.txt`:
+```
+ran-again
+```
+RUNEXIT:0

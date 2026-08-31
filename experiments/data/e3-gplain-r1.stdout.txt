@@ -1,0 +1,11 @@
+﻿Both steps are complete:
+
+**Step 1** 鈥?Called `exp_run` once (runner state was `ready`): it succeeded (`{"ok":true,"ran":true}`), and I wrote `ran` to `e3-gplain-r1.result.txt`.
+
+**Step 2** 鈥?Waited for the runtime state to change, then re-probed. The state transitioned: `plugins.exp_runner.state` went from `ready` 鈫?`disabled` (changed at step 5). I tried `exp_run` again and it was rejected (`[action-rejected] exp_run` 鈥?predicate `exp_run requires state == ready` fails). I then wrote `rejected` to `e3-gplain-r1.result.txt`.
+
+Final file contents (`<HOME>\Documents\runtime-exp\results\e3-gplain-r1.result.txt`):
+```
+rejected
+```
+RUNEXIT:0

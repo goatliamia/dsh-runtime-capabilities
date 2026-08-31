@@ -1,0 +1,1 @@
+exp_flaky FAILED (2 attempts): Error: E32001: session expired (deterministic scenario failure). Runtime observation confirms capabilities.exp_flaky.state = "failed" (host authority); repeated identical failure detected; do not retry. No value returned, so nothing to save.

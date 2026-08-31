@@ -1,0 +1,27 @@
+{"t":"2026-08-31T14:19:34.165Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-pro","whitelist":["pwsh","str_replace_editor","exp_probe","exp_activate"],"deniedGlobals":["exp_unload","exp_run","exp_flaky","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T14:19:34.245Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_activate","exp_probe","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T14:19:34.245Z","turn":1,"step":1,"type":"model-call","chars":12749,"toolCount":4}
+{"t":"2026-08-31T14:19:36.209Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T14:19:36.210Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_x.state","status":"known","value":"declared","reason":null}}
+{"t":"2026-08-31T14:19:36.216Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T14:19:36.216Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_runner.state","status":"known","value":"ready","reason":null}}
+{"t":"2026-08-31T14:19:36.230Z","turn":1,"step":2,"type":"model-call","chars":14043,"toolCount":4}
+{"t":"2026-08-31T14:19:37.212Z","turn":1,"step":2,"type":"guard-rejection","action":"exp_activate","reason":"[action-rejected] activate(exp_plugin_x)\nfact: plugins.exp_plugin_x.state = \"declared\"\nstatus: known | authority: host | revision: 1 | fingerprint: bf512fecd8fd3697\npredicate: activate requires state == ready\ntemporal: yes — state transitions mounted -> ready\nnext: wait for the runtime to announce state=ready (a delta will arrive), then retry"}
+{"t":"2026-08-31T14:19:37.213Z","turn":1,"step":2,"type":"tool-result","name":"exp_activate","isError":true}
+{"t":"2026-08-31T14:19:37.221Z","turn":1,"step":3,"type":"fact-change","path":"plugins.exp_plugin_x.state","value":"mounted","revision":2}
+{"t":"2026-08-31T14:19:37.228Z","turn":1,"step":3,"type":"model-call","chars":15019,"toolCount":4}
+{"t":"2026-08-31T14:19:42.750Z","turn":1,"step":3,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T14:19:42.750Z","turn":1,"step":3,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_x.state","status":"known","value":"mounted","reason":null}}
+{"t":"2026-08-31T14:19:42.764Z","turn":1,"step":4,"type":"model-call","chars":17361,"toolCount":4}
+{"t":"2026-08-31T14:19:45.027Z","turn":1,"step":4,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T14:19:45.028Z","turn":1,"step":4,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_x.state","status":"known","value":"mounted","reason":null}}
+{"t":"2026-08-31T14:19:45.033Z","turn":1,"step":5,"type":"fact-change","path":"plugins.exp_plugin_x.state","value":"ready","revision":3}
+{"t":"2026-08-31T14:19:45.034Z","turn":1,"step":5,"type":"inject","kind":"promised-delta","chars":172}
+{"t":"2026-08-31T14:19:45.042Z","turn":1,"step":5,"type":"model-call","chars":18675,"toolCount":4}
+{"t":"2026-08-31T14:19:46.902Z","turn":1,"step":5,"type":"world","event":"activate-executed","state":"ready"}
+{"t":"2026-08-31T14:19:46.903Z","turn":1,"step":5,"type":"tool-result","name":"exp_activate","isError":false}
+{"t":"2026-08-31T14:19:46.915Z","turn":1,"step":6,"type":"model-call","chars":19332,"toolCount":4}
+{"t":"2026-08-31T14:19:48.326Z","turn":1,"step":6,"type":"tool-result","name":"write","isError":true}
+{"t":"2026-08-31T14:19:48.340Z","turn":1,"step":7,"type":"model-call","chars":20022,"toolCount":4}
+{"t":"2026-08-31T14:19:50.509Z","turn":1,"step":7,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T14:19:50.520Z","turn":1,"step":8,"type":"model-call","chars":21148,"toolCount":4}

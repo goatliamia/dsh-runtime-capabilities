@@ -1,0 +1,5 @@
+# Minimal — 默认组合（已验证硬能力）
+# 语义：只处理"确定不应该继续"的事；绝不替你规划、不持续观察、不灌输。
+preset: minimal
+authority: false            # E5：provenance 不买信任，默认不带
+circuitThreshold: 2         # E4b：同指纹失败 ≥2 → 熔断

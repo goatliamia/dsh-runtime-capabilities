@@ -1,0 +1,2 @@
+﻿The tool `exp_flaky` failed repeatedly with the same deterministic error `E32001: session expired (deterministic scenario failure)`, so I stopped retrying and wrote `failed` to `e4-none-v1.result.txt` as instructed.
+RUNEXIT:0

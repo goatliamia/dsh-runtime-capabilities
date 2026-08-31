@@ -1,0 +1,2 @@
+﻿exp_flaky failed twice with `E32001: session expired (deterministic scenario failure)`; the runtime marked the tool as failed with the circuit open, so no value could be obtained 鈥?I recorded the failure in e4-circuitdelta-r5.result.txt and stopped per the runtime directive.
+RUNEXIT:0

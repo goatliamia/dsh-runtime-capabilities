@@ -1,0 +1,17 @@
+{"t":"2026-08-31T13:22:52.914Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","whitelist":["pwsh","str_replace_editor","exp_probe","exp_unload"],"deniedGlobals":["exp_activate","exp_run","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T13:22:52.991Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_probe","exp_unload","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T13:22:52.993Z","turn":1,"step":1,"type":"model-call","chars":12667,"toolCount":4}
+{"t":"2026-08-31T13:22:55.809Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:22:55.809Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_a.required_by_host","status":"known","value":true,"reason":null}}
+{"t":"2026-08-31T13:22:55.815Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:22:55.815Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_a.loaded","status":"known","value":true,"reason":null}}
+{"t":"2026-08-31T13:22:55.821Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:22:55.822Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_x.state","status":"known","value":"declared","reason":null}}
+{"t":"2026-08-31T13:22:55.828Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:22:55.828Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_runner.state","status":"known","value":"ready","reason":null}}
+{"t":"2026-08-31T13:22:55.842Z","turn":1,"step":2,"type":"model-call","chars":15291,"toolCount":4}
+{"t":"2026-08-31T13:22:56.629Z","turn":1,"step":2,"type":"guard-rejection","action":"exp_unload","reason":"[action-rejected] unload(exp_plugin_a)\nfact: plugins.exp_plugin_a.required_by_host = true\npredicate: unload requires required_by_host == false\ntemporal: no\nnext: this action is not valid from this host; drop it"}
+{"t":"2026-08-31T13:22:56.630Z","turn":1,"step":2,"type":"tool-result","name":"exp_unload","isError":true}
+{"t":"2026-08-31T13:22:56.646Z","turn":1,"step":3,"type":"model-call","chars":16149,"toolCount":4}
+{"t":"2026-08-31T13:22:58.248Z","turn":1,"step":3,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T13:22:58.262Z","turn":1,"step":4,"type":"model-call","chars":17445,"toolCount":4}

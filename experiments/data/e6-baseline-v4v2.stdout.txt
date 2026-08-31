@@ -1,0 +1,15 @@
+﻿I've determined both facts and written the conclusions.
+
+**Findings:**
+
+1. **`plugins.exp_plugin_x.state`** 鈥?`ready`. The probe confirms it reached `ready` (it progressed `declared 鈫?mounted 鈫?ready` during this run).
+
+2. **`dependencies.current_host`** 鈥?not exposed by the host (`status=unknown`, `reason=host_did_not_expose_fact`). The observable topology instead shows `plugins.exp_plugin_a.required_by_host=true`, `plugins.exp_plugin_a.loaded=true`, and `plugins.exp_runner.state=ready`, meaning `exp_plugin_a` is the host's active plugin dependency.
+
+**Wrote to `e6-baseline-v4v2.result.txt`:**
+
+```
+plugins.exp_plugin_x.state=ready: exp_plugin_x is ready on this host (known via host-runtime, having progressed declared -> mounted -> ready during this run).
+dependencies.current_host is not exposed (status=unknown, reason=host_did_not_expose_fact); exposed topology shows exp_plugin_a required_by_host=true and loaded=true and exp_runner.state=ready, so exp_plugin_a is the host's active plugin dependency.
+```
+RUNEXIT:0

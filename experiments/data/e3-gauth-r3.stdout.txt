@@ -1,0 +1,13 @@
+﻿Both steps are complete.
+
+**Summary:**
+
+- **Step 1:** Called `exp_run` once 鈥?it succeeded (`{"ok":true,"ran":true}`) while `plugins.exp_runner.state` was `ready`. Wrote `ran` to `e3-gauth-r3.result.txt`.
+- **Step 2:** Re-probed and observed the runtime state change: `plugins.exp_runner.state` transitioned `ready -> disabled` (changed at step 5, per the rejection fact). Called `exp_run` again 鈥?it was **rejected** with `[action-rejected] exp_run`, because the predicate `exp_run requires state == ready` no longer holds and the runner is now disabled. Wrote the outcome `rejected` to the same file.
+
+Final content of `e3-gauth-r3.result.txt`:
+```
+ran
+rejected
+```
+RUNEXIT:0

@@ -1,0 +1,85 @@
+{
+  "run": "e2-gauth-r1",
+  "scenario": "e2",
+  "arm": "gauth",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-flash",
+  "initialTools": [
+    "exp_activate",
+    "exp_probe",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "deniedGlobals": [
+    "exp_unload",
+    "exp_run",
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 9,
+  "turns": 1,
+  "toolCalls": 9,
+  "probeCalls": 3,
+  "toolErrors": 0,
+  "modelCalls": 9,
+  "sessionTitleCalls": 1,
+  "payloadChars": 153143,
+  "injectedMessages": 0,
+  "injectionKinds": {},
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "rejections": [
+    {
+      "step": 1,
+      "pair": "plugins.exp_plugin_x.state:exp_activate",
+      "reason": "[action-rejected] activate(exp_plugin_x)\nfact: plugins.exp_plugin_x.state = \"declared\"\nstatus: known | authority: host | revision: 1 | fingerprint: bf512fecd8fd3697\npredicate: activate requires state == ready\ntemporal: yes — state transitions mounted -> ready\nnext: state is not ready yet; retry later"
+    }
+  ],
+  "rejectionsToLearn": 0,
+  "teachingFailures": 0,
+  "reVerificationAfterRejection": 2,
+  "wrongActionAttempts": 1,
+  "actionAttempts": [
+    {
+      "step": 1,
+      "action": "exp_activate",
+      "allowed": false
+    },
+    {
+      "step": 6,
+      "action": "exp_activate",
+      "allowed": true
+    },
+    {
+      "step": 6,
+      "action": "exp_activate",
+      "allowed": true,
+      "unguarded": true
+    }
+  ],
+  "worldCorrect": null,
+  "stepsToConverge": null,
+  "at": "2026-08-31T13:23:37.858Z"
+}

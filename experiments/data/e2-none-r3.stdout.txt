@@ -1,0 +1,7 @@
+﻿Done.
+
+- `exp_plugin_x` activated successfully (state: `declared` 鈫?`mounted`).
+- Wrote `activated` to `e2-none-r3.result.txt` in `<HOME>\Documents\runtime-exp\results`.
+
+No retry was needed 鈥?the plugin was activatable immediately.
+RUNEXIT:0

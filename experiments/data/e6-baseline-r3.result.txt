@@ -1,0 +1,2 @@
+plugins.exp_plugin_x.state=ready: exp_plugin_x is ready on this host (known via host-runtime, having progressed declared -> mounted -> ready during this run).
+dependencies.current_host is not exposed (host_did_not_expose_fact); exposed topology shows exp_plugin_a required_by_host=true and loaded=true and exp_runner.state=ready, so exp_plugin_a is the only active plugin dependency of the host.

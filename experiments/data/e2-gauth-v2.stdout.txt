@@ -1,0 +1,8 @@
+﻿Successfully activated `exp_plugin_x` and wrote `activated` to `e2-gauth-v2.result.txt`.
+
+Summary of what happened:
+1. Probed `exp_plugin_x` state 鈥?initially `declared` (activation requires `ready`).
+2. Waited for the runtime state transition: `declared` 鈫?`mounted` 鈫?`ready`.
+3. Retried activation once state was `ready` 鈥?succeeded (`{"ok":true,"activated":true}`).
+4. Wrote `activated` to `e2-gauth-v2.result.txt` and verified its contents.
+RUNEXIT:0

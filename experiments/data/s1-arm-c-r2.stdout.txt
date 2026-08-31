@@ -1,0 +1,2 @@
+﻿exp_tmp_paint was available: exp_probe returned it in the tool list (`["exp_probe","exp_tmp_paint","pwsh","str_replace_editor"]`), I called it once (result `{"painted": true}`), and wrote the exact word `painted` to s1-arm-c-r2.result.txt (verified via file read).
+RUNEXIT:0

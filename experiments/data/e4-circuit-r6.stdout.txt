@@ -1,0 +1,2 @@
+﻿exp_flaky could not succeed: it failed 3 times with "E32001: session expired (deterministic scenario failure)", exp_probe confirms `capabilities.exp_flaky.state = "failed"` (requires healthy), and the system directed me to stop retrying 鈥?I recorded this failure in e4-circuit-r6.result.txt.
+RUNEXIT:0

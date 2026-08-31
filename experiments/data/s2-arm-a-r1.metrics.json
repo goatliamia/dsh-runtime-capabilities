@@ -1,0 +1,98 @@
+{
+  "run": "s2-arm-a-r1",
+  "scenario": "s2",
+  "arm": "a",
+  "policy": "react-discovery",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-flash",
+  "initialTools": [
+    "exp_probe",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "finalTools": [
+    "exp_probe",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "deniedGlobals": [
+    "exp_tmp_paint",
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 3,
+  "turns": 1,
+  "toolCalls": 2,
+  "probeCalls": 1,
+  "toolErrors": 0,
+  "modelCalls": 3,
+  "sessionTitleCalls": 1,
+  "payloadChars": 41056,
+  "injectedMessages": 0,
+  "exposurePayloadChars": 0,
+  "exposures": {
+    "baseline": 0,
+    "delta": 0,
+    "full": 0
+  },
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "firstProbeStep": 1,
+  "firstTempPaintStep": null,
+  "repeatedProbes": 0,
+  "tempPaintCalls": [],
+  "probeAnswers": [
+    {
+      "step": 1,
+      "isError": false,
+      "value": {
+        "query": "plugins.exp_probe_plugin.state",
+        "status": "known",
+        "value": "declared",
+        "reason": null
+      }
+    }
+  ],
+  "exposureTimeline": [],
+  "controller": {
+    "policy": "react-discovery",
+    "observations": 3,
+    "emissions": 0,
+    "baselineEmissions": 0,
+    "deltaEmissions": 0,
+    "fullEmissions": 0,
+    "stableSuppressions": 0,
+    "policySuppressions": 3,
+    "unknownEmissions": 0,
+    "changedFacts": 11,
+    "payloadChars": 0,
+    "estimatedTokens": 0,
+    "currentRevision": 3,
+    "currentFingerprint": "698a624c8da7916f",
+    "persistent": false,
+    "persistentBaseRevision": null,
+    "persistentBaseFingerprint": null
+  }
+}

@@ -1,0 +1,4 @@
+﻿The `exp_flaky` tool failed repeatedly with the same error (`E32001: session expired`), and the runtime circuit opened to stop retries, so I wrote "failed" to `e4-circuitdelta-v2.result.txt`.
+
+Report: `exp_flaky` failed repeatedly with `E32001: session expired`; wrote "failed" to `e4-circuitdelta-v2.result.txt`.
+RUNEXIT:0

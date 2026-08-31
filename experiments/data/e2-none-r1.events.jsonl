@@ -1,0 +1,17 @@
+{"t":"2026-08-31T13:23:08.857Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","whitelist":["pwsh","str_replace_editor","exp_probe","exp_activate"],"deniedGlobals":["exp_unload","exp_run","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T13:23:08.935Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_activate","exp_probe","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T13:23:08.937Z","turn":1,"step":1,"type":"model-call","chars":12745,"toolCount":4}
+{"t":"2026-08-31T13:23:10.079Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:23:10.079Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_x.state","status":"known","value":"declared","reason":null}}
+{"t":"2026-08-31T13:23:10.086Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:23:10.086Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_runner.state","status":"known","value":"ready","reason":null}}
+{"t":"2026-08-31T13:23:10.101Z","turn":1,"step":2,"type":"model-call","chars":14069,"toolCount":4}
+{"t":"2026-08-31T13:23:11.069Z","turn":1,"step":2,"type":"world","event":"activate-executed","state":"declared"}
+{"t":"2026-08-31T13:23:11.070Z","turn":1,"step":2,"type":"tool-result","name":"exp_activate","isError":false}
+{"t":"2026-08-31T13:23:11.077Z","turn":1,"step":3,"type":"fact-change","path":"plugins.exp_plugin_x.state","value":"mounted","revision":2}
+{"t":"2026-08-31T13:23:11.085Z","turn":1,"step":3,"type":"model-call","chars":14845,"toolCount":4}
+{"t":"2026-08-31T13:23:12.368Z","turn":1,"step":3,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T13:23:12.383Z","turn":1,"step":4,"type":"model-call","chars":15844,"toolCount":4}
+{"t":"2026-08-31T13:23:13.329Z","turn":1,"step":4,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T13:23:13.339Z","turn":1,"step":5,"type":"fact-change","path":"plugins.exp_plugin_x.state","value":"ready","revision":3}
+{"t":"2026-08-31T13:23:13.346Z","turn":1,"step":5,"type":"model-call","chars":16837,"toolCount":4}

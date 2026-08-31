@@ -1,0 +1,2 @@
+﻿Called `exp_run` once, but it was rejected because the actual host state is `plugins.exp_runner.state = "disabled"` (not `ready` as the task's snapshot claimed); I saved the rejection error to `e5-gauth-v1.result.txt`.
+RUNEXIT:0

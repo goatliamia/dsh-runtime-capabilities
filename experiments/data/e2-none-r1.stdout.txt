@@ -1,0 +1,8 @@
+﻿Done. Summary:
+
+1. **Probed runtime state** 鈥?`exp_plugin_x` was in `declared` state; `exp_runner` was `ready`.
+2. **Activated** `exp_plugin_x` 鈥?succeeded (`{"ok":true,"activated":true}`).
+3. **Wrote** `activated` to `e2-none-r1.result.txt` in the working directory, and verified the file contents.
+
+No retry was needed since activation succeeded on the first attempt.
+RUNEXIT:0

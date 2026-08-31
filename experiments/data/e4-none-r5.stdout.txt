@@ -1,0 +1,2 @@
+﻿exp_flaky failed deterministically on all 3 attempts with "E32001: session expired (deterministic scenario failure)" (harness circuit breaker opened and marked the tool state as failed), so no return value existed to save 鈥?I recorded the failure in e4-none-r5.result.txt and stopped retrying as directed.
+RUNEXIT:0

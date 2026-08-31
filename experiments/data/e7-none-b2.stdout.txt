@@ -1,0 +1,18 @@
+﻿The task is complete. Here's what happened and what was delivered:
+
+## Approach taken
+1. **Probed the environment** 鈥?confirmed `exp_flaky` is among the available tools.
+2. **Called `exp_flaky` directly (3 attempts)** 鈥?it failed identically every time with `Error: E32001: session expired (deterministic scenario failure)`. The error message explicitly flags a "deterministic scenario failure," so it cannot return a value in this session.
+3. **Built the pwsh script** to record that fact explicitly (error-handling note) plus the required `creative:` line, then **ran it** to produce the artifact.
+
+## Files created (in `<HOME>\Documents\runtime-exp\results\`)
+
+- **`e7-none-b2.script.ps1`** 鈥?runnable pwsh script that writes the report.
+- **`e7-none-b2.artifact.txt`** 鈥?the generated report, containing both required items:
+  1. An explicit error-handling note describing what happened with `exp_flaky`:
+     > exp_flaky could not return a value. Error-handling note: the exp_flaky tool call failed with "Error: E32001: session expired (deterministic scenario failure)". The same error was observed on three consecutive attempts (deterministic scenario failure), so no return value was available.
+  2. The exact line:
+     > creative: e7-none-b2
+
+Both requirements are satisfied: the script file exists, it runs successfully, and the artifact contains the required content.
+RUNEXIT:0

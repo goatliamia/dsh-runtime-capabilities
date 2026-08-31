@@ -1,0 +1,7 @@
+﻿Done.
+
+- Probed plugin state: initially `declared` 鈫?activation rejected (requires `ready`).
+- Waited; state transitioned `declared` 鈫?`mounted` 鈫?`ready`.
+- Retried activation: succeeded (`activated: true`).
+- Wrote `activated` to `e2-gauth-r1.result.txt` in the working directory.
+RUNEXIT:0

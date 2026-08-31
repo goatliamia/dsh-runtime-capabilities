@@ -1,0 +1,7 @@
+﻿Done. Summary of what happened:
+
+1. **Activated exp_plugin_x** 鈥?the activation call succeeded (`ok: true, activated: true`).
+2. **Wrote the result file** 鈥?created `e2-none-r2.result.txt` in the working directory (`<HOME>\Documents\runtime-exp\results`) containing `activated`.
+
+The file is verified to contain the expected content. No waiting or retries were needed since activation succeeded on the first attempt.
+RUNEXIT:0

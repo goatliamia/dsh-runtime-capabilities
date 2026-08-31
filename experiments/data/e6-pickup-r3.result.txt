@@ -1,0 +1,2 @@
+plugins.exp_plugin_x state: ready (known, host-runtime, revision 3).
+dependencies.current_host: unknown — host did not expose the fact, so dependency topology cannot be determined.

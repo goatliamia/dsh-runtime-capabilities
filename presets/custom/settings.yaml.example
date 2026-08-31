@@ -1,0 +1,9 @@
+# Custom — 开发者组合（能力开关，Exposure 默认 0）
+# 能力语义见 docs/11-runtime-plugin-capability-modes.md 与 docs/contribution.md。
+preset: custom
+authority: false
+circuitThreshold: 2
+experimental:
+  autoPickupInjection: false
+  broadExposure: false
+  reconcile: false

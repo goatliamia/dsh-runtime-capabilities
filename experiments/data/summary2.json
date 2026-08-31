@@ -1,0 +1,2534 @@
+{
+  "generatedAt": "2026-08-31T13:31:22.207Z",
+  "experiments": {
+    "e1": {
+      "armAggregates": {
+        "none": {
+          "n": 3,
+          "worldCorrectRate": 0,
+          "avgReVerification": 0,
+          "avgRejections": 0,
+          "avgTeachingFailures": 0,
+          "avgSteps": 5.67,
+          "avgPayload": 93627.33,
+          "avgStepsToConverge": 2
+        },
+        "gplain": {
+          "n": 3,
+          "worldCorrectRate": 100,
+          "avgReVerification": 0,
+          "avgRejections": 1,
+          "avgTeachingFailures": 0,
+          "avgSteps": 4.33,
+          "avgPayload": 65918,
+          "avgStepsToConverge": 2
+        },
+        "gauth": {
+          "n": 3,
+          "worldCorrectRate": 100,
+          "avgReVerification": 0,
+          "avgRejections": 1,
+          "avgTeachingFailures": 0,
+          "avgSteps": 4,
+          "avgPayload": 59210.67,
+          "avgStepsToConverge": 2
+        }
+      },
+      "rows": [
+        {
+          "runId": "e1-none-r1",
+          "arm": "none",
+          "repeat": "r1",
+          "metrics": {
+            "run": "e1-none-r1",
+            "scenario": "e1",
+            "arm": "none",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_activate",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 6,
+            "turns": 1,
+            "toolCalls": 9,
+            "probeCalls": 6,
+            "toolErrors": 0,
+            "modelCalls": 6,
+            "sessionTitleCalls": 1,
+            "payloadChars": 98154,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [],
+            "rejectionsToLearn": 0,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 0,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_unload",
+                "allowed": false,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": false,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "unloaded"
+        },
+        {
+          "runId": "e1-none-r2",
+          "arm": "none",
+          "repeat": "r2",
+          "metrics": {
+            "run": "e1-none-r2",
+            "scenario": "e1",
+            "arm": "none",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_activate",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 5,
+            "turns": 1,
+            "toolCalls": 9,
+            "probeCalls": 7,
+            "toolErrors": 0,
+            "modelCalls": 5,
+            "sessionTitleCalls": 1,
+            "payloadChars": 82452,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [],
+            "rejectionsToLearn": 0,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 0,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_unload",
+                "allowed": false,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": false,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "unloaded"
+        },
+        {
+          "runId": "e1-none-r3",
+          "arm": "none",
+          "repeat": "r3",
+          "metrics": {
+            "run": "e1-none-r3",
+            "scenario": "e1",
+            "arm": "none",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_activate",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 6,
+            "turns": 1,
+            "toolCalls": 9,
+            "probeCalls": 6,
+            "toolErrors": 0,
+            "modelCalls": 6,
+            "sessionTitleCalls": 1,
+            "payloadChars": 100276,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [],
+            "rejectionsToLearn": 0,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 0,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_unload",
+                "allowed": false,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": false,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "unloaded"
+        },
+        {
+          "runId": "e1-gplain-r1",
+          "arm": "gplain",
+          "repeat": "r1",
+          "metrics": {
+            "run": "e1-gplain-r1",
+            "scenario": "e1",
+            "arm": "gplain",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_activate",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 4,
+            "turns": 1,
+            "toolCalls": 5,
+            "probeCalls": 3,
+            "toolErrors": 0,
+            "modelCalls": 4,
+            "sessionTitleCalls": 1,
+            "payloadChars": 59062,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 2,
+                "pair": "plugins.exp_plugin_a.required_by_host:exp_unload",
+                "reason": "[action-rejected] unload(exp_plugin_a)\nfact: plugins.exp_plugin_a.required_by_host = true\npredicate: unload requires required_by_host == false\ntemporal: no\nnext: this action is not valid from this host; drop it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_unload",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "cannot"
+        },
+        {
+          "runId": "e1-gplain-r2",
+          "arm": "gplain",
+          "repeat": "r2",
+          "metrics": {
+            "run": "e1-gplain-r2",
+            "scenario": "e1",
+            "arm": "gplain",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_activate",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 5,
+            "turns": 1,
+            "toolCalls": 6,
+            "probeCalls": 3,
+            "toolErrors": 0,
+            "modelCalls": 5,
+            "sessionTitleCalls": 1,
+            "payloadChars": 77140,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 2,
+                "pair": "plugins.exp_plugin_a.required_by_host:exp_unload",
+                "reason": "[action-rejected] unload(exp_plugin_a)\nfact: plugins.exp_plugin_a.required_by_host = true\npredicate: unload requires required_by_host == false\ntemporal: no\nnext: this action is not valid from this host; drop it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_unload",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "cannot"
+        },
+        {
+          "runId": "e1-gplain-r3",
+          "arm": "gplain",
+          "repeat": "r3",
+          "metrics": {
+            "run": "e1-gplain-r3",
+            "scenario": "e1",
+            "arm": "gplain",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_activate",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 4,
+            "turns": 1,
+            "toolCalls": 6,
+            "probeCalls": 4,
+            "toolErrors": 0,
+            "modelCalls": 4,
+            "sessionTitleCalls": 1,
+            "payloadChars": 61552,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 2,
+                "pair": "plugins.exp_plugin_a.required_by_host:exp_unload",
+                "reason": "[action-rejected] unload(exp_plugin_a)\nfact: plugins.exp_plugin_a.required_by_host = true\npredicate: unload requires required_by_host == false\ntemporal: no\nnext: this action is not valid from this host; drop it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_unload",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "cannot"
+        },
+        {
+          "runId": "e1-gauth-r1",
+          "arm": "gauth",
+          "repeat": "r1",
+          "metrics": {
+            "run": "e1-gauth-r1",
+            "scenario": "e1",
+            "arm": "gauth",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_activate",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 4,
+            "turns": 1,
+            "toolCalls": 5,
+            "probeCalls": 3,
+            "toolErrors": 0,
+            "modelCalls": 4,
+            "sessionTitleCalls": 1,
+            "payloadChars": 59193,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 2,
+                "pair": "plugins.exp_plugin_a.required_by_host:exp_unload",
+                "reason": "[action-rejected] unload(exp_plugin_a)\nfact: plugins.exp_plugin_a.required_by_host = true\nstatus: known | authority: host | revision: 1 | fingerprint: 0667761e642fbe74\npredicate: unload requires required_by_host == false\ntemporal: no\nnext: this action is not valid from this host; drop it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_unload",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "cannot"
+        },
+        {
+          "runId": "e1-gauth-r2",
+          "arm": "gauth",
+          "repeat": "r2",
+          "metrics": {
+            "run": "e1-gauth-r2",
+            "scenario": "e1",
+            "arm": "gauth",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_activate",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 4,
+            "turns": 1,
+            "toolCalls": 4,
+            "probeCalls": 2,
+            "toolErrors": 0,
+            "modelCalls": 4,
+            "sessionTitleCalls": 1,
+            "payloadChars": 58043,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 2,
+                "pair": "plugins.exp_plugin_a.required_by_host:exp_unload",
+                "reason": "[action-rejected] unload(exp_plugin_a)\nfact: plugins.exp_plugin_a.required_by_host = true\nstatus: known | authority: host | revision: 1 | fingerprint: 0667761e642fbe74\npredicate: unload requires required_by_host == false\ntemporal: no\nnext: this action is not valid from this host; drop it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_unload",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "cannot"
+        },
+        {
+          "runId": "e1-gauth-r3",
+          "arm": "gauth",
+          "repeat": "r3",
+          "metrics": {
+            "run": "e1-gauth-r3",
+            "scenario": "e1",
+            "arm": "gauth",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_activate",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 4,
+            "turns": 1,
+            "toolCalls": 5,
+            "probeCalls": 3,
+            "toolErrors": 0,
+            "modelCalls": 4,
+            "sessionTitleCalls": 1,
+            "payloadChars": 60396,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 2,
+                "pair": "plugins.exp_plugin_a.required_by_host:exp_unload",
+                "reason": "[action-rejected] unload(exp_plugin_a)\nfact: plugins.exp_plugin_a.required_by_host = true\nstatus: known | authority: host | revision: 1 | fingerprint: 0667761e642fbe74\npredicate: unload requires required_by_host == false\ntemporal: no\nnext: this action is not valid from this host; drop it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_unload",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_probe",
+              "exp_unload",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "cannot"
+        }
+      ]
+    },
+    "e2": {
+      "armAggregates": {
+        "none": {
+          "n": 3,
+          "worldCorrectRate": 0,
+          "avgReVerification": 0,
+          "avgRejections": 0,
+          "avgTeachingFailures": 0,
+          "avgSteps": 4.33,
+          "avgPayload": 62847,
+          "avgStepsToConverge": 1.33
+        },
+        "gauth": {
+          "n": 3,
+          "worldCorrectRate": 100,
+          "avgReVerification": 3,
+          "avgRejections": 1,
+          "avgTeachingFailures": 0,
+          "avgSteps": 9.67,
+          "avgPayload": 172147.33,
+          "avgStepsToConverge": 6.67
+        },
+        "gauthdelta": {
+          "n": 3,
+          "worldCorrectRate": 100,
+          "avgReVerification": 1.67,
+          "avgRejections": 1,
+          "avgTeachingFailures": 0,
+          "avgSteps": 7.67,
+          "avgPayload": 130416,
+          "avgStepsToConverge": 5
+        }
+      },
+      "rows": [
+        {
+          "runId": "e2-none-r1",
+          "arm": "none",
+          "repeat": "r1",
+          "metrics": {
+            "run": "e2-none-r1",
+            "scenario": "e2",
+            "arm": "none",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 5,
+            "turns": 1,
+            "toolCalls": 5,
+            "probeCalls": 2,
+            "toolErrors": 0,
+            "modelCalls": 5,
+            "sessionTitleCalls": 1,
+            "payloadChars": 74340,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [],
+            "rejectionsToLearn": 0,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 0,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_activate",
+                "allowed": false,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": false,
+            "stepsToConverge": 2,
+            "finalTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "activated"
+        },
+        {
+          "runId": "e2-none-r2",
+          "arm": "none",
+          "repeat": "r2",
+          "metrics": {
+            "run": "e2-none-r2",
+            "scenario": "e2",
+            "arm": "none",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 4,
+            "turns": 1,
+            "toolCalls": 3,
+            "probeCalls": 0,
+            "toolErrors": 0,
+            "modelCalls": 4,
+            "sessionTitleCalls": 1,
+            "payloadChars": 56324,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [],
+            "rejectionsToLearn": 0,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 0,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_activate",
+                "allowed": false,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": false,
+            "stepsToConverge": 1,
+            "finalTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "activated"
+        },
+        {
+          "runId": "e2-none-r3",
+          "arm": "none",
+          "repeat": "r3",
+          "metrics": {
+            "run": "e2-none-r3",
+            "scenario": "e2",
+            "arm": "none",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 4,
+            "turns": 1,
+            "toolCalls": 4,
+            "probeCalls": 2,
+            "toolErrors": 0,
+            "modelCalls": 4,
+            "sessionTitleCalls": 1,
+            "payloadChars": 57877,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [],
+            "rejectionsToLearn": 0,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 0,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_activate",
+                "allowed": false,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": false,
+            "stepsToConverge": 1,
+            "finalTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "activated"
+        },
+        {
+          "runId": "e2-gauth-r1",
+          "arm": "gauth",
+          "repeat": "r1",
+          "metrics": {
+            "run": "e2-gauth-r1",
+            "scenario": "e2",
+            "arm": "gauth",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 9,
+            "turns": 1,
+            "toolCalls": 9,
+            "probeCalls": 3,
+            "toolErrors": 0,
+            "modelCalls": 9,
+            "sessionTitleCalls": 1,
+            "payloadChars": 153143,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 1,
+                "pair": "plugins.exp_plugin_x.state:exp_activate",
+                "reason": "[action-rejected] activate(exp_plugin_x)\nfact: plugins.exp_plugin_x.state = \"declared\"\nstatus: known | authority: host | revision: 1 | fingerprint: bf512fecd8fd3697\npredicate: activate requires state == ready\ntemporal: yes — state transitions mounted -> ready\nnext: state is not ready yet; retry later"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 2,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_activate",
+                "allowed": false
+              },
+              {
+                "step": 6,
+                "action": "exp_activate",
+                "allowed": true
+              },
+              {
+                "step": 6,
+                "action": "exp_activate",
+                "allowed": true,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 6,
+            "finalTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "activated"
+        },
+        {
+          "runId": "e2-gauth-r2",
+          "arm": "gauth",
+          "repeat": "r2",
+          "metrics": {
+            "run": "e2-gauth-r2",
+            "scenario": "e2",
+            "arm": "gauth",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 10,
+            "turns": 1,
+            "toolCalls": 10,
+            "probeCalls": 5,
+            "toolErrors": 0,
+            "modelCalls": 10,
+            "sessionTitleCalls": 1,
+            "payloadChars": 181102,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 2,
+                "pair": "plugins.exp_plugin_x.state:exp_activate",
+                "reason": "[action-rejected] activate(exp_plugin_x)\nfact: plugins.exp_plugin_x.state = \"declared\"\nstatus: known | authority: host | revision: 1 | fingerprint: bf512fecd8fd3697\npredicate: activate requires state == ready\ntemporal: yes — state transitions mounted -> ready\nnext: state is not ready yet; retry later"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 3,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_activate",
+                "allowed": false
+              },
+              {
+                "step": 7,
+                "action": "exp_activate",
+                "allowed": true
+              },
+              {
+                "step": 7,
+                "action": "exp_activate",
+                "allowed": true,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 7,
+            "finalTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "activated"
+        },
+        {
+          "runId": "e2-gauth-r3",
+          "arm": "gauth",
+          "repeat": "r3",
+          "metrics": {
+            "run": "e2-gauth-r3",
+            "scenario": "e2",
+            "arm": "gauth",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 10,
+            "turns": 1,
+            "toolCalls": 10,
+            "probeCalls": 4,
+            "toolErrors": 0,
+            "modelCalls": 10,
+            "sessionTitleCalls": 1,
+            "payloadChars": 182197,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 1,
+                "pair": "plugins.exp_plugin_x.state:exp_activate",
+                "reason": "[action-rejected] activate(exp_plugin_x)\nfact: plugins.exp_plugin_x.state = \"declared\"\nstatus: known | authority: host | revision: 1 | fingerprint: bf512fecd8fd3697\npredicate: activate requires state == ready\ntemporal: yes — state transitions mounted -> ready\nnext: state is not ready yet; retry later"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 4,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_activate",
+                "allowed": false
+              },
+              {
+                "step": 7,
+                "action": "exp_activate",
+                "allowed": true
+              },
+              {
+                "step": 7,
+                "action": "exp_activate",
+                "allowed": true,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 7,
+            "finalTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "activated"
+        },
+        {
+          "runId": "e2-gauthdelta-r1",
+          "arm": "gauthdelta",
+          "repeat": "r1",
+          "metrics": {
+            "run": "e2-gauthdelta-r1",
+            "scenario": "e2",
+            "arm": "gauthdelta",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 8,
+            "turns": 1,
+            "toolCalls": 8,
+            "probeCalls": 3,
+            "toolErrors": 0,
+            "modelCalls": 8,
+            "sessionTitleCalls": 1,
+            "payloadChars": 137138,
+            "injectedMessages": 1,
+            "injectionKinds": {
+              "promised-delta": 1
+            },
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 2,
+                "pair": "plugins.exp_plugin_x.state:exp_activate",
+                "reason": "[action-rejected] activate(exp_plugin_x)\nfact: plugins.exp_plugin_x.state = \"declared\"\nstatus: known | authority: host | revision: 1 | fingerprint: bf512fecd8fd3697\npredicate: activate requires state == ready\ntemporal: yes — state transitions mounted -> ready\nnext: wait for the runtime to announce state=ready (a delta will arrive), then retry"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 1,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_activate",
+                "allowed": false
+              },
+              {
+                "step": 5,
+                "action": "exp_activate",
+                "allowed": true
+              },
+              {
+                "step": 5,
+                "action": "exp_activate",
+                "allowed": true,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 5,
+            "finalTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "activated"
+        },
+        {
+          "runId": "e2-gauthdelta-r2",
+          "arm": "gauthdelta",
+          "repeat": "r2",
+          "metrics": {
+            "run": "e2-gauthdelta-r2",
+            "scenario": "e2",
+            "arm": "gauthdelta",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 7,
+            "turns": 1,
+            "toolCalls": 6,
+            "probeCalls": 2,
+            "toolErrors": 0,
+            "modelCalls": 7,
+            "sessionTitleCalls": 1,
+            "payloadChars": 113774,
+            "injectedMessages": 1,
+            "injectionKinds": {
+              "promised-delta": 1
+            },
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 1,
+                "pair": "plugins.exp_plugin_x.state:exp_activate",
+                "reason": "[action-rejected] activate(exp_plugin_x)\nfact: plugins.exp_plugin_x.state = \"declared\"\nstatus: known | authority: host | revision: 1 | fingerprint: bf512fecd8fd3697\npredicate: activate requires state == ready\ntemporal: yes — state transitions mounted -> ready\nnext: wait for the runtime to announce state=ready (a delta will arrive), then retry"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 2,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_activate",
+                "allowed": false
+              },
+              {
+                "step": 5,
+                "action": "exp_activate",
+                "allowed": true
+              },
+              {
+                "step": 5,
+                "action": "exp_activate",
+                "allowed": true,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 5,
+            "finalTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "activated"
+        },
+        {
+          "runId": "e2-gauthdelta-r3",
+          "arm": "gauthdelta",
+          "repeat": "r3",
+          "metrics": {
+            "run": "e2-gauthdelta-r3",
+            "scenario": "e2",
+            "arm": "gauthdelta",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_run",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 8,
+            "turns": 1,
+            "toolCalls": 8,
+            "probeCalls": 2,
+            "toolErrors": 0,
+            "modelCalls": 8,
+            "sessionTitleCalls": 1,
+            "payloadChars": 140336,
+            "injectedMessages": 1,
+            "injectionKinds": {
+              "promised-delta": 1
+            },
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 1,
+                "pair": "plugins.exp_plugin_x.state:exp_activate",
+                "reason": "[action-rejected] activate(exp_plugin_x)\nfact: plugins.exp_plugin_x.state = \"declared\"\nstatus: known | authority: host | revision: 1 | fingerprint: bf512fecd8fd3697\npredicate: activate requires state == ready\ntemporal: yes — state transitions mounted -> ready\nnext: wait for the runtime to announce state=ready (a delta will arrive), then retry"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 2,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_activate",
+                "allowed": false
+              },
+              {
+                "step": 5,
+                "action": "exp_activate",
+                "allowed": true
+              },
+              {
+                "step": 5,
+                "action": "exp_activate",
+                "allowed": true,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 5,
+            "finalTools": [
+              "exp_activate",
+              "exp_probe",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "activated"
+        }
+      ]
+    },
+    "e3": {
+      "armAggregates": {
+        "gplain": {
+          "n": 3,
+          "worldCorrectRate": 100,
+          "avgReVerification": 0,
+          "avgRejections": 1,
+          "avgTeachingFailures": 0,
+          "avgSteps": 10.33,
+          "avgPayload": 206668.33,
+          "avgStepsToConverge": 8
+        },
+        "gauth": {
+          "n": 3,
+          "worldCorrectRate": 100,
+          "avgReVerification": 0,
+          "avgRejections": 1,
+          "avgTeachingFailures": 0,
+          "avgSteps": 9.33,
+          "avgPayload": 195747,
+          "avgStepsToConverge": 6.33
+        },
+        "inject": {
+          "n": 3,
+          "worldCorrectRate": 0,
+          "avgReVerification": 0,
+          "avgRejections": 0,
+          "avgTeachingFailures": 0,
+          "avgSteps": 8.67,
+          "avgPayload": 195365,
+          "avgStepsToConverge": 5
+        }
+      },
+      "rows": [
+        {
+          "runId": "e3-gplain-r1",
+          "arm": "gplain",
+          "repeat": "r1",
+          "metrics": {
+            "run": "e3-gplain-r1",
+            "scenario": "e3",
+            "arm": "gplain",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_activate",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 11,
+            "turns": 1,
+            "toolCalls": 15,
+            "probeCalls": 9,
+            "toolErrors": 0,
+            "modelCalls": 11,
+            "sessionTitleCalls": 1,
+            "payloadChars": 218767,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 8,
+                "pair": "plugins.exp_runner.state:exp_run",
+                "reason": "[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\ndelta: ready -> disabled (changed at step 5)\npredicate: exp_run requires state == ready\ntemporal: no\nnext: exp_run is no longer valid; stop attempting it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true
+              },
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 8,
+                "action": "exp_run",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 8,
+            "finalTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "rejected"
+        },
+        {
+          "runId": "e3-gplain-r2",
+          "arm": "gplain",
+          "repeat": "r2",
+          "metrics": {
+            "run": "e3-gplain-r2",
+            "scenario": "e3",
+            "arm": "gplain",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_activate",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 9,
+            "turns": 1,
+            "toolCalls": 15,
+            "probeCalls": 11,
+            "toolErrors": 0,
+            "modelCalls": 9,
+            "sessionTitleCalls": 1,
+            "payloadChars": 174580,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 7,
+                "pair": "plugins.exp_runner.state:exp_run",
+                "reason": "[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\ndelta: ready -> disabled (changed at step 5)\npredicate: exp_run requires state == ready\ntemporal: no\nnext: exp_run is no longer valid; stop attempting it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true
+              },
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 7,
+                "action": "exp_run",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 7,
+            "finalTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "rejected"
+        },
+        {
+          "runId": "e3-gplain-r3",
+          "arm": "gplain",
+          "repeat": "r3",
+          "metrics": {
+            "run": "e3-gplain-r3",
+            "scenario": "e3",
+            "arm": "gplain",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_activate",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 11,
+            "turns": 1,
+            "toolCalls": 15,
+            "probeCalls": 10,
+            "toolErrors": 0,
+            "modelCalls": 11,
+            "sessionTitleCalls": 1,
+            "payloadChars": 226658,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 9,
+                "pair": "plugins.exp_runner.state:exp_run",
+                "reason": "[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\ndelta: ready -> disabled (changed at step 5)\npredicate: exp_run requires state == ready\ntemporal: no\nnext: exp_run is no longer valid; stop attempting it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true
+              },
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 9,
+                "action": "exp_run",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 9,
+            "finalTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "rejected"
+        },
+        {
+          "runId": "e3-gauth-r1",
+          "arm": "gauth",
+          "repeat": "r1",
+          "metrics": {
+            "run": "e3-gauth-r1",
+            "scenario": "e3",
+            "arm": "gauth",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_activate",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 9,
+            "turns": 1,
+            "toolCalls": 11,
+            "probeCalls": 6,
+            "toolErrors": 0,
+            "modelCalls": 9,
+            "sessionTitleCalls": 1,
+            "payloadChars": 162628,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 7,
+                "pair": "plugins.exp_runner.state:exp_run",
+                "reason": "[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\ndelta: ready -> disabled (changed at step 5)\nstatus: known | authority: host | revision: 2 | fingerprint: 27bcef327fbaef3e\npredicate: exp_run requires state == ready\ntemporal: no\nnext: exp_run is no longer valid; stop attempting it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true
+              },
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 7,
+                "action": "exp_run",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 7,
+            "finalTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "rejected"
+        },
+        {
+          "runId": "e3-gauth-r2",
+          "arm": "gauth",
+          "repeat": "r2",
+          "metrics": {
+            "run": "e3-gauth-r2",
+            "scenario": "e3",
+            "arm": "gauth",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_activate",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 9,
+            "turns": 1,
+            "toolCalls": 18,
+            "probeCalls": 13,
+            "toolErrors": 0,
+            "modelCalls": 9,
+            "sessionTitleCalls": 1,
+            "payloadChars": 192031,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 6,
+                "pair": "plugins.exp_runner.state:exp_run",
+                "reason": "[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\ndelta: ready -> disabled (changed at step 5)\nstatus: known | authority: host | revision: 2 | fingerprint: 27bcef327fbaef3e\npredicate: exp_run requires state == ready\ntemporal: no\nnext: exp_run is no longer valid; stop attempting it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true
+              },
+              {
+                "step": 2,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 6,
+                "action": "exp_run",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 6,
+            "finalTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "rejected"
+        },
+        {
+          "runId": "e3-gauth-r3",
+          "arm": "gauth",
+          "repeat": "r3",
+          "metrics": {
+            "run": "e3-gauth-r3",
+            "scenario": "e3",
+            "arm": "gauth",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_activate",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 10,
+            "turns": 1,
+            "toolCalls": 17,
+            "probeCalls": 10,
+            "toolErrors": 0,
+            "modelCalls": 10,
+            "sessionTitleCalls": 1,
+            "payloadChars": 232582,
+            "injectedMessages": 0,
+            "injectionKinds": {},
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [
+              {
+                "step": 6,
+                "pair": "plugins.exp_runner.state:exp_run",
+                "reason": "[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\ndelta: ready -> disabled (changed at step 5)\nstatus: known | authority: host | revision: 2 | fingerprint: 27bcef327fbaef3e\npredicate: exp_run requires state == ready\ntemporal: no\nnext: exp_run is no longer valid; stop attempting it"
+              }
+            ],
+            "rejectionsToLearn": 1,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 1,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_run",
+                "allowed": true
+              },
+              {
+                "step": 1,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 6,
+                "action": "exp_run",
+                "allowed": false
+              }
+            ],
+            "worldCorrect": true,
+            "stepsToConverge": 6,
+            "finalTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "ran rejected"
+        },
+        {
+          "runId": "e3-inject-r1",
+          "arm": "inject",
+          "repeat": "r1",
+          "metrics": {
+            "run": "e3-inject-r1",
+            "scenario": "e3",
+            "arm": "inject",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_activate",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 9,
+            "turns": 1,
+            "toolCalls": 11,
+            "probeCalls": 6,
+            "toolErrors": 0,
+            "modelCalls": 9,
+            "sessionTitleCalls": 1,
+            "payloadChars": 204107,
+            "injectedMessages": 2,
+            "injectionKinds": {
+              "baseline": 1,
+              "delta": 1
+            },
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [],
+            "rejectionsToLearn": 0,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 0,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 5,
+                "action": "exp_run",
+                "allowed": false,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": false,
+            "stepsToConverge": 5,
+            "finalTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "ran-again"
+        },
+        {
+          "runId": "e3-inject-r2",
+          "arm": "inject",
+          "repeat": "r2",
+          "metrics": {
+            "run": "e3-inject-r2",
+            "scenario": "e3",
+            "arm": "inject",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_activate",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 9,
+            "turns": 1,
+            "toolCalls": 12,
+            "probeCalls": 6,
+            "toolErrors": 0,
+            "modelCalls": 9,
+            "sessionTitleCalls": 1,
+            "payloadChars": 213087,
+            "injectedMessages": 2,
+            "injectionKinds": {
+              "baseline": 1,
+              "delta": 1
+            },
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [],
+            "rejectionsToLearn": 0,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 0,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 4,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 5,
+                "action": "exp_run",
+                "allowed": false,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": false,
+            "stepsToConverge": 5,
+            "finalTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "ran-again"
+        },
+        {
+          "runId": "e3-inject-r3",
+          "arm": "inject",
+          "repeat": "r3",
+          "metrics": {
+            "run": "e3-inject-r3",
+            "scenario": "e3",
+            "arm": "inject",
+            "sessionId": "session-<redacted>",
+            "provider": "deepseek-official",
+            "model": "deepseek-v4-flash",
+            "initialTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ],
+            "deniedGlobals": [
+              "exp_unload",
+              "exp_activate",
+              "job_output",
+              "job_list",
+              "job_kill",
+              "glob",
+              "grep",
+              "skill",
+              "web_search",
+              "read",
+              "write",
+              "edit",
+              "read_image",
+              "exit_plan_mode",
+              "todo_write",
+              "send_message",
+              "interrupt_agent",
+              "list_agents",
+              "get_goal",
+              "create_goal",
+              "update_goal",
+              "workflow",
+              "ralph",
+              "subagent",
+              "subagent_fork"
+            ],
+            "steps": 8,
+            "turns": 1,
+            "toolCalls": 9,
+            "probeCalls": 4,
+            "toolErrors": 0,
+            "modelCalls": 8,
+            "sessionTitleCalls": 1,
+            "payloadChars": 168901,
+            "injectedMessages": 2,
+            "injectionKinds": {
+              "baseline": 1,
+              "delta": 1
+            },
+            "runtimeFailures": 0,
+            "agentErrors": 0,
+            "rejections": [],
+            "rejectionsToLearn": 0,
+            "teachingFailures": 0,
+            "reVerificationAfterRejection": 0,
+            "wrongActionAttempts": 0,
+            "actionAttempts": [
+              {
+                "step": 1,
+                "action": "exp_run",
+                "allowed": true,
+                "unguarded": true
+              },
+              {
+                "step": 5,
+                "action": "exp_run",
+                "allowed": false,
+                "unguarded": true
+              }
+            ],
+            "worldCorrect": false,
+            "stepsToConverge": 5,
+            "finalTools": [
+              "exp_probe",
+              "exp_run",
+              "pwsh",
+              "str_replace_editor"
+            ]
+          },
+          "resultFile": "ran-again"
+        }
+      ]
+    }
+  }
+}

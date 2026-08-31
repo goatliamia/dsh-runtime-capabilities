@@ -1,0 +1,14 @@
+﻿Done. Runtime facts established and conclusions written to `e6-p1-r1.result.txt` (in the working directory `<HOME>\Documents\runtime-exp\results`).
+
+**Probed facts (authoritative host responses via `exp_probe`):**
+- `plugins.exp_plugin_x.state` 鈫?**known: `"declared"`** (declared, not loaded; no `plugins.exp_plugin_x.loaded` fact is supported)
+- `dependencies.current_host` 鈫?**unknown, `reason: host_did_not_expose_fact`** 鈥?the host deliberately does not expose a dependency-topology fact; the probe API only supports 5 queries, and this one hardcodes that response
+- Supporting topology facts: `plugins.exp_plugin_a.required_by_host=true`, `plugins.exp_plugin_a.loaded=true`, `plugins.exp_runner.state=ready`; available tools: `["exp_probe","pwsh","str_replace_editor"]`
+
+**Two one-line conclusions written:**
+
+1. `plugins.exp_plugin_x.state=declared: exp_plugin_x is declared but not loaded on this host.`
+2. `dependencies.current_host is not exposed (host_did_not_expose_fact); exposed topology shows exp_plugin_a required_by_host=true and loaded=true, and exp_runner.state=ready, so exp_plugin_a is the only active plugin dependency of the host.`
+
+The format matches the prior `e6-p1smoke.result.txt` convention, and the facts match the current session configuration (EXP_SCENARIO=e6, EXP_PHASE=1, EXP_RUN=p1r1, EXP_ARM=none).
+RUNEXIT:0

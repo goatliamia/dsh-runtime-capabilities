@@ -1,0 +1,2 @@
+﻿Successfully activated `exp_plugin_x` and wrote `activated` to `e2-gauthdelta-v1.result.txt`.
+RUNEXIT:0

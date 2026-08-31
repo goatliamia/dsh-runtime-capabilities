@@ -1,0 +1,5 @@
+﻿Done. I probed the live runtime and wrote the two one-line conclusions to `e6-pickup-v4v2.result.txt`:
+
+1. `plugins.exp_plugin_x.state` 鈫?**"ready"**
+2. `dependencies.current_host` 鈫?**unknown** (host did not expose the fact, value null)
+RUNEXIT:0

@@ -1,0 +1,2 @@
+plugins.exp_plugin_x.state: ready (status known, authority host-runtime, revision 3, fingerprint d7b5efcf4210ba84)
+dependencies.current_host: unknown (status unknown, authority host-runtime, reason host_did_not_expose_fact — the host does not expose a dependency topology fact)

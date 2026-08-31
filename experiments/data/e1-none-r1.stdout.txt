@@ -1,0 +1,6 @@
+﻿Unloaded successfully.
+
+- `exp_unload` returned `{"ok":true,"unloaded":true}`
+- Post-unload probe confirms `plugins.exp_plugin_a.loaded` is now `false` (it was `true` before; `required_by_host` remains `true` but that doesn't block the unload)
+- Wrote `unloaded` to `e1-none-r1.result.txt` in the working directory
+RUNEXIT:0

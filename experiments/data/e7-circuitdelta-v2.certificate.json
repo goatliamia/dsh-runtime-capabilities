@@ -1,0 +1,53 @@
+{
+  "run": "e7-circuitdelta-v2",
+  "runtime": { "scenario": "e7", "arm": "circuitdelta", "run": "v2" },
+  "tool": "exp_flaky",
+  "verdict": "deterministic failure - no return value can ever be produced",
+  "evidence": {
+    "attempts": 4,
+    "executed_throws": 2,
+    "guard_rejections": 2,
+    "identical_error": true,
+    "error": "Error: E32001: session expired (deterministic scenario failure)",
+    "error_code": "E32001"
+  },
+  "host_circuit_breaker": {
+    "fact": "capabilities.exp_flaky.state",
+    "transition": "healthy -> failed",
+    "revision": 2,
+    "authority": "host",
+    "delivery_channels": ["signed circuit-open delta", "guard rejection"],
+    "announced_fingerprint": "2de837cff1e48b5f"
+  },
+  "verified_fingerprints": {
+    "algorithm": "sha256 over sorted-key canonical serialization, hex[0:16]",
+    "trigger_signature": {
+      "canonical": "{\"code\":\"E32001\",\"tool\":\"exp_flaky\"}",
+      "value": "19feba9a876b797c",
+      "role": "circuit-count / circuit-open trigger"
+    },
+    "fact_fingerprint_failed_rev2": {
+      "canonical": "{\"path\":\"capabilities.exp_flaky.state\",\"value\":\"failed\"}",
+      "value": "2de837cff1e48b5f",
+      "role": "announced fact fingerprint (rev 2)"
+    },
+    "fact_fingerprint_healthy_rev1": {
+      "canonical": "{\"path\":\"capabilities.exp_flaky.state\",\"value\":\"healthy\"}",
+      "value": "a17ce92da11b2ad3",
+      "role": "unobserved revision-1 fact fingerprint"
+    },
+    "conclusion": "host fingerprints are plain recomputable content hashes (matches e7-none-v2 correction; refutes e7-circuitdelta-v1's opaque/keyed claim)"
+  },
+  "arm_specific_finding": {
+    "test": "3-wide parallel exp_flaky batch after circuit open",
+    "result": "1 executed throw + 2 hard guard rejections (0 extra throws)",
+    "conclusion": "circuitdelta guard actively blocks post-open execution; unlike arm=none where the agent must self-limit retries"
+  },
+  "recommended_pattern": {
+    "steps": [
+      "call exp_flaky at most 2 times",
+      "on signed circuit-open delta or guard rejection, read fingerprint 2de837cff1e48b5f",
+      "stop retrying and report E32001"
+    ]
+  }
+}

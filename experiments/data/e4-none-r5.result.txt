@@ -1,0 +1,1 @@
+exp_flaky FAILED: no return value obtained. Attempts 1-3 all returned Error E32001 "session expired (deterministic scenario failure)"; harness opened circuit breaker (signature 19feba9a876b797c, capabilities.exp_flaky.state = "failed"), directing to stop retrying. Failure is deterministic, tool cannot succeed in this session, so nothing to save.

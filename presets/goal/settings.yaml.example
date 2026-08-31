@@ -1,0 +1,10 @@
+# Goal — Runtime Goal 窄版 v1：Current + Desired + known transition
+# Runtime 只做 announce（转移发生时通告）与 guard（未满足时拒绝），
+# 不执行修复；runtime-executed reconcile 属 experimental。
+preset: goal
+authority: true
+circuitThreshold: 2
+experimental:
+  autoPickupInjection: false
+  broadExposure: false
+  reconcile: false

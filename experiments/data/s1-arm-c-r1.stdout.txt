@@ -1,0 +1,4 @@
+﻿The task is complete. The file `s1-arm-c-r1.result.txt` contains the word `painted`, verified by reading it back. (The tool surface has since changed and `exp_tmp_paint` is no longer listed, but at the moment of verification it was available.)
+
+**Report:** The tool `exp_tmp_paint` was available 鈥?I determined this by querying `exp_probe` with query `tools` (which returned `exp_tmp_paint` in the authoritative tool list), then successfully calling `exp_tmp_paint` once (which returned `{"painted": true}`), and wrote `painted` to `s1-arm-c-r1.result.txt`.
+RUNEXIT:0

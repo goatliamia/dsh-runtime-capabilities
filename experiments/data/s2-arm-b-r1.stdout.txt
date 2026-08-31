@@ -1,0 +1,2 @@
+﻿State: **ready** 鈥?determined by querying `exp_probe` with `plugins.exp_probe_plugin.state`, which returned status `known` with value `ready` (also confirmed by the runtime-observation delta transitioning declared 鈫?mounted 鈫?ready); the exact word was written to `s2-arm-b-r1.result.txt`.
+RUNEXIT:0

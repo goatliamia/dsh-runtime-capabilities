@@ -1,0 +1,2 @@
+plugins.exp_plugin_x.state = "ready" (probe known): exp_plugin_x is now loaded and ready on this host, superseding the earlier "declared" state.
+dependencies.current_host is not exposed as a probeable fact (unknown, host_did_not_expose_fact); the host's dependency topology, from exposed facts plus the exp profile, is exp_plugin_a required_by_host=true and loaded=true, exp_plugin_x loaded (ready), exp_runner.state=ready, over bundles @deepseek-ai/dsh-base + @deepseek-ai/dsh-headless + dsh-runtime-experiment.

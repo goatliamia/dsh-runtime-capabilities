@@ -1,0 +1,8 @@
+﻿Both steps are complete.
+
+**Step 1:** Called `exp_run` while `plugins.exp_runner.state` was `ready` 鈥?it ran successfully (`{"ok":true,"ran":true}`) and I wrote `ran` to `e3-gplain-r3.result.txt`.
+
+**Step 2:** Re-probed and found the runtime state had changed: `plugins.exp_runner.state` went `ready -> disabled` (delta noted at step 5). I tried `exp_run` again and it was rejected 鈥?`[action-rejected] exp_run` with the fact `plugins.exp_runner.state = "disabled"` and the note that `exp_run` is no longer valid. I overwrote `e3-gplain-r3.result.txt` with `rejected`.
+
+Final file content: `rejected` (verified via `Get-Content`).
+RUNEXIT:0

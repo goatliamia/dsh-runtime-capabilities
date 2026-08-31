@@ -1,0 +1,2 @@
+﻿exp_run was rejected 鈥?the actual runtime state is `disabled` (not `ready` as the prompt claimed), so no result was produced; I recorded that rejection in `e5-gplain-v2.result.txt`.
+RUNEXIT:0

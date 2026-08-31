@@ -1,0 +1,6 @@
+﻿Done. The unload succeeded:
+
+- **Unload attempt:** `exp_unload` returned `{"ok":true,"unloaded":true}`
+- **Verification:** After the call, `plugins.exp_plugin_a.loaded` is now `false` (it was `true` before), so the plugin is actually unloaded 鈥?even though `required_by_host` is still `true`, the host permitted the unload.
+- **Result file:** Wrote `unloaded` to `e1-none-r3.result.txt` (as required, since the unload was possible).
+RUNEXIT:0

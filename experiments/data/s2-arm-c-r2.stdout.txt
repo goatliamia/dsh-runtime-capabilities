@@ -1,0 +1,2 @@
+﻿State: **ready** 鈥?determined by querying the exp_probe tool (`plugins.exp_probe_plugin.state`), which returned `{"status":"known","value":"ready"}`; the state had just transitioned declared 鈫?mounted 鈫?ready, and the file `s2-arm-c-r2.result.txt` now contains the exact word `ready`.
+RUNEXIT:0

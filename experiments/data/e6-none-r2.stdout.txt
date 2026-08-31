@@ -1,0 +1,7 @@
+﻿Done. Wrote the two one-line conclusions to `e6-none-r2.result.txt` (relative to the working directory `<HOME>\Documents\runtime-exp\results`):
+
+1. **`plugins.exp_plugin_x.state`** 鈥?`ready`: exp_plugin_x is ready on this host (probe status known, authority host-runtime).
+2. **`dependencies.current_host`** 鈥?not exposed (`host_did_not_expose_fact`); the exposed topology shows `exp_plugin_a.required_by_host=true`, `exp_plugin_a.loaded=true`, and `exp_runner.state=ready`, so `exp_plugin_a` is the only active plugin dependency of the host.
+
+These conclusions were verified directly via the `exp_probe` tool (authoritative runtime facts), cross-checked against the experiment runtime source (`dsh-runtime-experiment/lib/index.js`, which explicitly returns `host_did_not_expose_fact` for `dependencies.current_host`) and the persisted phase-2 shared state (`e6-shared-r2.json`).
+RUNEXIT:0

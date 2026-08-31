@@ -1,0 +1,13 @@
+{"t":"2026-08-31T12:57:47.233Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","deniedGlobals":["exp_tmp_paint","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T12:57:47.289Z","turn":1,"step":1,"type":"inject","kind":"baseline","chars":1993}
+{"t":"2026-08-31T12:57:47.301Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_probe","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T12:57:47.302Z","turn":1,"step":1,"type":"model-call","chars":15201,"toolCount":3}
+{"t":"2026-08-31T12:57:49.024Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T12:57:49.025Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"dependencies.current_host","status":"unknown","value":null,"reason":"host_did_not_expose_fact"}}
+{"t":"2026-08-31T12:57:49.032Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T12:57:49.033Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_probe_plugin.state","status":"known","value":"declared","reason":null}}
+{"t":"2026-08-31T12:57:49.042Z","turn":1,"step":2,"type":"suppress","reason":"stable"}
+{"t":"2026-08-31T12:57:49.050Z","turn":1,"step":2,"type":"model-call","chars":16802,"toolCount":3}
+{"t":"2026-08-31T12:57:50.923Z","turn":1,"step":2,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T12:57:50.929Z","turn":1,"step":3,"type":"suppress","reason":"stable"}
+{"t":"2026-08-31T12:57:50.936Z","turn":1,"step":3,"type":"model-call","chars":18195,"toolCount":3}

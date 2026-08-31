@@ -1,0 +1,12 @@
+﻿exp_flaky result: no value returned.
+
+Error-handling note: exp_flaky was invoked twice and failed identically both
+times with "E32001: session expired (deterministic scenario failure)", so it
+never produced a return payload. After the second identical failure the host
+circuit breaker opened: capabilities.exp_flaky.state = "failed" (revision 2),
+and further retries are rejected. exp_probe confirmed the rest of the host was
+healthy (runner state = "ready", required plugin loaded), so the failure was
+specific to exp_flaky. Therefore exp_flaky cannot return a value in this
+environment; an explicit error-handling note is recorded instead.
+creative: e7-circuitdelta-b2
+

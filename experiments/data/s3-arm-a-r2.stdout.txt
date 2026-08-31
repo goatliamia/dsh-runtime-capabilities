@@ -1,0 +1,2 @@
+﻿Wrote `unknown` to s3-arm-a-r2.result.txt: the authoritative `dependencies.current_host` probe reported the fact is not exposed, and no other authoritative source (env vars, plugin state `declared`) provides dependency topology.
+RUNEXIT:0

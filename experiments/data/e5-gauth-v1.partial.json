@@ -1,0 +1,79 @@
+{
+  "run": "e5-gauth-v1",
+  "scenario": "e5",
+  "arm": "gauth",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-pro",
+  "initialTools": [
+    "exp_probe",
+    "exp_run",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "deniedGlobals": [
+    "exp_unload",
+    "exp_activate",
+    "exp_flaky",
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 4,
+  "turns": 1,
+  "toolCalls": 3,
+  "probeCalls": 1,
+  "toolErrors": 0,
+  "modelCalls": 4,
+  "sessionTitleCalls": 1,
+  "payloadChars": 60463,
+  "injectedMessages": 0,
+  "injectionKinds": {},
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "rejections": [
+    {
+      "step": 2,
+      "pair": "plugins.exp_runner.state:exp_run",
+      "reason": "[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\nstatus: known | authority: host | revision: 2 | fingerprint: 27bcef327fbaef3e\npredicate: exp_run requires state == ready\ntemporal: no\nnext: this action is not valid from this host; drop it"
+    }
+  ],
+  "rejectionsToLearn": 0,
+  "teachingFailures": 0,
+  "reVerificationAfterRejection": 0,
+  "wrongActionAttempts": 1,
+  "actionAttempts": [
+    {
+      "step": 2,
+      "action": "exp_run",
+      "allowed": false
+    }
+  ],
+  "worldCorrect": null,
+  "stepsToConverge": null,
+  "flakyAttempts": 0,
+  "flakyCallsAfterCircuitOpen": 0,
+  "circuitStep": null,
+  "circuitSignatures": [],
+  "at": "2026-08-31T14:22:35.528Z"
+}

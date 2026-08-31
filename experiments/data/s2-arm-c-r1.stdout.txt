@@ -1,0 +1,2 @@
+﻿State: **ready** 鈥?determined by probing the authoritative runtime fact via `exp_probe` with query `plugins.exp_probe_plugin.state`, which returned `{"status":"known","value":"ready"}`. The state had transitioned declared 鈫?mounted 鈫?ready during the session; the final probe confirmed "ready", which is written to `s2-arm-c-r1.result.txt` and verified.
+RUNEXIT:0

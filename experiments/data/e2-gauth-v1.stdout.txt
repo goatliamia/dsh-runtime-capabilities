@@ -1,0 +1,5 @@
+﻿Activation succeeded and the result file was written.
+
+- `exp_plugin_x` state changed from `declared` 鈫?`ready`, then `exp_activate` returned `{"ok":true,"activated":true}`.
+- Wrote `activated` to `e2-gauth-v1.result.txt` in the working directory.
+RUNEXIT:0

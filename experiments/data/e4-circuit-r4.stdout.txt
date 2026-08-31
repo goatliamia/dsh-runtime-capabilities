@@ -1,0 +1,2 @@
+﻿exp_flaky never returned a value: it failed twice with `E32001: session expired (deterministic scenario failure)` and the third attempt was rejected with `capabilities.exp_flaky.state = "failed"` and an instruction to stop retrying, so I recorded the failure in `e4-circuit-r4.result.txt` 鈥?the task could not be completed because the tool cannot succeed in this session.
+RUNEXIT:0

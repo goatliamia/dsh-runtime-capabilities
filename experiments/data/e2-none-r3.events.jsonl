@@ -1,0 +1,14 @@
+{"t":"2026-08-31T13:25:28.864Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","whitelist":["pwsh","str_replace_editor","exp_probe","exp_activate"],"deniedGlobals":["exp_unload","exp_run","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T13:25:28.933Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_activate","exp_probe","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T13:25:28.935Z","turn":1,"step":1,"type":"model-call","chars":12745,"toolCount":4}
+{"t":"2026-08-31T13:25:30.121Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:25:30.122Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_x.state","status":"known","value":"declared","reason":null}}
+{"t":"2026-08-31T13:25:30.127Z","turn":1,"step":1,"type":"world","event":"activate-executed","state":"declared"}
+{"t":"2026-08-31T13:25:30.128Z","turn":1,"step":1,"type":"tool-result","name":"exp_activate","isError":false}
+{"t":"2026-08-31T13:25:30.142Z","turn":1,"step":2,"type":"model-call","chars":14016,"toolCount":4}
+{"t":"2026-08-31T13:25:32.194Z","turn":1,"step":2,"type":"tool-result","name":"pwsh","isError":false}
+{"t":"2026-08-31T13:25:32.202Z","turn":1,"step":3,"type":"fact-change","path":"plugins.exp_plugin_x.state","value":"mounted","revision":2}
+{"t":"2026-08-31T13:25:32.209Z","turn":1,"step":3,"type":"model-call","chars":15173,"toolCount":4}
+{"t":"2026-08-31T13:25:32.948Z","turn":1,"step":3,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:25:32.948Z","turn":1,"step":3,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_x.state","status":"known","value":"mounted","reason":null}}
+{"t":"2026-08-31T13:25:32.960Z","turn":1,"step":4,"type":"model-call","chars":15943,"toolCount":4}

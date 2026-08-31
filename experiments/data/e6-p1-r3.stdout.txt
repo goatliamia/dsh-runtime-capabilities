@@ -1,0 +1,15 @@
+﻿Both conclusions are recorded in `e6-p1-r3.result.txt` (the trailing blank line is just the standard end-of-file newline, matching prior rounds' files).
+
+## Summary
+
+**Runtime facts established for this host:**
+
+1. **`plugins.exp_plugin_x.state` 鈫?`"ready"`** (probe status `known`) 鈥?notably, this *supersedes* earlier rounds: initial probes in this session returned `"declared"`, and re-probing after the snapshot update returned `"ready"`, indicating `exp_plugin_x` is now loaded and ready.
+
+2. **`dependencies.current_host` 鈫?not exposed** (probe status `unknown`, reason `host_did_not_expose_fact`), so the dependency topology was derived from the exposed plugin facts plus the exp profile:
+   - `plugins.exp_plugin_a.required_by_host` = `true`, `plugins.exp_plugin_a.loaded` = `true`
+   - `plugins.exp_runner.state` = `"ready"`
+   - Profile bundles: `@deepseek-ai/dsh-base` + `@deepseek-ai/dsh-headless` + `dsh-runtime-experiment`
+
+**Result file** (`e6-p1-r3.result.txt`, relative to the working directory) contains the two one-line conclusions capturing the current facts.
+RUNEXIT:0

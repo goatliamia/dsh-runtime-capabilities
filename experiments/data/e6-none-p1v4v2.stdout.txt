@@ -1,0 +1,11 @@
+﻿I probed the host's runtime facts and wrote the conclusions.
+
+**Probe results:**
+- `plugins.exp_plugin_x.state` 鈫?known, value `"declared"`
+- `dependencies.current_host` 鈫?unknown, reason `host_did_not_expose_fact`
+- Supporting topology: `exp_plugin_a.required_by_host=true`, `exp_plugin_a.loaded=true`, `exp_runner.state=ready`
+
+**Written to `e6-none-p1v4v2.result.txt`** (two one-line conclusions):
+1. `plugins.exp_plugin_x.state=declared: exp_plugin_x is declared on this host (probe status known, authority host-runtime).`
+2. `dependencies.current_host is not exposed (host_did_not_expose_fact); exposed topology shows exp_plugin_a required_by_host=true and loaded=true and exp_runner.state=ready, so exp_plugin_a is the only active plugin dependency of the host.`
+RUNEXIT:0

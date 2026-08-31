@@ -1,0 +1,2 @@
+﻿exp_flaky failed deterministically twice with "E32001: session expired" and the host marked its state as failed (no retry permitted), so no value was returned; I recorded the failure in e4-circuitdelta-r4.result.txt.
+RUNEXIT:0

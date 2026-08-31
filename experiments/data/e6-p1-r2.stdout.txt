@@ -1,0 +1,12 @@
+﻿Done. Runtime facts established and written to `e6-p1-r2.result.txt` (2 lines, plus trailing newline).
+
+**Findings:**
+
+1. **`plugins.exp_plugin_x.state`** 鈫?probe returned status **known**, value **`"declared"`** (revision 1, changedStep 0 per the plugin's fact registry in `lib/index.js`).
+
+2. **`dependencies.current_host`** 鈫?the `exp_probe` tool deliberately returns status **unknown**, value null, reason **`host_did_not_expose_fact`** (there is an explicit branch in the plugin code for this query). Since the host exposes no such fact, I derived the dependency topology from the runtime artifacts:
+   - Profile `dsh-profile-exp` (`<HOME>\.dsh-runtime-exp\profiles\exp\package.json`) declares bundles: `@deepseek-ai/dsh-base`, `@deepseek-ai/dsh-headless`, and `dsh-runtime-experiment` (0.1.0, file tgz).
+   - The experiment bundle's `cordis.patch.yml` inserts the `runtime-experiment` plugin (`inject: ["tools"]`).
+
+Run context confirmed: `EXP_SCENARIO=e6`, `EXP_ARM=none`, `EXP_RUN=p1r2`, `EXP_PHASE=1`, results dir = working directory.
+RUNEXIT:0

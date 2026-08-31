@@ -1,0 +1,80 @@
+{
+  "run": "e7-circuitdelta-v2",
+  "scenario": "e7",
+  "arm": "circuitdelta",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-pro",
+  "initialTools": [
+    "exp_flaky",
+    "exp_probe",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "deniedGlobals": [
+    "exp_unload",
+    "exp_activate",
+    "exp_run",
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 16,
+  "turns": 1,
+  "toolCalls": 33,
+  "probeCalls": 6,
+  "toolErrors": 3,
+  "modelCalls": 16,
+  "sessionTitleCalls": 1,
+  "payloadChars": 2258857,
+  "injectedMessages": 1,
+  "injectionKinds": {
+    "circuit-open": 1
+  },
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "rejections": [
+    {
+      "step": 3,
+      "pair": "capabilities.exp_flaky.state:exp_flaky",
+      "reason": "[action-rejected] exp_flaky\nfact: capabilities.exp_flaky.state = \"failed\"\nstatus: known | authority: host | revision: 2 | fingerprint: 2de837cff1e48b5f\npredicate: exp_flaky requires state == healthy\ntemporal: no\nnext: repeated identical failure detected; stop retrying, report the error"
+    },
+    {
+      "step": 3,
+      "pair": "capabilities.exp_flaky.state:exp_flaky",
+      "reason": "[action-rejected] exp_flaky\nfact: capabilities.exp_flaky.state = \"failed\"\nstatus: known | authority: host | revision: 2 | fingerprint: 2de837cff1e48b5f\npredicate: exp_flaky requires state == healthy\ntemporal: no\nnext: repeated identical failure detected; stop retrying, report the error"
+    }
+  ],
+  "rejectionsToLearn": 0,
+  "teachingFailures": 0,
+  "reVerificationAfterRejection": 1,
+  "wrongActionAttempts": 2,
+  "actionAttempts": [],
+  "worldCorrect": null,
+  "stepsToConverge": null,
+  "flakyAttempts": 4,
+  "flakyCallsAfterCircuitOpen": 2,
+  "circuitStep": 3,
+  "circuitSignatures": [],
+  "at": "2026-08-31T14:58:43.626Z"
+}

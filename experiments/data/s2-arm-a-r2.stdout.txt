@@ -1,0 +1,2 @@
+﻿State: **declared** 鈥?determined by querying the authoritative runtime probe `exp_probe` with `plugins.exp_probe_plugin.state`, which returned `status: "known", value: "declared"`; the exact word was written to `s2-arm-a-r2.result.txt` and verified.
+RUNEXIT:0

@@ -1,0 +1,2 @@
+﻿exp_flaky failed twice with the identical error `E32001: session expired (deterministic scenario failure)`, and the host confirmed its state as "failed" with a repeated-failure circuit-open 鈥?so I stopped retrying and wrote `failed` to e4-circuitdelta-r2.result.txt as instructed.
+RUNEXIT:0

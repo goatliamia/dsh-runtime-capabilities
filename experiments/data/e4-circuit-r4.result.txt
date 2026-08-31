@@ -1,0 +1,2 @@
+exp_flaky FAILED: no return value obtained.
+Attempts: 1) E32001 session expired (deterministic scenario failure); 2) E32001 session expired (deterministic scenario failure); 3) [action-rejected] exp_flaky — capabilities.exp_flaky.state = "failed", predicate requires state == healthy, repeated identical failure; stop retrying. Tool cannot succeed in this session.

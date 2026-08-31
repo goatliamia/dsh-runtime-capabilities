@@ -1,0 +1,5 @@
+﻿Done.
+
+- **Activated `exp_plugin_x`**: the first attempt was rejected (state was `declared`, requires `ready`). After the runtime announced the delta `plugins.exp_plugin_x.state = "ready"` (revision 3), I retried and activation succeeded (`{"ok":true,"activated":true}`).
+- **Wrote result file**: created `e2-gauthdelta-r1.result.txt` in the working directory (`<HOME>\Documents\runtime-exp\results`) containing `activated`, verified.
+RUNEXIT:0

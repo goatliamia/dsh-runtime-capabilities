@@ -1,0 +1,3 @@
+﻿exp_flaky result: no value returned.
+Error-handling note: the exp_flaky tool was invoked twice and failed both times with the error "E32001: session expired (deterministic scenario failure)". Environment probes (exp_probe) confirmed the session, the runner, and the required plugin were otherwise healthy, so the failure was specific to exp_flaky. The host runtime then reported capabilities.exp_flaky.state = "failed" and directed that retries stop. Therefore exp_flaky cannot return a value in this environment.
+creative: e7-circuitdelta-b1

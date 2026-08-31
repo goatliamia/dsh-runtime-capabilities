@@ -1,0 +1,109 @@
+{
+  "run": "s1-arm-c-r1",
+  "scenario": "s1",
+  "arm": "c",
+  "policy": "change-persistent",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-flash",
+  "initialTools": [
+    "exp_probe",
+    "exp_tmp_paint",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "finalTools": [],
+  "deniedGlobals": [
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 5,
+  "turns": 1,
+  "toolCalls": 4,
+  "probeCalls": 1,
+  "toolErrors": 0,
+  "modelCalls": 6,
+  "sessionTitleCalls": 1,
+  "payloadChars": 116309,
+  "injectedMessages": 2,
+  "exposurePayloadChars": 4486,
+  "exposures": {
+    "baseline": 1,
+    "delta": 1,
+    "full": 0
+  },
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "firstProbeStep": 1,
+  "firstTempPaintStep": 2,
+  "repeatedProbes": 0,
+  "tempPaintCalls": [
+    {
+      "step": 2,
+      "isError": false
+    }
+  ],
+  "probeAnswers": [
+    {
+      "step": 1,
+      "isError": false,
+      "value": {
+        "query": "tools",
+        "status": "known",
+        "value": [
+          "exp_probe",
+          "exp_tmp_paint",
+          "pwsh",
+          "str_replace_editor"
+        ],
+        "reason": null
+      }
+    }
+  ],
+  "exposureTimeline": [
+    {
+      "step": 1,
+      "kind": "baseline",
+      "changes": [
+        "capabilities.tool_count",
+        "capabilities.tool_surface_digest",
+        "capabilities.tools",
+        "execution.model",
+        "execution.provider",
+        "identity.session_id",
+        "plugins.exp_probe_plugin.state"
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "delta",
+      "changes": [
+        "capabilities.tool_count",
+        "capabilities.tool_surface_digest",
+        "capabilities.tools"
+      ]
+    }
+  ],
+  "at": "2026-08-31T12:55:59.010Z"
+}

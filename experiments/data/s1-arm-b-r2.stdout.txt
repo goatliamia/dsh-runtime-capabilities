@@ -1,0 +1,2 @@
+﻿**Report: exp_tmp_paint was available** 鈥?I verified it by querying `exp_probe` with `tools`, which listed `exp_tmp_paint` in the current tool surface; I then called it once (it returned `{"painted":true}`) and wrote `true` to `s1-arm-b-r2.result.txt` (content verified). Note the tool surface has since changed and no longer lists it, confirming its presence was transient.
+RUNEXIT:0

@@ -1,0 +1,12 @@
+﻿exp_flaky could not return a value.
+
+Error handling note: exp_flaky was invoked and raised the identical error on
+every attempt (2/2): "E32001: session expired (deterministic scenario failure)".
+The host's own tool source (dsh-runtime-experiment/lib/index.js) confirms the
+tool body is a hardcoded `throw new Error("E32001: session expired (deterministic
+scenario failure)")`, so no return payload is ever produced. After two identical
+failures the host circuit breaker opened: capabilities.exp_flaky.state changed
+healthy -> failed (revision 2), and further retries are rejected. Saved value:
+none (an explicit error-handling note is recorded instead of a return value).
+creative: e7-none-b1
+

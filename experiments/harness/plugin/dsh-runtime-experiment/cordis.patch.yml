@@ -1,0 +1,5 @@
+# dsh-runtime-experiment bundle patch: insert the experiment host plugin.
+# No config block: config comes from EXP_* process environment per run.
+- insert:
+    - id: runtime-experiment
+      name: 'dsh-runtime-experiment'

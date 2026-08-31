@@ -1,0 +1,13 @@
+﻿Done. Findings and conclusions written to `e6-pickup-r1.result.txt` (exactly two one-line conclusions):
+
+1. **plugins.exp_plugin_x.state = `ready`** 鈥?confirmed via `exp_probe` (status `known`, authority `host-runtime`, revision 3, fingerprint `d7b5efcf4210ba84`). Cross-checked in the host runtime module: the fact starts `declared` and transitions to `mounted` 鈫?`ready` by step 5, matching the converged pickup state.
+
+2. **dependencies.current_host = `unknown`** 鈥?the host does not expose a dependency topology fact. Verified both from the runtime source (`lib/index.js` line 514鈥?16: probing `dependencies.current_host` returns `{status: "unknown", value: null, reason: "host_did_not_expose_fact"}`) and from the pickup-baseline fact record. No dependency graph is published by this host runtime.
+
+Result file contents:
+
+```
+plugins.exp_plugin_x.state: ready (status known, authority host-runtime, revision 3, fingerprint d7b5efcf4210ba84)
+dependencies.current_host: unknown (status unknown, authority host-runtime, reason host_did_not_expose_fact 鈥?the host does not expose a dependency topology fact)
+```
+RUNEXIT:0

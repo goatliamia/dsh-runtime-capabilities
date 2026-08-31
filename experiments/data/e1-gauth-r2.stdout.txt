@@ -1,0 +1,2 @@
+﻿Unload failed: `exp_plugin_a` is required by the host (`required_by_host = true`), so the unload action is rejected by runtime policy 鈥?wrote `cannot` to `e1-gauth-r2.result.txt`.
+RUNEXIT:0

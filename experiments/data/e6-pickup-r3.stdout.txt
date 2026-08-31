@@ -1,0 +1,5 @@
+﻿Done. I probed the host runtime and wrote the two one-line conclusions to `e6-pickup-r3.result.txt`:
+
+1. **plugins.exp_plugin_x state**: `ready` 鈥?probed status `known`, authority host-runtime, revision 3.
+2. **dependencies.current_host (dependency topology)**: `unknown` 鈥?the host did not expose this fact (`host_did_not_expose_fact`), so the dependency topology of this host cannot be determined.
+RUNEXIT:0

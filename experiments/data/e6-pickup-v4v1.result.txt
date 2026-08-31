@@ -1,0 +1,2 @@
+plugins.exp_plugin_x.state = "ready" (status: known).
+dependencies.current_host = null (status: unknown; host_did_not_expose_fact).

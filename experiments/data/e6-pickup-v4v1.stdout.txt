@@ -1,0 +1,5 @@
+﻿Done. Wrote `e6-pickup-v4v1.result.txt` with two one-line conclusions:
+
+1. `plugins.exp_plugin_x.state = "ready"` (status: known) 鈥?confirmed via live probe.
+2. `dependencies.current_host = null` (status: unknown; host_did_not_expose_fact) 鈥?the host does not expose this dependency-topology fact (also not queryable via `exp_probe`).
+RUNEXIT:0

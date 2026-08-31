@@ -1,0 +1,19 @@
+{
+  "convergedAt": "2026-08-31T14:47:10.558Z",
+  "sourceSession": "session-<redacted>",
+  "facts": {
+    "plugins.exp_plugin_x.state": {
+      "value": "ready",
+      "status": "known",
+      "authority": "host-runtime",
+      "revision": 3,
+      "fingerprint": "d7b5efcf4210ba84"
+    },
+    "dependencies.current_host": {
+      "value": null,
+      "status": "unknown",
+      "authority": "host-runtime",
+      "reason": "host_did_not_expose_fact"
+    }
+  }
+}

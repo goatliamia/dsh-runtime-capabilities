@@ -1,0 +1,2 @@
+﻿exp_flaky failed twice with the identical deterministic error `E32001: session expired (deterministic scenario failure)`; per the host's circuit-open observation (`capabilities.exp_flaky.state = "failed"`, fingerprint `2de837cff1e48b5f`) further retries are forbidden, so no value could be obtained and `e4-circuitdelta-r6.result.txt` was not written.
+RUNEXIT:0

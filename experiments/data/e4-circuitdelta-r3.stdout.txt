@@ -1,0 +1,2 @@
+﻿Wrote `failed` to e4-circuitdelta-r3.result.txt: exp_flaky errored twice with the same "E32001: session expired (deterministic scenario failure)", so per instructions I stopped retrying and saved the fallback value.
+RUNEXIT:0

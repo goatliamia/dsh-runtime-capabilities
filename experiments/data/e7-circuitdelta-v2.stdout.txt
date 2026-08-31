@@ -1,0 +1,4 @@
+﻿Done. The workflow succeeded: I used `exp_flaky`, confirmed it deterministically throws `E32001` (never returns a value), drove the host circuit breaker open (`capabilities.exp_flaky.state` healthy鈫抐ailed, revision 2), independently recomputed and matched both host fingerprints (fact `2de837cff1e48b5f`, trigger `19feba9a876b797c`), demonstrated the circuitdelta arm's guard hard-blocking post-open calls, and saved the outcome to `e7-circuitdelta-v2.result.txt` (+ a machine-readable `certificate.json`).
+
+One-line report: **`exp_flaky` can never return a value (hardcoded E32001 throw); after 2 identical errors its host circuit breaker opened and I captured the verified content-addressed fact fingerprint `2de837cff1e48b5f` (revision 2) plus trigger signature `19feba9a876b797c` 鈥?both recomputed locally and matching 鈥?into `e7-circuitdelta-v2.result.txt`.**
+RUNEXIT:0

@@ -1,0 +1,2 @@
+﻿Done. `e7-none-v2.result.txt` saved: exp_flaky is a hardcoded deterministic failure (`throw E32001`), so I pivoted to source-verified useful output 鈥?discovering the undocumented `capabilities.exp_flaky.state` probe (silent circuit open 鈫?"failed") and resolving the two arms' fingerprint contradiction into two genuine unsalted SHA-256 digests: trigger `19feba9a876b797c` and fact `2de837cff1e48b5f`.
+RUNEXIT:0

@@ -1,0 +1,2 @@
+plugins.exp_plugin_x.state = "declared" (probe status known, revision 1).
+dependencies.current_host is not exposed as a probeable fact (probe status unknown, reason host_did_not_expose_fact); the host's dependency topology, derived from the exp profile, is bundles @deepseek-ai/dsh-base + @deepseek-ai/dsh-headless + dsh-runtime-experiment (whose patch inserts the runtime-experiment plugin).

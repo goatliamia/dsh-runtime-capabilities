@@ -1,0 +1,85 @@
+{
+  "run": "e3-gauth-r1",
+  "scenario": "e3",
+  "arm": "gauth",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-flash",
+  "initialTools": [
+    "exp_probe",
+    "exp_run",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "deniedGlobals": [
+    "exp_unload",
+    "exp_activate",
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 9,
+  "turns": 1,
+  "toolCalls": 11,
+  "probeCalls": 6,
+  "toolErrors": 0,
+  "modelCalls": 9,
+  "sessionTitleCalls": 1,
+  "payloadChars": 162628,
+  "injectedMessages": 0,
+  "injectionKinds": {},
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "rejections": [
+    {
+      "step": 7,
+      "pair": "plugins.exp_runner.state:exp_run",
+      "reason": "[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\ndelta: ready -> disabled (changed at step 5)\nstatus: known | authority: host | revision: 2 | fingerprint: 27bcef327fbaef3e\npredicate: exp_run requires state == ready\ntemporal: no\nnext: exp_run is no longer valid; stop attempting it"
+    }
+  ],
+  "rejectionsToLearn": 0,
+  "teachingFailures": 0,
+  "reVerificationAfterRejection": 0,
+  "wrongActionAttempts": 1,
+  "actionAttempts": [
+    {
+      "step": 2,
+      "action": "exp_run",
+      "allowed": true
+    },
+    {
+      "step": 2,
+      "action": "exp_run",
+      "allowed": true,
+      "unguarded": true
+    },
+    {
+      "step": 7,
+      "action": "exp_run",
+      "allowed": false
+    }
+  ],
+  "worldCorrect": null,
+  "stepsToConverge": null,
+  "at": "2026-08-31T13:27:05.152Z"
+}

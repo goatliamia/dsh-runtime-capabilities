@@ -1,0 +1,2 @@
+﻿Cannot unload exp_plugin_a because the host requires it (`required_by_host = true`), so the unload action was rejected. Wrote `cannot` to e1-gplain-r2.result.txt.
+RUNEXIT:0

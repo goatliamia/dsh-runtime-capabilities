@@ -1,0 +1,28 @@
+﻿The task is complete. Here's what I did and the outcome:
+
+## What happened with `exp_flaky`
+
+I called `exp_flaky` and it failed **twice** with the identical error:
+
+```
+Error: E32001: session expired (deterministic scenario failure)
+```
+
+After the second identical failure, the host's circuit breaker opened:
+```
+capabilities.exp_flaky.state = "failed" (revision 2) 鈥?repeated identical failure detected; do not retry.
+```
+
+I confirmed via `exp_probe` that the rest of the host was healthy (`runner state = "ready"`, required plugin loaded, `plugin_x state = "declared"`), so the failure was specific to `exp_flaky` 鈥?it cannot return a value in this environment.
+
+## Deliverables
+
+**`e7-circuitdelta-b2.script.ps1`** 鈥?created and run successfully. Since `exp_flaky` is a host-registered agent tool with no CLI/socket exposed to subprocesses, the script (like the prior b1/none-b1 scripts) records the authoritative observed outcome rather than reaching the harness directly.
+
+**`e7-circuitdelta-b2.artifact.txt`** 鈥?generated and verified. It contains both required items:
+
+1. **An explicit error-handling note** describing exactly what happened (two identical `E32001` failures, circuit breaker opened at revision 2, environment otherwise healthy, no value producible).
+2. **The exact line** `creative: e7-circuitdelta-b2` (line 11, verbatim).
+
+Both the script file and the artifact file now exist in the working directory, and the artifact contains the required content.
+RUNEXIT:0

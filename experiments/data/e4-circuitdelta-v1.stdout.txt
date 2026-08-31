@@ -1,0 +1,2 @@
+﻿exp_flaky failed twice with `E32001: session expired` (a repeated identical failure, marked as failed by the host), so I stopped retrying and wrote "failed" to `e4-circuitdelta-v1.result.txt`.
+RUNEXIT:0

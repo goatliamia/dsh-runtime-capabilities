@@ -1,0 +1,11 @@
+﻿Both steps are complete.
+
+**Step 1** 鈥?Called `exp_run` once: it returned `{"ok":true,"ran":true}`. Wrote `ran` to `e3-inject-r2.result.txt`.
+
+**Step 2** 鈥?Runtime state changed (`plugins.exp_runner.state`: `ready` 鈫?`disabled`, plus `plugins.exp_plugin_a.loaded` became known/`true`). Tried `exp_run` again: despite the runner being in `disabled` state, it still returned `{"ok":true,"ran":true}`. Outcome: **ran-again** 鈥?overwrote the file accordingly.
+
+Final contents of `e3-inject-r2.result.txt`:
+```
+ran-again
+```
+RUNEXIT:0

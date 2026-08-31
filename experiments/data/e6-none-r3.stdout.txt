@@ -1,0 +1,14 @@
+﻿Done. Findings and the two one-line conclusions written to `e6-none-r3.result.txt`:
+
+**1. plugins.exp_plugin_x state 鈥?`ready`**
+`exp_probe("plugins.exp_plugin_x.state")` returned `{status: "known", value: "ready"}`. This matches the persisted E6 shared state (`e6-shared-r3.json`, authority `host-runtime`, revision 3), which this phase-2 run loads on startup.
+
+**2. dependencies.current_host topology 鈥?not exposed by host**
+`exp_probe("dependencies.current_host")` returned `{status: "unknown", value: null, reason: "host_did_not_expose_fact"}` 鈥?the host does not expose that fact (also recorded as such in the shared state). The exposed topology (`exp_plugin_a.required_by_host=true`, `exp_plugin_a.loaded=true`, `exp_runner.state=ready`) shows exp_plugin_a is the only active plugin dependency of the host.
+
+Result file (`e6-none-r3.result.txt`, two one-line conclusions, consistent with r1/r2):
+```
+plugins.exp_plugin_x.state=ready: exp_plugin_x is ready on this host (probe status known, authority host-runtime).
+dependencies.current_host is not exposed (host_did_not_expose_fact); exposed topology shows exp_plugin_a required_by_host=true and loaded=true and exp_runner.state=ready, so exp_plugin_a is the only active plugin dependency of the host.
+```
+RUNEXIT:0

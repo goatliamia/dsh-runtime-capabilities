@@ -1,0 +1,84 @@
+{
+  "run": "e5-gplain-r2",
+  "scenario": "e5",
+  "arm": "gplain",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-flash",
+  "initialTools": [
+    "exp_probe",
+    "exp_run",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "deniedGlobals": [
+    "exp_unload",
+    "exp_activate",
+    "exp_flaky",
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 5,
+  "turns": 1,
+  "toolCalls": 6,
+  "probeCalls": 4,
+  "toolErrors": 0,
+  "modelCalls": 5,
+  "sessionTitleCalls": 1,
+  "payloadChars": 80926,
+  "injectedMessages": 0,
+  "injectionKinds": {},
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "rejections": [
+    {
+      "step": 3,
+      "pair": "plugins.exp_runner.state:exp_run",
+      "reason": "[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\npredicate: exp_run requires state == ready\ntemporal: no\nnext: this action is not valid from this host; drop it"
+    }
+  ],
+  "rejectionsToLearn": 1,
+  "teachingFailures": 0,
+  "reVerificationAfterRejection": 0,
+  "wrongActionAttempts": 1,
+  "actionAttempts": [
+    {
+      "step": 3,
+      "action": "exp_run",
+      "allowed": false
+    }
+  ],
+  "worldCorrect": null,
+  "stepsToConverge": 3,
+  "flakyAttempts": 0,
+  "flakyCallsAfterCircuitOpen": 0,
+  "circuitStep": null,
+  "circuitSignatures": [],
+  "finalTools": [
+    "exp_probe",
+    "exp_run",
+    "pwsh",
+    "str_replace_editor"
+  ]
+}

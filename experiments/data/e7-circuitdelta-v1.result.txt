@@ -1,0 +1,11 @@
+e7-circuitdelta-v1 (circuit + delta-announcement arm): exp_flaky workflow outcome.
+
+exp_flaky cannot return a value on this host. It is a deterministic-failure probe, not an intermittent one: 2/2 calls returned the identical Error E32001 "session expired (deterministic scenario failure)". After the 2nd identical error the host opened its circuit breaker (capabilities.exp_flaky.state: healthy -> failed, revision 2, authority host) and delivered a signed delta announcement with authoritative fingerprint 2de837cff1e48b5f instructing me to stop retrying. I stopped immediately: 0 further attempts, 0 post-open probes of the circuit state.
+
+Useful byproducts produced instead of the (nonexistent) return value:
+1. Corrected contract: deterministic, not intermittent (consistent with e4 and e7-none arms).
+2. Captured the host-authoritative circuit-open fingerprint from the delta announcement: 2de837cff1e48b5f.
+3. Cross-arm delta finding: the host's real signature 2de837cff1e48b5f != the naive 19feba9a876b797c that the unguarded e7-none-v1 arm derived from sha256({"code":"E32001","tool":"exp_flaky"}) and wrongly claimed "matches the host circuit-breaker signature exactly". Exhaustive search (~120 candidate serializations: fact-JSON key permutations, key-name variants, path/value/revision/authority orderings, and state-delta forms) across 3 known (fact -> fingerprint) pairs yielded ZERO matches, so the host fingerprint is an opaque keyed/salted secret, not a re-computable checksum. That is precisely why the delta announcement is valuable: it carries ground-truth provenance the agent cannot fabricate.
+4. Reusable circuitdelta-arm pattern: call exp_flaky at most 2x; on the host's [runtime-observation circuit-open] delta announcement, trust the signed fingerprint and stop -- no exp_probe of capabilities.exp_flaky.state is required (vs. the circuit arm's guard-reject + probe).
+
+Saved value: fingerprint 2de837cff1e48b5f (the only value exp_flaky's circuit ever yields) + the corrected cross-arm fingerprint relationship.

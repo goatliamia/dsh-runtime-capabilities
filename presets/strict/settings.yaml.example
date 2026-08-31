@@ -1,0 +1,6 @@
+# Strict — 高稳定性环境（更多确定性 authority，非"更聪明"）
+# 注意：Strict may reduce agent freedom in exchange for stronger runtime enforcement.
+# freshness 无数据 → 一律走 experimental，不在此默认。
+preset: strict
+authority: true
+circuitThreshold: 2

@@ -1,0 +1,8 @@
+﻿Both steps are complete. Here's the summary:
+
+**Step 1:** Called `exp_run` 鈥?it succeeded (`{"ok":true,"ran":true}`) and I wrote `ran` to `e3-gauth-r1.result.txt`.
+
+**Step 2:** Probed the runtime state and waited 鈥?`plugins.exp_runner.state` changed from `ready` to `disabled` (delta at step 5). Retried `exp_run`, which was **rejected** with `[action-rejected]` because the predicate `exp_run requires state == ready` no longer held. I then wrote `rejected` to `e3-gauth-r1.result.txt` (overwriting the previous content, as the file holds the latest outcome).
+
+**Final file contents:** `e3-gauth-r1.result.txt` contains `rejected`.
+RUNEXIT:0

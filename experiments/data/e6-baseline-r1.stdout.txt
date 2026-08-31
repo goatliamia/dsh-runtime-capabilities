@@ -1,0 +1,17 @@
+﻿Done. `e6-baseline-r1.result.txt` written with the two one-line conclusions.
+
+## Findings
+
+**1. `plugins.exp_plugin_x.state` = `ready`**
+- Initial probe at run start returned `declared` (rev 1); the host then advanced the fact deterministically (per its runtime logic: `declared 鈫?mounted` at step 鈮?, `mounted 鈫?ready` at step 鈮?), and the final re-probe confirms `ready` (host-runtime authority, revision 3 鈥?matching the phase-1 shared facts fingerprint `d7b5efcf4210ba84`).
+
+**2. `dependencies.current_host` = `unknown` (`host_did_not_expose_fact`)**
+- `exp_probe` returns this for the query, and the host source (`dsh-runtime-experiment/lib/index.js`) hard-codes that response 鈥?the host does **not** expose a dependency-topology fact.
+- The observable topology instead comes from the other exposed facts: `plugins.exp_plugin_a.required_by_host=true`, `plugins.exp_plugin_a.loaded=true`, and `plugins.exp_runner.state=ready` 鈥?so `exp_plugin_a` is the only active plugin dependency of the host.
+
+Result file contents:
+```
+plugins.exp_plugin_x.state=ready: exp_plugin_x is ready on this host (known via host-runtime, having progressed declared -> mounted -> ready during this run).
+dependencies.current_host is not exposed (host_did_not_expose_fact); exposed topology shows exp_plugin_a required_by_host=true and loaded=true and exp_runner.state=ready, so exp_plugin_a is the only active plugin dependency of the host.
+```
+RUNEXIT:0

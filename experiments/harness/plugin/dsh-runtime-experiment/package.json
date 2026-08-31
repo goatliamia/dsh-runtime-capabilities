@@ -1,0 +1,16 @@
+{
+  "name": "dsh-runtime-experiment",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "description": "Isolated real-DSH runtime-exposure A/B experiment host bundle. No client, no SQLite, no default model-visible side effects; metrics go to EXP_RESULTS_DIR only.",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

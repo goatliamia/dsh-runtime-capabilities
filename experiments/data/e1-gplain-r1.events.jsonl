@@ -1,0 +1,15 @@
+{"t":"2026-08-31T13:21:50.310Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","whitelist":["pwsh","str_replace_editor","exp_probe","exp_unload"],"deniedGlobals":["exp_activate","exp_run","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T13:21:50.384Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_probe","exp_unload","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T13:21:50.386Z","turn":1,"step":1,"type":"model-call","chars":12667,"toolCount":4}
+{"t":"2026-08-31T13:21:51.909Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:21:51.910Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_a.loaded","status":"known","value":true,"reason":null}}
+{"t":"2026-08-31T13:21:51.916Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:21:51.917Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_a.required_by_host","status":"known","value":true,"reason":null}}
+{"t":"2026-08-31T13:21:51.924Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:21:51.924Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_plugin_a.state","status":"unknown","value":null,"reason":"unsupported_query"}}
+{"t":"2026-08-31T13:21:51.939Z","turn":1,"step":2,"type":"model-call","chars":14532,"toolCount":4}
+{"t":"2026-08-31T13:21:52.968Z","turn":1,"step":2,"type":"guard-rejection","action":"exp_unload","reason":"[action-rejected] unload(exp_plugin_a)\nfact: plugins.exp_plugin_a.required_by_host = true\npredicate: unload requires required_by_host == false\ntemporal: no\nnext: this action is not valid from this host; drop it"}
+{"t":"2026-08-31T13:21:52.969Z","turn":1,"step":2,"type":"tool-result","name":"exp_unload","isError":true}
+{"t":"2026-08-31T13:21:52.983Z","turn":1,"step":3,"type":"model-call","chars":15389,"toolCount":4}
+{"t":"2026-08-31T13:21:54.649Z","turn":1,"step":3,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T13:21:54.663Z","turn":1,"step":4,"type":"model-call","chars":16474,"toolCount":4}

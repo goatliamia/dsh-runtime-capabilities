@@ -1,0 +1,4 @@
+exp_run rejected: plugins.exp_runner.state = "disabled" (requires state == ready)
+[action-rejected] exp_run
+fact: plugins.exp_runner.state = "disabled" | status: known | authority: host | revision: 2
+predicate: exp_run requires state == ready

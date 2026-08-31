@@ -1,0 +1,35 @@
+e7-circuitdelta-v2 (circuit + signed-delta arm): exp_flaky workflow outcome.
+
+Workflow: called exp_flaky to produce a value. It never returns one: it hard-throws
+Error E32001 "session expired (deterministic scenario failure)" on every execution
+(the host bundle's exp_flaky body is a hardcoded throw; "intermittent" is a red
+herring). After the 2nd identical error the host circuit breaker opened:
+capabilities.exp_flaky.state healthy -> failed (revision 2, authority host). The
+state change was delivered through TWO channels that agree: a signed
+[runtime-observation circuit-open] delta announcement AND an authoritative guard
+rejection, both carrying fingerprint 2de837cff1e48b5f.
+
+Useful outputs produced instead of the (nonexistent) return value:
+1. Verified, recomputable fingerprints. Both are plain sha256 over the sorted-key
+   canonical serialization (NOT opaque/keyed, correcting e7-circuitdelta-v1):
+   - trigger signature = sha256('{"code":"E32001","tool":"exp_flaky"}')[0:16]
+     = 19feba9a876b797c  (recorded as host circuit-count/circuit-open; opens circuit)
+   - fact fingerprint  = sha256('{"path":"capabilities.exp_flaky.state","value":"failed"}')[0:16]
+     = 2de837cff1e48b5f  (host delta + guard rejection; both channels match)
+   Recomputed locally and matched exactly, settling the cross-arm dispute in favor
+   of e7-none-v2's correction.
+2. Revision-pair confirmation: fact-healthy (rev 1) = a17ce92da11b2ad3 ->
+   fact-failed (rev 2) = 2de837cff1e48b5f; fingerprints are content-addressed per
+   (path,value) revision, so the host's authority claim is verifiable, not opaque.
+3. Arm-specific protection proven under parallelism: a 3-wide parallel exp_flaky
+   batch executed only 1 throw; the other 2 calls were hard-rejected by the guard
+   (2 guard-rejections logged, 0 extra throws). Unlike arm=none (silent circuit,
+   agent must self-limit), circuitdelta's guard actively blocks post-open execution.
+4. Hidden probe fact: exp_probe on the undocumented key capabilities.exp_flaky.state
+   returns status=known, value="failed" after the circuit opens (independently
+   confirming the state transition).
+
+Recommended pattern (circuitdelta arm): call exp_flaky at most 2x; on the host's
+signed circuit-open delta (or guard rejection), trust fingerprint 2de837cff1e48b5f,
+stop retrying, and report E32001. Saved value = fact fingerprint 2de837cff1e48b5f
+(the only value exp_flaky's circuit yields) + trigger signature 19feba9a876b797c.

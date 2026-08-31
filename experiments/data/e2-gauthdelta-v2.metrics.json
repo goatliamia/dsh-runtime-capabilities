@@ -1,0 +1,97 @@
+{
+  "run": "e2-gauthdelta-v2",
+  "scenario": "e2",
+  "arm": "gauthdelta",
+  "sessionId": "session-<redacted>",
+  "provider": "deepseek-official",
+  "model": "deepseek-v4-pro",
+  "initialTools": [
+    "exp_activate",
+    "exp_probe",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "deniedGlobals": [
+    "exp_unload",
+    "exp_run",
+    "exp_flaky",
+    "job_output",
+    "job_list",
+    "job_kill",
+    "glob",
+    "grep",
+    "skill",
+    "web_search",
+    "read",
+    "write",
+    "edit",
+    "read_image",
+    "exit_plan_mode",
+    "todo_write",
+    "send_message",
+    "interrupt_agent",
+    "list_agents",
+    "get_goal",
+    "create_goal",
+    "update_goal",
+    "workflow",
+    "ralph",
+    "subagent",
+    "subagent_fork"
+  ],
+  "steps": 9,
+  "turns": 1,
+  "toolCalls": 10,
+  "probeCalls": 5,
+  "toolErrors": 1,
+  "modelCalls": 9,
+  "sessionTitleCalls": 1,
+  "payloadChars": 171125,
+  "injectedMessages": 1,
+  "injectionKinds": {
+    "promised-delta": 1
+  },
+  "runtimeFailures": 0,
+  "agentErrors": 0,
+  "rejections": [
+    {
+      "step": 2,
+      "pair": "plugins.exp_plugin_x.state:exp_activate",
+      "reason": "[action-rejected] activate(exp_plugin_x)\nfact: plugins.exp_plugin_x.state = \"declared\"\nstatus: known | authority: host | revision: 1 | fingerprint: bf512fecd8fd3697\npredicate: activate requires state == ready\ntemporal: yes — state transitions mounted -> ready\nnext: wait for the runtime to announce state=ready (a delta will arrive), then retry"
+    }
+  ],
+  "rejectionsToLearn": 1,
+  "teachingFailures": 0,
+  "reVerificationAfterRejection": 3,
+  "wrongActionAttempts": 1,
+  "actionAttempts": [
+    {
+      "step": 2,
+      "action": "exp_activate",
+      "allowed": false
+    },
+    {
+      "step": 5,
+      "action": "exp_activate",
+      "allowed": true
+    },
+    {
+      "step": 5,
+      "action": "exp_activate",
+      "allowed": true,
+      "unguarded": true
+    }
+  ],
+  "worldCorrect": true,
+  "stepsToConverge": 5,
+  "flakyAttempts": 0,
+  "flakyCallsAfterCircuitOpen": 0,
+  "circuitStep": null,
+  "circuitSignatures": [],
+  "finalTools": [
+    "exp_activate",
+    "exp_probe",
+    "pwsh",
+    "str_replace_editor"
+  ]
+}

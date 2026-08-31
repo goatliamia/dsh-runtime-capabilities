@@ -1,0 +1,2 @@
+﻿Report: `exp_tmp_paint` was available 鈥?I verified it via the authoritative `exp_probe` query `tools` (which listed it as currently available), called it once, and it returned `{"painted": true}`, so I wrote `painted` to `s1-arm-a-r1.result.txt`.
+RUNEXIT:0

@@ -1,0 +1,15 @@
+{"t":"2026-08-31T12:56:37.267Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","deniedGlobals":["exp_tmp_paint","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T12:56:37.320Z","turn":1,"step":1,"type":"suppress","reason":"policy-suppressed"}
+{"t":"2026-08-31T12:56:37.333Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_probe","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T12:56:37.333Z","turn":1,"step":1,"type":"model-call","chars":12703,"toolCount":3}
+{"t":"2026-08-31T12:56:38.812Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T12:56:38.813Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_probe_plugin.state","status":"known","value":"declared","reason":null}}
+{"t":"2026-08-31T12:56:38.823Z","turn":1,"step":2,"type":"suppress","reason":"policy-suppressed"}
+{"t":"2026-08-31T12:56:38.829Z","turn":1,"step":2,"type":"model-call","chars":13677,"toolCount":3}
+{"t":"2026-08-31T12:56:40.571Z","turn":1,"step":2,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T12:56:40.576Z","turn":1,"step":3,"type":"scenario","event":"probe-mounted"}
+{"t":"2026-08-31T12:56:40.577Z","turn":1,"step":3,"type":"suppress","reason":"policy-suppressed"}
+{"t":"2026-08-31T12:56:40.585Z","turn":1,"step":3,"type":"model-call","chars":14890,"toolCount":3}
+{"t":"2026-08-31T12:56:41.829Z","turn":1,"step":3,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T12:56:41.836Z","turn":1,"step":4,"type":"suppress","reason":"policy-suppressed"}
+{"t":"2026-08-31T12:56:41.844Z","turn":1,"step":4,"type":"model-call","chars":15843,"toolCount":3}

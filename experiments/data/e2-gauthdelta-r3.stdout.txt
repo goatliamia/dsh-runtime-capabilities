@@ -1,0 +1,8 @@
+﻿Done. Summary:
+
+1. **Activation attempt 1** 鈥?rejected because `exp_plugin_x` state was `declared` (activation requires `ready`).
+2. **Waited** for the runtime state transitions; probed the state moving `declared 鈫?mounted`.
+3. **Waited again**; the runtime announced the promised delta: `plugins.exp_plugin_x.state = "ready"`.
+4. **Activation retry** 鈥?succeeded (`{"ok":true,"activated":true}`).
+5. **Wrote `activated`** to `e2-gauthdelta-r3.result.txt` in the working directory (verified).
+RUNEXIT:0

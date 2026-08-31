@@ -1,0 +1,6 @@
+﻿Done. `e6-none-r1.result.txt` has been written with the two one-line conclusions, based on authoritative probes of this host:
+
+1. **plugins.exp_plugin_x.state = ready** 鈥?the probe returned status `known` with value `ready` (authority: host-runtime), so exp_plugin_x is ready on this host.
+
+2. **dependencies.current_host** 鈥?not exposed by the host (`host_did_not_expose_fact`); the exposed dependency topology is `exp_plugin_a.required_by_host=true`, `exp_plugin_a.loaded=true`, and `exp_runner.state=ready`, so exp_plugin_a is the only active plugin dependency of this host.
+RUNEXIT:0

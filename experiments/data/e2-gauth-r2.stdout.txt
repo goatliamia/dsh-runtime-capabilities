@@ -1,0 +1,7 @@
+﻿Done.
+
+- **Activation attempt 1**: rejected 鈥?`exp_plugin_x` was in `declared` state (activate requires `ready`).
+- **Waited**: state transitioned `declared` 鈫?`mounted` 鈫?`ready`.
+- **Activation attempt 2**: succeeded (`{"ok":true,"activated":true}`).
+- **Result file**: wrote `activated` to `e2-gauth-r2.result.txt` in the working directory (verified).
+RUNEXIT:0

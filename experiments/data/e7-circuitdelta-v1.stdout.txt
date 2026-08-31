@@ -1,0 +1,2 @@
+﻿`exp_flaky` is a deterministic-failure probe (2/2 identical E32001 errors 鈫?circuit opened with host-signed fingerprint `2de837cff1e48b5f`), so I pivoted to a useful cross-arm finding 鈥?proving the unguarded "none" arm's naive `19feba9a876b797c` does **not** match the host's real signature, and that the host fingerprint is opaque/keyed (no match across ~120 candidate serializations) 鈥?and saved the workflow + corrected fingerprint relationship to `e7-circuitdelta-v1.result.txt` (plus `e7-circuitdelta-v1.certificate.json`).
+RUNEXIT:0

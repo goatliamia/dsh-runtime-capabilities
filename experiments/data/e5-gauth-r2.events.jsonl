@@ -1,0 +1,10 @@
+{"t":"2026-08-31T13:59:32.903Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","whitelist":["pwsh","str_replace_editor","exp_probe","exp_run"],"deniedGlobals":["exp_unload","exp_activate","exp_flaky","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T13:59:32.975Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_probe","exp_run","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T13:59:32.975Z","turn":1,"step":1,"type":"model-call","chars":12765,"toolCount":4}
+{"t":"2026-08-31T13:59:34.758Z","turn":1,"step":1,"type":"tool-result","name":"exp_probe","isError":false}
+{"t":"2026-08-31T13:59:34.758Z","turn":1,"step":1,"type":"probe","isError":false,"value":{"query":"plugins.exp_runner.state","status":"known","value":"disabled","reason":null}}
+{"t":"2026-08-31T13:59:34.759Z","turn":1,"step":1,"type":"guard-rejection","action":"exp_run","reason":"[action-rejected] exp_run\nfact: plugins.exp_runner.state = \"disabled\"\nstatus: known | authority: host | revision: 2 | fingerprint: 27bcef327fbaef3e\npredicate: exp_run requires state == ready\ntemporal: no\nnext: this action is not valid from this host; drop it"}
+{"t":"2026-08-31T13:59:34.760Z","turn":1,"step":1,"type":"tool-result","name":"exp_run","isError":true}
+{"t":"2026-08-31T13:59:34.776Z","turn":1,"step":2,"type":"model-call","chars":14174,"toolCount":4}
+{"t":"2026-08-31T13:59:37.083Z","turn":1,"step":2,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T13:59:37.096Z","turn":1,"step":3,"type":"model-call","chars":15720,"toolCount":4}

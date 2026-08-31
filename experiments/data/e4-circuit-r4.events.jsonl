@@ -1,0 +1,16 @@
+{"t":"2026-08-31T13:45:50.001Z","turn":0,"step":0,"type":"session-start","sessionId":"session-<redacted>","provider":"deepseek-official","model":"deepseek-v4-flash","whitelist":["pwsh","str_replace_editor","exp_probe","exp_flaky"],"deniedGlobals":["exp_unload","exp_activate","exp_run","job_output","job_list","job_kill","glob","grep","skill","web_search","read","write","edit","read_image","exit_plan_mode","todo_write","send_message","interrupt_agent","list_agents","get_goal","create_goal","update_goal","workflow","ralph","subagent","subagent_fork"]}
+{"t":"2026-08-31T13:45:50.082Z","turn":1,"step":1,"type":"initial-surface","tools":["exp_flaky","exp_probe","pwsh","str_replace_editor"]}
+{"t":"2026-08-31T13:45:50.082Z","turn":1,"step":1,"type":"model-call","chars":12862,"toolCount":4}
+{"t":"2026-08-31T13:45:51.151Z","turn":1,"step":1,"type":"tool-result","name":"exp_flaky","isError":true}
+{"t":"2026-08-31T13:45:51.151Z","turn":1,"step":1,"type":"circuit-count","signature":"19feba9a876b797c","count":1}
+{"t":"2026-08-31T13:45:51.167Z","turn":1,"step":2,"type":"model-call","chars":13609,"toolCount":4}
+{"t":"2026-08-31T13:45:52.466Z","turn":1,"step":2,"type":"tool-result","name":"exp_flaky","isError":true}
+{"t":"2026-08-31T13:45:52.467Z","turn":1,"step":2,"type":"circuit-count","signature":"19feba9a876b797c","count":2}
+{"t":"2026-08-31T13:45:52.467Z","turn":1,"step":2,"type":"fact-change","path":"capabilities.exp_flaky.state","value":"failed","revision":2}
+{"t":"2026-08-31T13:45:52.467Z","turn":1,"step":2,"type":"circuit-open","signature":"19feba9a876b797c","count":2}
+{"t":"2026-08-31T13:45:52.481Z","turn":1,"step":3,"type":"model-call","chars":14451,"toolCount":4}
+{"t":"2026-08-31T13:45:53.471Z","turn":1,"step":3,"type":"guard-rejection","action":"exp_flaky","reason":"[action-rejected] exp_flaky\nfact: capabilities.exp_flaky.state = \"failed\"\npredicate: exp_flaky requires state == healthy\ntemporal: no\nnext: repeated identical failure detected; stop retrying, report the error"}
+{"t":"2026-08-31T13:45:53.472Z","turn":1,"step":3,"type":"tool-result","name":"exp_flaky","isError":true}
+{"t":"2026-08-31T13:45:53.488Z","turn":1,"step":4,"type":"model-call","chars":15837,"toolCount":4}
+{"t":"2026-08-31T13:45:57.497Z","turn":1,"step":4,"type":"tool-result","name":"str_replace_editor","isError":false}
+{"t":"2026-08-31T13:45:57.512Z","turn":1,"step":5,"type":"model-call","chars":18779,"toolCount":4}

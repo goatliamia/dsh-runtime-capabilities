@@ -1,0 +1,2 @@
+﻿The authoritative probe for `dependencies.current_host` returned status `unknown` (reason: `host_did_not_expose_fact`); wrote `unknown` to s3-arm-c-r1.result.txt.
+RUNEXIT:0

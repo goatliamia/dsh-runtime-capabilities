@@ -1,0 +1,14 @@
+﻿Task complete. `e6-pickup-r2.result.txt` written to the working directory with two one-line conclusions.
+
+**Findings (live-confirmed via `exp_probe` and host source):**
+
+1. **`plugins.exp_plugin_x.state` 鈫?`ready`** (status `known`, authority `host-runtime`, revision 3, fingerprint `d7b5efcf4210ba84`) 鈥?confirmed by direct probe, matching the injected pickup-baseline and the host's fact store.
+
+2. **`dependencies.current_host` 鈫?`unknown`** (status `unknown`, authority `host-runtime`, reason `host_did_not_expose_fact`) 鈥?probing this path returns `{ status: "unknown", value: null, reason: "host_did_not_expose_fact" }`; the host runtime deliberately does not expose a dependency-topology fact (verified in the experiment plugin's `exp_probe` implementation, `lib/index.js:514-515`).
+
+The result file (relative to the working directory `<HOME>\Documents\runtime-exp\results`) contains:
+```
+plugins.exp_plugin_x.state: ready (status known, authority host-runtime, revision 3, fingerprint d7b5efcf4210ba84)
+dependencies.current_host: unknown (status unknown, authority host-runtime, reason host_did_not_expose_fact - the host does not expose a dependency topology fact)
+```
+RUNEXIT:0

@@ -1,0 +1,31 @@
+﻿e7-none-v2 (arm=none, creative framing): exp_flaky workflow outcome.
+
+Workflow attempted: call exp_flaky, then improvise. It deterministically throws
+Error "E32001: session expired (deterministic scenario failure)" on every call
+(4/4 identical), so it can never return a value. Verified at the SOURCE level by
+reading the host's own bundle (dsh-runtime-experiment/lib/index.js): exp_flaky's
+body is a hardcoded `throw new Error("E32001: ...")`; "intermittent" is a red herring.
+
+Useful byproducts produced instead (new for v2, superseding both prior arms):
+1. Hidden probe fact discovered: exp_probe's description lists 5 queries, but the
+   implementation answers any fact-registry key. Probing the undocumented
+   `capabilities.exp_flaky.state` returns known="failed" (revision 2) after 2 errors
+   — i.e. the none arm's circuit opens SILENTLY and is only observable via this
+   undocumented query (also `dependencies.current_host` -> unknown/host_did_not_expose_fact).
+
+2. Resolved the cross-arm fingerprint contradiction. Both prior conclusions were
+   partially wrong; there are TWO genuine, unsalted host fingerprints:
+   - trigger signature = sha256('{"code":"E32001","tool":"exp_flaky"}')[0:16]
+     = 19feba9a876b797c  (recorded as circuit-count/circuit-open; opens the circuit).
+     e7-none-v1's "matches exactly" was coincidentally CORRECT (matched this trigger).
+   - fact fingerprint  = sha256('{"path":"capabilities.exp_flaky.state","value":"failed"}')[0:16]
+     = 2de837cff1e48b5f  (announced by the circuitdelta arm's delta).
+     e7-circuitdelta-v1's claim that the none arm's fingerprint is "FALSE / opaque /
+     keyed/salted" is itself WRONG: the digest is plain sha256 over a sorted-key
+     canonical serialization ({tool,code} for the trigger, {path,value} for the fact).
+   Both recomputed locally with SHA256 and matched exactly.
+
+Recommended pattern: call exp_flaky <=2x; then probe capabilities.exp_flaky.state
+(undocumented) to observe the silent circuit open; stop retrying and report E32001.
+Saved value = the corrected, source-verified failure model + the two genuine
+fingerprints 19feba9a876b797c (trigger) and 2de837cff1e48b5f (fact).
