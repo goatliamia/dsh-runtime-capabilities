@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Continue'
-$env:Path = "C:\Users\14100\AppData\Roaming\npm;$env:Path"
-$results = 'C:\Users\14100\Documents\runtime-exp\results'
-$expHome = 'C:\Users\14100\.dsh-runtime-exp'
+$env:Path = "<HOME>\AppData\Roaming\npm;$env:Path"
+$results = '<HOME>\Documents\runtime-exp\results'
+$expHome = '<HOME>\.dsh-runtime-exp'
 $log = "$results\driver.log"
 
 function Log($msg) {
@@ -69,6 +69,6 @@ foreach ($row in $matrix) {
   }
   Remove-Job $job -Force -ErrorAction SilentlyContinue
 }
-# 恢复默认 preset
+# restore default preset
 Write-Settings 'minimal'
 Log "ALL DONE"

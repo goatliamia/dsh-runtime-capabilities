@@ -24,7 +24,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR_GITHUB_USERNAME/dsh-runtime-seam.git"
+    "url": "git+https://github.com/goatliamia/dsh-runtime.git",
+    "directory": "core/runtime-seam"
   },
   "engines": {
     "node": ">=18"

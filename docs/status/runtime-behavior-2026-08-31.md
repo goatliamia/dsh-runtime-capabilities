@@ -24,7 +24,7 @@
 ### 隔离环境（断言全部通过）
 
 - 独立 DSH_HOME：`<HOME>\.dsh-runtime-exp`（仅 profiles/sessions/settings/credentials；无 plugins、无 storages、无任何 SQLite/WAL）；
-- `exp` profile 组成：`dsh-base + dsh-headless + dsh-runtime-experiment` 三个 bundle（`--dump-config` 审计通过，无 Reactor/Retro/Maker/Synapse 等任何其他插件）；
+- `exp` profile 组成：`dsh-base + dsh-headless + dsh-runtime-experiment` 三个 bundle（`--dump-config` 审计通过，无任何宿主常驻插件或第三方插件）；
 - 实验对象：shipped `minimal` preset + `deepseek-v4-flash`；模型可见工具面被 restrict 到 4 个（`pwsh`、`str_replace_editor`、`exp_probe`、`exp_tmp_paint`），23 个全局工具被 deny；
 - 每次运行 = 独立 headless 进程（`dsh --profile exp "<task>"`），进程级隔离，18/18 exit=0；
 - 实验插件零默认副作用：不写 SQLite、不改 prompt、度量只写 results 目录。

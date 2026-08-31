@@ -63,7 +63,7 @@ foreach ($pair in @(@('v1',@('baseline','pickup')), @('v2',@('pickup','baseline'
   }
 }
 
-# 3) E7 v2 (creative, slow — last)
+# 3) E7 v2 (creative, slow - last)
 foreach ($a in @('none', 'circuitdelta')) {
   $runId = "e7-$a-v2"
   Run-Cell $runId ($tE7.Replace('RESULTFILE', "$runId.result.txt")) @{EXP_SCENARIO='e7'; EXP_ARM=$a; EXP_RUN='v2'; EXP_PHASE='1'; EXP_SHARED_STATE=''}

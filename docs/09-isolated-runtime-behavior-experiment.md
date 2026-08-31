@@ -20,12 +20,12 @@
 
 本机活动 profile（`web`）挂载了多个会污染实验的插件，逐一读过其挂载内容：
 
-| 插件 | 已核实的干扰面 |
+| 插件类别 | 已核实的干扰面 |
 |---|---|
-| project-context-bridge（Reactor 0.3.5） | Host bundle：`session/event` 监听、后台捕获、SQLite 写入（`~/.dsh/plugins/project-context-bridge/state.sqlite`）、会话开始注入「收件箱必读」指令、`bridge_capture`/`project_inbox`/`idea_solidify` 等工具进入工具面 |
-| dsh-retro 0.2.42 | `observePresets: ['reactor','cordis']`：模式 watch/guard、`retro_learn`/`retro_upgrade` 工具、写 PITFALLS.md、可弹交互卡改变行为 |
-| dsh-plugin-maker 0.6.19 | `checklist` 等带硬约束指令的工具与 skill（「开工前先调用本工具拿清单」），直接改写 Agent 行为；另有 facts/ 目录 |
-| 其他（synapse/voice-scribe/visual-html/describe-image/UI 插件） | 工具面、MCP、session 依赖，同样排除 |
+| 会话桥接 / 后台捕获类 | Host bundle：`session/event` 监听、后台捕获、SQLite 写入、会话开始注入指令、多个捕获类工具进入工具面 |
+| 复盘 / 模式沉淀类 | 模式 watch/guard、学习沉淀类工具、写本地文档、可弹交互卡改变行为 |
+| 开发工具链类 | 带硬约束指令的工具与 skill（「开工前先调用本工具拿清单」），直接改写 Agent 行为 |
+| 其他（语音 / 可视化 / 媒体 / UI 类） | 工具面、MCP、session 依赖，同样排除 |
 
 任何一个进入实验会话，都会污染：工具面基线、探测调用计数、错误计数、payload、甚至行为指令。因此隔离必须是**环境级**，不是「换个 preset」级别——宿主组合里挂着这些插件时，它们的监听器对本 host 内所有会话都生效。
 
@@ -42,14 +42,14 @@
   → 一个会话、一个数据点、进程级隔离，运行间互不可见
 ```
 
-- **home 级隔离**：新 home 没有 reactor/retro/maker 的任何目录、状态或插件数据；
+- **home 级隔离**：新 home 没有任何宿主插件的目录、状态或插件数据；
 - **组合级隔离**：`exp` profile 只含 3 个 bundle，`--dump-config` 可审计；
 - **进程级隔离**：每个 scenario×arm×repeat 是一次性 headless 进程，模型上下文、KV、内存互不跨染。
 
 ### 启动前隔离断言（必须全真才开跑）
 
 1. `dsh --profile exp --dump-config` 只出现 3 个 bundle id；
-2. 实验会话工具面不含 `bridge_capture`/`retro_learn`/`plugin_maker_*` 等任何外部工具；
+2. 实验会话工具面不含任何宿主常驻插件的工具；
 3. 新 home 下无 `plugins/`、无任何 SQLite/WAL 文件（实验插件只写 results 目录）；
 4. 实验会话系统提示不含 skill 目录、不含「清单/收件箱」指令（`minimal` preset persona 固定）。
 

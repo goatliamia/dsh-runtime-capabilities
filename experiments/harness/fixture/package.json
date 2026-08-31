@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "dsh-runtime-seam": "file:D:/projects/runtime/dsh-runtime/core/runtime-seam"
+    "dsh-runtime-seam": "file:../../../core/runtime-seam"
   },
   "dsh": {
     "bundle": {

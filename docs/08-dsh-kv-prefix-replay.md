@@ -56,7 +56,7 @@ npm run dsh-kv-experiment
 src/adapters/dsh/simulate-kv-prefix-replay.mjs
 ```
 
-并通过根入口和 `project-context-bridge/dsh/kv-experiment` 导出。实验结果中的所有检查必须为 `true`，默认 host cost 为：
+并通过根入口和 `dsh/kv-experiment` 子路径导出。实验结果中的所有检查必须为 `true`，默认 host cost 为：
 
 ```json
 {

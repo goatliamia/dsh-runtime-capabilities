@@ -32,7 +32,7 @@ Truth + Authority + Need → Intervention
 
 1. **环境服务必须可选获取**：`webServer` 等仅在 web profile 存在的服务，用 `ctx.get()` + 条件注册；硬 `inject` 在 headless profile 会 pending 拖死整个 boot（PITFALLS 2026-08-31）。
 2. **settings schema 用 `@deepseek-ai/schemastery`**：`Schema` 实例是可调用函数；zod 对象注册即抛 "schema is not a function"（PITFALLS 2026-08-31）。
-3. **waterfall 事件必须透传 `next()`**：坏监听器会锁死全部工具（maker 契约校验已拦）。
+3. **waterfall 事件必须透传 `next()`**：坏监听器会锁死全部工具（契约校验已拦）。
 4. **绝不读 `ctx.config`**：DSH 无此服务，访问即抛、启动树中止；配置走 `apply(ctx, config)` 或 settings 命名空间。
 
 ## 证据要求

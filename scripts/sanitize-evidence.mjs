@@ -1,7 +1,7 @@
 /**
  * Desensitize + materialize experiment evidence into the dsh-runtime repo.
  * Rules: home paths -> <HOME>; session ids -> session-<redacted>; never copy
- * credentials, bridge/reactor/maker sources, or anything outside the runtime
+ * credentials, local plugin sources, or anything outside the runtime
  * experiment line.
  */
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
@@ -52,7 +52,7 @@ function copySanitized(from, to) {
 
 // 1) experiment harness (plugin + drivers + aggregators + verifier)
 mkdirSync(join(DST, "experiments", "harness"), { recursive: true });
-for (const name of ["plugin", "driver.ps1", "driver2.ps1", "driver3.ps1", "driver4.ps1", "driver4b.ps1", "driver5.ps1", "driver6.ps1", "driver7.ps1", "driver8.ps1", "driver9.ps1", "aggregate.mjs", "aggregate2.mjs", "aggregate4.mjs", "aggregate4b.mjs", "aggregate56.mjs", "aggregate7.mjs", "verify-e7b.ps1"]) {
+for (const name of ["plugin", "fixture", "driver.ps1", "driver2.ps1", "driver3.ps1", "driver4.ps1", "driver4b.ps1", "driver5.ps1", "driver6.ps1", "driver7.ps1", "driver8.ps1", "driver9.ps1", "driver10.ps1", "driver11.ps1", "driver12.ps1", "driver13.ps1", "aggregate.mjs", "aggregate2.mjs", "aggregate4.mjs", "aggregate4b.mjs", "aggregate56.mjs", "aggregate7.mjs", "verify-e7b.ps1"]) {
   copySanitized(join(SRC, name), join(DST, "experiments", "harness", name));
 }
 
@@ -67,7 +67,7 @@ for (const entry of readdirSync(join(SRC, "results"))) {
 
 // 3) docs: the runtime experiment line only (07-14 + relevant adr/status)
 mkdirSync(join(DST, "docs"), { recursive: true });
-for (const name of ["07-runtime-exposure-experiment.md", "08-dsh-kv-prefix-replay.md", "09-isolated-runtime-behavior-experiment.md", "10-guard-teaching-experiment-design.md", "11-runtime-plugin-capability-modes.md", "13-experiment-data-report.md", "14-runtime-plugin-design-review.md"]) {
+for (const name of ["07-runtime-exposure-experiment.md", "08-dsh-kv-prefix-replay.md", "09-isolated-runtime-behavior-experiment.md", "10-guard-teaching-experiment-design.md", "11-runtime-plugin-capability-modes.md", "13-experiment-data-report.md", "14-runtime-plugin-design-review.md", "15-four-quadrant-scene-harness.md"]) {
   copySanitized(join(ZIP, "docs", name), join(DST, "docs", name));
 }
 mkdirSync(join(DST, "docs", "adr"), { recursive: true });
@@ -75,7 +75,7 @@ for (const name of ["0003-out-of-band-constraints-and-zero-cost-fast-path.md", "
   copySanitized(join(ZIP, "docs", "adr", name), join(DST, "docs", "adr", name));
 }
 mkdirSync(join(DST, "docs", "status"), { recursive: true });
-for (const name of ["runtime-exposure-2026-08-31.md", "runtime-behavior-2026-08-31.md", "runtime-guard-round2-2026-08-31.md", "runtime-circuit-e4-2026-08-31.md", "runtime-h1-pickup-e5e6-2026-08-31.md", "runtime-v4pro-e7-2026-08-31.md"]) {
+for (const name of ["runtime-exposure-2026-08-31.md", "runtime-behavior-2026-08-31.md", "runtime-guard-round2-2026-08-31.md", "runtime-circuit-e4-2026-08-31.md", "runtime-h1-pickup-e5e6-2026-08-31.md", "runtime-v4pro-e7-2026-08-31.md", "runtime-four-quadrant-2026-09-01.md", "runtime-mode-validation-2026-09-01.md", "token-cost-appendix-2026-09-01.md"]) {
   copySanitized(join(ZIP, "docs", "status", name), join(DST, "docs", "status", name));
 }
 

@@ -93,7 +93,7 @@ Runtime 只作为下一轮 Reason 的一个字段：
 
 | 时间点 | 事实 | 预期 |
 |---|---|---|
-| t0 | Session、Scope、Profile、read/edit/bash、Maker ready | 建立 baseline |
+| t0 | Session、Scope、Profile、read/edit/bash、第三方工具 ready | 建立 baseline |
 | t1 | 完全稳定 | 不暴露 |
 | t2 | 插件内部 declared → mounted，但 action surface 不变 | 不暴露 |
 | t3 | lsp ready，工具面增加 lsp | 只暴露 delta |

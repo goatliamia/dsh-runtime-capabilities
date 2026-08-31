@@ -21,13 +21,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR_ORG/dsh-runtime.git"
+    "url": "git+https://github.com/goatliamia/dsh-runtime.git",
+    "directory": "plugins/runtime-progress"
   },
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
-    "dsh-runtime-seam": "file:D:/projects/runtime/dsh-runtime/core/runtime-seam",
+    "dsh-runtime-seam": "file:../../core/runtime-seam",
     "@deepseek-ai/schemastery": "^3.18.1"
   },
   "dsh": {
