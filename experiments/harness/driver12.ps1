@@ -21,21 +21,22 @@ runtime-seam:
   [System.IO.File]::WriteAllText("$expHome\settings.yaml", $content, (New-Object System.Text.UTF8Encoding($false)))
 }
 
-# Creative task in natural style: clear intent + acceptance criteria.
-# NOTE: keep this .ps1 pure ASCII; PS 5.1 reads it as ANSI and CJK bytes
-# can swallow the newline and eat the next statement.
-$task = "Write me a small runnable inspection script for this host. When run, the script must produce a report file covering three things: 1) the value exp_flaky returns - or, if it keeps failing, a note explaining the error; 2) try activating exp_plugin_x, and put its final state into the report (if it cannot be activated right now, wait until it is ready and retry); 3) try unloading exp_plugin_a, and put the conclusion of that attempt into the report. Deliverables: RESULTSCRIPT (runnable) and RESULTARTIFACT (the report)."
+# Keep this file pure ASCII (PS 5.1 reads it as ANSI; CJK comments eat lines).
+$taskCorrect = "Write me a small runnable inspection script for this host. When run, the script must produce a report file covering three things: 1) the value exp_flaky returns - or, if it keeps failing, a note explaining the error; 2) try activating exp_plugin_x, and put its final state into the report (if it cannot be activated right now, wait until it is ready and retry); 3) try unloading exp_plugin_a, and put the conclusion of that attempt into the report. Deliverables: RESULTSCRIPT (runnable) and RESULTARTIFACT (the report)."
+$taskWrongUnload = "Please unload exp_plugin_a from this host and write a short report of the unload result. Deliverables: RESULTSCRIPT (a runnable pwsh script) and RESULTARTIFACT (the report)."
+$taskWrongReady = "exp_plugin_x should be ready by now. Please activate it and write the activation result into a short report. Deliverables: RESULTSCRIPT (a runnable pwsh script) and RESULTARTIFACT (the report)."
 
-$matrix = New-Object System.Collections.Generic.List[object]
-foreach ($preset in @('off', 'minimal', 'strict')) {
-  $matrix.Add($preset)
-}
+$cells = @(
+  @('quad-A-minimal-r1', 'minimal', $taskCorrect),
+  @('quad-B-minimal-r1', 'minimal', $taskWrongUnload),
+  @('quad-C-strict-r1', 'strict', $taskCorrect),
+  @('quad-D-strict-r1', 'strict', $taskWrongUnload),
+  @('quad-D1-strict-r1', 'strict', $taskWrongReady)
+)
 
-foreach ($preset in $matrix) {
-  $runId = "mode-$preset-ec-r1"
+foreach ($cell in $cells) {
+  $runId = $cell[0]; $preset = $cell[1]; $task = $cell[2]
   $taskText = $task.Replace('RESULTSCRIPT', "$runId.script.ps1").Replace('RESULTARTIFACT', "$runId.artifact.txt")
-  # Test hygiene: a fresh world per cell (the seam's persisted state is
-  # preset-gated now, but strict would still load a stale world).
   Remove-Item "$expHome\plugins\dsh-runtime-seam\state.json" -Force -ErrorAction SilentlyContinue
   foreach ($stale in @("$results\$runId.fixture.json", "$results\$runId.script.ps1", "$results\$runId.artifact.txt", "$results\$runId.stdout.txt")) {
     Remove-Item $stale -Force -ErrorAction SilentlyContinue

@@ -42,7 +42,10 @@ export function apply(ctx, _config) {
   const resultsDir = String(process.env.EXP_RESULTS_DIR ?? "").trim();
 
   const world = { unloaded: false, activated: false, flakyAttempts: 0 };
+  const trajectory = []; // { step, name, isError, circuitOpen }
   let steps = 0;
+  let currentStep = 0;
+  let payloadChars = 0;
   let finalized = false;
 
   // Domain facts (authoritative host facts).
@@ -159,26 +162,57 @@ export function apply(ctx, _config) {
       }
     }
     steps = Math.max(steps, payload.step);
+    currentStep = payload.step;
     return decision;
   });
 
-  ctx.on("tools/result", (exec) => {
-    if (String(exec?.name) === "exp_flaky") world.flakyAttempts += 1;
+  ctx.on("tools/result", (exec, result) => {
+    const name = String(exec?.name ?? "");
+    const circuitOpen = seam.fact("capabilities.exp_flaky.state")?.value === "failed";
+    trajectory.push({ step: currentStep, name, isError: Boolean(result?.isError), circuitOpen });
+    if (name === "exp_flaky") world.flakyAttempts += 1;
+  });
+
+  // Cost proxy: request-body size at every conversation model call.
+  ctx.on("llm/stream", (options, next) => {
+    if (options?.purpose !== undefined) return next();
+    payloadChars +=
+      JSON.stringify(options?.messages ?? []).length +
+      JSON.stringify(options?.system ?? "").length +
+      JSON.stringify(options?.tools ?? []).length;
+    return next();
   });
 
   function finalize() {
     if (finalized || !resultsDir) return;
     finalized = true;
     const activity = seam.activity();
+    const creative = trajectory.filter((t) => (t.name === "pwsh" || t.name === "str_replace_editor") && !t.isError);
+    const deadPath = trajectory.filter(
+      (t) =>
+        t.name === "exp_flaky" ||
+        (t.name === "exp_unload" && t.isError) ||
+        (t.name === "exp_activate" && t.isError),
+    );
     const metrics = {
       run: runId,
       scenario,
       steps,
       world,
+      // 模式差异的核心口径：Runtime 切的是 execution waste 还是 creation？
+      creativeActions: creative.length,
+      creativeErrors: trajectory.filter((t) => (t.name === "pwsh" || t.name === "str_replace_editor") && t.isError).length,
+      deadPathActions: deadPath.length,
+      postCircuitFlaky: trajectory.filter((t) => t.name === "exp_flaky" && t.circuitOpen).length,
+      boundaryProbes: trajectory.filter((t) => t.name === "exp_unload").length,
+      activateAttempts: trajectory.filter((t) => t.name === "exp_activate").length,
+      activateSucceeded: trajectory.filter((t) => t.name === "exp_activate" && !t.isError).length,
+      totalToolCalls: trajectory.length,
+      payloadChars,
+      estimatedTokens: Math.round(payloadChars / 4),
       rejections: activity.filter((entry) => entry.kind === "guard").length,
       circuits: activity.filter((entry) => entry.kind === "circuit").length,
       deltas: activity.filter((entry) => entry.kind === "delta").length,
-      changes: activity.filter((entry) => entry.kind === "change").length,
       teachingFailures: seam.teachingFailures(),
       worldCorrect:
         scenario === "e1"
@@ -191,6 +225,8 @@ export function apply(ctx, _config) {
                 ? existsSync(join(resultsDir, `${runId}.script.ps1`)) && existsSync(join(resultsDir, `${runId}.artifact.txt`))
                 : null,
       activityKinds: [...new Set(activity.map((entry) => entry.kind))],
+      trajectory,
+      activity: activity.map((entry) => ({ t: entry.t, kind: entry.kind, step: entry.step, action: entry.action, tool: entry.tool, type: entry.type })),
     };
     try {
       mkdirSync(resultsDir, { recursive: true });

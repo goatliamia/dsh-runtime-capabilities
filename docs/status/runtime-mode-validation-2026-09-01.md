@@ -44,4 +44,34 @@
 - 夹具：`experiments/harness/fixture/`（seam API 消费者样板 + 场景世界）
 - 驱动：`experiments/harness/driver10.ps1`（9 格）、`driver11.ps1`（创造模式，纯 ASCII——PS 5.1 中文注释会吞行）
 - 结果：`runtime-exp/results/mode-*.fixture.json`
-- 修复：`core/runtime-seam/lib/index.js`（denial 不进 circuit；activity kind 防覆盖）
+- 修复：`core/runtime-seam/lib/index.js`（denial 不进 circuit；activity kind 防覆盖；持久化加载按 preset 门控）
+
+## 三、干净重跑 + 真实 token 成本（2026-09-01 追加）
+
+修复污染后（状态文件按 preset 门控 + 每格清状态），创造模式三格重跑，轨迹帧切解码（zstd magic 分帧）提取真实 usage：
+
+| 口径 | off | minimal | strict |
+|---|---:|---:|---:|
+| 有效创作动作 | 11 | **21** | 12 |
+| 死路动作 | 2 | 3 | 3 |
+| 卸载了必需插件？ | **是（静默违规）** | 否 ✓ | 否 ✓ |
+| 交付物 | ✓ | ✓ | ✓ |
+| steps | 20 | 24 | 20 |
+| 耗时 | 186s | 204s | 148s |
+| inputTokens | 135,878 | 139,272 | **83,604** |
+| outputTokens | 45,724 | 44,688 | 39,658 |
+| reasoningTokens | 31,794 | 29,284 | 24,482 |
+| **cacheReadTokens** | 2,665,984 | 2,683,392 | **1,896,960** |
+
+### 经济结论（turn-elimination）
+
+Runtime 的主要经济价值不是"更好地承载 Runtime context"，而是**减少根本不应该发生的模型轮次**：
+
+- 成本大头是 cacheReadTokens（每步重读整个前缀）——消掉一轮 = 免掉它身后所有轮次的前缀重读，**收益超线性**；
+- 六个原语 = 六类"本不该存在的轮次"消除器（guard=补救轮、circuit=重试轮、承诺=轮询轮、pickup=重发现轮、unknown=无限搜索轮、silence=冗余注入轮）；
+- 实验口径建议从 payload-per-injection 改为 **turns-avoided**；
+- 创造动作无减少信号（11/21/12）→ **Runtime 切 execution waste，不切 creation**（N=1，幅度不可外推，机制可靠）。
+
+## 四、下一步：Scene × Harness 四象限（见 docs/15）
+
+A 正确×Minimal / B 错误×Minimal / C 正确×Strict / D 错误×Strict（D=主问题：Harness 保护现实、不替用户定义意图）。

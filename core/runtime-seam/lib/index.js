@@ -116,8 +116,9 @@ export function apply(ctx, _config) {
   const configNow = () => readConfig().capabilities;
   const settingsNow = () => readConfig().settings;
 
-  // ---- persistence (Strict / Goal) ----
-  if (existsSync(STATE_FILE)) {
+  // ---- persistence (Strict / Goal only; the load is preset-gated so a
+  // persisted world can never leak into off/minimal sessions) ----
+  if (readConfig().capabilities.persistence && existsSync(STATE_FILE)) {
     try {
       const saved = JSON.parse(readFileSync(STATE_FILE, "utf8"));
       for (const [path, fact] of Object.entries(saved.facts ?? {})) {
