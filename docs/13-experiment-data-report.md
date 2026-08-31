@@ -187,6 +187,14 @@ E4（任务自带"失败就停"）= 天花板：三臂都 ~2 次尝试，模型�
 
 ---
 
+## 成本认识的更新（2026-09-01，实验收束）
+
+1. **真实 token 已全量回溯**：152 份历史会话轨迹逐帧解码（zstd frame-split），usage 来自 llm/stream finish 记录。全表见 `docs/status/token-cost-appendix-2026-09-01.md`；
+2. **旧代理口径的关系**：payloadChars 与真实 inputTokens **排序一致**，但绝对值高一个数量级；chars÷4 系统性偏高。此后一律以真实 usage 为准；
+3. **成本的主导项是 cacheReadTokens**：每步把整个前缀从 KV 重读，随步数超线性增长。因此 Runtime 的经济价值不是"更好地承载 context"，而是 **turn-elimination**——消除本不该发生的轮次，同时免除其后所有轮次的回忆成本；
+4. 六个原语 = 六类轮次消除器（guard=补救轮、circuit=重试轮、承诺=轮询轮、pickup=重发现轮、unknown=无限搜索轮、silence=冗余注入轮）；
+5. 实验口径从 payload-per-injection 改为 **turns-avoided**；实验线至此收束，不再新增实验。
+
 ## 汇总结论表（数据背书的决策表）
 
 | 情况 | 机制 | 证据强度 |

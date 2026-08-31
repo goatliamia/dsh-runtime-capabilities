@@ -36,6 +36,16 @@
 3. 与 #3489（MCP 过期重复调用）、#3171/#2848/#3228（无限循环烧 token）的问题形状同构：`相同 (tool, error) + 无进展 + N≥2 → 开断` 可作为通用 circuit，而不是等每个根因修复；
 4. 诚实边界：v4flash 的放弃阈值低（E4 天花板），强模型可能自行重试更久——circuit 的价值上限在更强模型上预期更大，但未验证。
 
+## 成本补充（真实 token，2026-09-01 回溯解码）
+
+| 臂 | n | input | output | reasoning | cacheRead |
+|---|---|---:|---:|---:|---:|
+| e4-none | 9 | 8,702 | 3,040 | 1,788 | 71,225 |
+| e4-circuit | 6 | 1,039 | 1,448 | 694 | 31,829 |
+| e4-circuitdelta | 9 | 1,418 | 1,064 | 516 | 26,766 |
+
+真实口径确认：无熔断臂 cacheRead 是熔断臂的 2.2-2.7 倍（死路重试轮次的 KV 重读）；circuitdelta 最省。turn-elimination 经济学见 docs/13。
+
 ## 文件
 
 - 结果：`<HOME>\Documents\runtime-exp\results\`（`e4-*-r[1-6].*.json/.txt/.stdout`、`summary4.md/.json`、`summary4b.md/.json`）

@@ -50,6 +50,20 @@
 
 pickup 只允许拾取 **Runtime 确认过、带 revision+fingerprint、仍然有效的 authoritative facts**；永不恢复 transcript、模型结论或任何历史记忆（防滑向 Memory）。注入形态是"当前权威状态"，不出现"上一会话"字样；会话来源只留在共享文件的审计元数据里。见好就收。
 
+## 成本补充（真实 token，2026-09-01 回溯解码）
+
+| 臂 | n | input | output | reasoning | cacheRead |
+|---|---|---:|---:|---:|---:|
+| e5-gplain | 5 | 1,767 | 1,112 | 590 | 22,682 |
+| e5-gauth | 5 | 3,408 | 1,609 | 906 | 29,286 |
+| e6-baseline | 3 | 93,523 | 16,136 | 10,791 | 853,333 |
+| e6-none | 5 | 63,416 | 10,412 | 6,205 | 539,648 |
+| e6-pickup | 3 | 31,079 | 7,149 | 3,460 | 314,965 |
+| e6-baseline-v4 | 2 | 78,111 | 13,668 | 9,319 | 552,064 |
+| e6-pickup-v4 | 2 | 7,687 | 2,576 | 1,426 | 58,112 |
+
+要点：pickup 相对重发现基线 cacheRead −63%（flash）/ −89%（v4pro）——拾取的经济价值随模型强度放大；e5 中 authority 臂略贵（provenance 不买信任，见 H1 定案）。完整口径见 docs/13。
+
 ## 文件
 
 - 结果：`runtime-exp/results/`（`e5-*-r*.{metrics,events,result,stdout}`、`e6-{baseline,none,pickup}-r*.`、`e6-shared-r*.json`、`summary56.md/.json`）
