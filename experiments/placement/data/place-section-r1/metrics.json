@@ -1,0 +1,10 @@
+{
+  "run": "place-section-r1",
+  "modelCalls": 6,
+  "inputTokens": 17014,
+  "outputTokens": 440,
+  "cacheReadTokens": 33280,
+  "reasoningTokens": 112,
+  "factInTranscript": false,
+  "tag": "v2.1.0"
+}

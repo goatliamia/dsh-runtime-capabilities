@@ -1,0 +1,4 @@
+# Context-placement experiment bundle: insert the placement host plugin.
+- insert:
+    - id: dsh-ctx-place
+      name: dsh-ctx-place

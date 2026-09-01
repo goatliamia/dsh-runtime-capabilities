@@ -1,0 +1,10 @@
+{
+  "run": "place-context-v2-r2",
+  "modelCalls": 6,
+  "inputTokens": 17102,
+  "outputTokens": 1444,
+  "cacheReadTokens": 34560,
+  "reasoningTokens": 1010,
+  "factInTranscript": true,
+  "tag": "v3.0.0"
+}

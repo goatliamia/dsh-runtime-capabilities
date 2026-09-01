@@ -1,0 +1,22 @@
+{
+  "name": "dsh-ctx-place",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "description": "Context-placement experiment: one authoritative fact placed via system section / runtime-context snapshot / pre-step injection, selected by EXP_ARM. Zero other effects.",
+  "files": [
+    "lib",
+    "cordis.patch.yml"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

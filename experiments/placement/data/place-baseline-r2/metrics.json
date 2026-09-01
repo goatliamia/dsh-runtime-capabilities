@@ -1,0 +1,10 @@
+{
+  "run": "place-baseline-r2",
+  "modelCalls": 6,
+  "inputTokens": 16982,
+  "outputTokens": 390,
+  "cacheReadTokens": 33280,
+  "reasoningTokens": 54,
+  "factInTranscript": false,
+  "tag": "v2.1.0"
+}

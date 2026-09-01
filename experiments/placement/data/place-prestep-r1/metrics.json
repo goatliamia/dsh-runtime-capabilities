@@ -1,0 +1,10 @@
+{
+  "run": "place-prestep-r1",
+  "modelCalls": 6,
+  "inputTokens": 17198,
+  "outputTokens": 1222,
+  "cacheReadTokens": 34304,
+  "reasoningTokens": 766,
+  "factInTranscript": true,
+  "tag": "v3.0.0"
+}
