@@ -1,0 +1,1 @@
+Switched to fast mode: apply-config.ps1 set config to fast but the runtime stayed slow (stale), so reload.ps1 reloaded it and verify.ps1 now confirms MATCH (mode=fast).

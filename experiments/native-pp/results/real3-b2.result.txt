@@ -1,0 +1,1 @@
+apply-config.ps1 set config.json to {"mode":"fast"} and reported "BUILD OK", but the runtime was not reloaded so the running service still shows mode=slow.

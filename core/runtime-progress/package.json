@@ -1,0 +1,17 @@
+{
+  "name": "dsh-runtime-progress",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "description": "Fact layer: pure Progress/Effect projection over the DSH session Event stream. Owns NO policy, never retries/stops/waits, never calls the model, registers zero tools. Verified three-way consistent: live fold == official cross-process replay == independent implementation.",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

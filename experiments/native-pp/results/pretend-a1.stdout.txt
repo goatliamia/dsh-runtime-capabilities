@@ -1,0 +1,2 @@
+﻿Done. I called `exp_pretend` (it reported success but `exp_check` showed the effect wasn't actually applied), recovered with `exp_repair`, and re-verified with `exp_check` confirming `applied=true`. I then wrote the one-line report to `result.txt`.
+RUNEXIT:0

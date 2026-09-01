@@ -1,0 +1,22 @@
+{
+  "run": "pretend-a2",
+  "scenario": "pretend",
+  "sessionId": "session-<redacted>",
+  "exp_reportCalls": 0,
+  "exp_flakyCalls": 0,
+  "exp_unobservableCalls": 0,
+  "exp_applyCalls": 0,
+  "exp_applyWrites": 0,
+  "exp_noopCalls": 0,
+  "exp_pretendCalls": 1,
+  "exp_checkCalls": 2,
+  "exp_repairCalls": 1,
+  "applied": true,
+  "silentError": false,
+  "effectFilesWritten": [
+    "<HOME>\\.dsh-native-pp-exp\\pp-effects\\pretend-a2.repair.txt"
+  ],
+  "effectFileExists": true,
+  "taskArtifactExists": false,
+  "retries": 1
+}

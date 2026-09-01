@@ -1,0 +1,30 @@
+{
+  "run": "loop-a1",
+  "sessionId": "session-<redacted>",
+  "policy": "investigate",
+  "contracts": [
+    {
+      "id": "exp_pretend",
+      "match": {
+        "tool": "exp_pretend"
+      },
+      "verify": "exp_check",
+      "repair": "exp_repair"
+    },
+    {
+      "id": "apply-config",
+      "match": {
+        "tool": "pwsh",
+        "pattern": {}
+      },
+      "verify": "verify.ps1",
+      "repair": "reload.ps1"
+    }
+  ],
+  "interventions": [],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

@@ -1,0 +1,12 @@
+﻿The job has been started and monitored to completion. Final state:
+
+1. Ran `job-start.ps1` 鈫?it created `job-state.txt` with `running`.
+2. Polled the state until the experiment host transitioned it 鈫?observed `complete`.
+3. Wrote the final state to `result.txt`.
+
+`result.txt` now contains:
+
+```
+complete
+```
+RUNEXIT:0

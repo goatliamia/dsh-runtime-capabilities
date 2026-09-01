@@ -1,3 +1,3 @@
 - insert:
-    - id: dsh-runtime-progress
-      name: dsh-runtime-progress
+    - id: dsh-runtime-progress-legacy
+      name: dsh-runtime-progress-legacy

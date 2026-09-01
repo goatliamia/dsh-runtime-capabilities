@@ -1,0 +1,115 @@
+{
+  "run": "loop-a2",
+  "sessionId": "session-<redacted>",
+  "writtenAt": 1788275143411,
+  "lastEventTime": 1788275143356,
+  "projection": {
+    "axes": {
+      "execution": {
+        "turns": 1,
+        "steps": 8,
+        "toolCalls": 7,
+        "toolErrors": 3,
+        "turnHistory": [
+          {
+            "turn": 1,
+            "steps": 8,
+            "toolCalls": 7,
+            "toolErrors": 3,
+            "reason": {
+              "kind": "completed"
+            }
+          }
+        ],
+        "turnOutcome": "completed"
+      },
+      "goal": null,
+      "effect": {
+        "exp_flaky": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 194,
+              "isError": true
+            },
+            {
+              "seq": 291,
+              "isError": true
+            },
+            {
+              "seq": 355,
+              "isError": true
+            }
+          ],
+          "callResult": "failed",
+          "worldEffect": "failed",
+          "support": [
+            194,
+            291,
+            355
+          ]
+        },
+        "pwsh": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 270,
+              "isError": false
+            },
+            {
+              "seq": 344,
+              "isError": false
+            },
+            {
+              "seq": 2566,
+              "isError": false
+            },
+            {
+              "seq": 2619,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            270,
+            344,
+            2566,
+            2619
+          ]
+        }
+      }
+    },
+    "verdict": {
+      "turn": "completed",
+      "execution": "failed",
+      "effect": {
+        "exp_flaky": "failed",
+        "pwsh": "success"
+      }
+    },
+    "unknownFields": [],
+    "usage": {
+      "inputTokens": 1032,
+      "outputTokens": 2984,
+      "cacheReadTokens": 30464,
+      "cacheWriteTokens": 0,
+      "reasoningTokens": 2280
+    },
+    "foldStats": {
+      "events": 2834,
+      "foldMs": 1.696
+    }
+  },
+  "hostTiming": {
+    "totalUs": 1696.0000001198523,
+    "events": 2834,
+    "avgUsPerEvent": 0.6
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "agentApisCalled": 0,
+    "llmApisCalled": 0,
+    "promptEdits": 0
+  }
+}

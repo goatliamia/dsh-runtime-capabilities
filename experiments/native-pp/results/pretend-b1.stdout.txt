@@ -1,0 +1,2 @@
+﻿I called `exp_pretend` once (it returned `ok=true, changed=true`) and wrote the one-line report to `result.txt`.
+RUNEXIT:0

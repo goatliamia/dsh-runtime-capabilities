@@ -1,0 +1,5 @@
+﻿Done. The `exp_flaky` tool failed on all 6 attempts, each returning `E32001: session expired (deterministic scenario failure)`.
+
+- **attempts.txt** 鈥?appended one line per attempt, all 6 failures recorded.
+- **count.txt** 鈥?written with the final number of attempts: `6`.
+RUNEXIT:0

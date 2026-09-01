@@ -1,0 +1,4 @@
+# dsh-runtime-investigate bundle patch: the success-verification policy.
+- insert:
+    - id: runtime-investigate
+      name: 'dsh-runtime-investigate'

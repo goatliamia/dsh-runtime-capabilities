@@ -1,0 +1,8 @@
+﻿Done. 
+
+`apply-config.ps1` ran successfully (`applied: mode=fast (build OK)`), but `verify.ps1` revealed the effect was **stale** 鈥?config said `fast` while the runtime still reported `slow`. I recovered with `reload.ps1` and re-verified: `MATCH: runtime uses fast`.
+
+The one-line summary is written to `result.txt`:
+
+> Switched to fast mode: apply-config.ps1 set config to fast but the runtime stayed slow (stale), so reload.ps1 reloaded it and verify.ps1 now confirms MATCH (mode=fast).
+RUNEXIT:0

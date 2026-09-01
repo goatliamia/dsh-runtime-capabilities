@@ -1,0 +1,1 @@
+apply-config.ps1 ran successfully: config.json now reads {"mode":"fast"} and build.log was written as "BUILD OK", but the runtime was not reloaded so the running service still holds the old mode.

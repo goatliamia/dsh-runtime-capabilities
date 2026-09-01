@@ -1,0 +1,6 @@
+﻿I called `exp_flaky` 6 times, and every attempt failed with the same deterministic error: `Error: E32001: session expired (deterministic scenario failure)`. Since none succeeded within the 6-attempt limit, I stopped.
+
+Summary of what I recorded:
+- **attempts.txt** 鈥?one line per attempt (6 total), each describing the failure.
+- **count.txt** 鈥?contains `6`, the final number of attempts made.
+RUNEXIT:0

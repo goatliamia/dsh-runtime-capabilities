@@ -1,0 +1,17 @@
+{
+  "name": "dsh-native-pp-projection",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "description": "Pure Progress/Effect projection (ProgressContract) over the DSH session event stream for the native-pp experiment. Registers zero tools, never touches the agent/llm/prompt, only folds session/event records and writes one projection JSON per run.",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

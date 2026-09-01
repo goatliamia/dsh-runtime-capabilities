@@ -1,0 +1,150 @@
+{
+  "run": "real3-a2",
+  "sessionId": "session-<redacted>",
+  "writtenAt": 1788270084611,
+  "lastEventTime": 1788270084561,
+  "projection": {
+    "axes": {
+      "execution": {
+        "turns": 1,
+        "steps": 10,
+        "toolCalls": 10,
+        "toolErrors": 0,
+        "turnHistory": [
+          {
+            "turn": 1,
+            "steps": 10,
+            "toolCalls": 10,
+            "toolErrors": 0,
+            "reason": {
+              "kind": "completed"
+            }
+          }
+        ],
+        "turnOutcome": "completed"
+      },
+      "goal": null,
+      "effect": {
+        "glob": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 54,
+              "isError": false
+            },
+            {
+              "seq": 272,
+              "isError": false
+            },
+            {
+              "seq": 309,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            54,
+            272,
+            309
+          ]
+        },
+        "read": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 78,
+              "isError": false
+            },
+            {
+              "seq": 350,
+              "isError": false
+            },
+            {
+              "seq": 351,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            78,
+            350,
+            351
+          ]
+        },
+        "pwsh": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 172,
+              "isError": false
+            },
+            {
+              "seq": 386,
+              "isError": false
+            },
+            {
+              "seq": 453,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            172,
+            386,
+            453
+          ]
+        },
+        "write": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 626,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            626
+          ]
+        }
+      }
+    },
+    "verdict": {
+      "turn": "completed",
+      "execution": "success",
+      "effect": {
+        "glob": "success",
+        "read": "success",
+        "pwsh": "success",
+        "write": "success"
+      }
+    },
+    "unknownFields": [],
+    "usage": {
+      "inputTokens": 2305,
+      "outputTokens": 1003,
+      "cacheReadTokens": 91776,
+      "cacheWriteTokens": 0,
+      "reasoningTokens": 274
+    },
+    "foldStats": {
+      "events": 771,
+      "foldMs": 0.971
+    }
+  },
+  "hostTiming": {
+    "totalUs": 971.100000008164,
+    "events": 771,
+    "avgUsPerEvent": 1.26
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "agentApisCalled": 0,
+    "llmApisCalled": 0,
+    "promptEdits": 0
+  }
+}

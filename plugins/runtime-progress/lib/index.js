@@ -17,7 +17,7 @@
  */
 import Schema from "@deepseek-ai/schemastery";
 
-export const name = "dsh-runtime-progress";
+export const name = "dsh-runtime-progress-legacy";
 export const inject = ["runtimeSeam", "settings"];
 
 const SETTINGS_SCHEMA = Schema.object({

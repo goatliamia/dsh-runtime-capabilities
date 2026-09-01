@@ -1,0 +1,8 @@
+﻿The job is complete. Here's what happened:
+
+1. **Started the job** via `job-start.ps1` 鈫?state set to `running`.
+2. **Polled status** with `status.ps1` 鈫?first poll returned `running`, second poll returned `complete`.
+3. **Wrote final state** to `result.txt`.
+
+Final state written to `result.txt`: **`complete`**.
+RUNEXIT:0

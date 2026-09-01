@@ -1,0 +1,17 @@
+{
+  "name": "dsh-native-pp-fixture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "description": "Isolated-home fixture for the DSH native Progress/Effect Projection experiment: deterministic world tools, raw event trace, world-truth record, and the offline replay runner. No state files, no SQLite, no prompt edits.",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "run": "real3-smoke1",
+  "sessionId": "session-<redacted>",
+  "writtenAt": 1788269992849,
+  "lastEventTime": 1788269992806,
+  "projection": {
+    "axes": {
+      "execution": {
+        "turns": 1,
+        "steps": 11,
+        "toolCalls": 18,
+        "toolErrors": 0,
+        "turnHistory": [
+          {
+            "turn": 1,
+            "steps": 11,
+            "toolCalls": 18,
+            "toolErrors": 0,
+            "reason": {
+              "kind": "completed"
+            }
+          }
+        ],
+        "turnOutcome": "completed"
+      },
+      "goal": null,
+      "effect": {
+        "glob": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 102,
+              "isError": false
+            },
+            {
+              "seq": 104,
+              "isError": false
+            },
+            {
+              "seq": 300,
+              "isError": false
+            },
+            {
+              "seq": 448,
+              "isError": false
+            },
+            {
+              "seq": 3635,
+              "isError": false
+            },
+            {
+              "seq": 3637,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            102,
+            104,
+            300,
+            448,
+            3635,
+            3637
+          ]
+        },
+        "read": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 147,
+              "isError": false
+            },
+            {
+              "seq": 450,
+              "isError": false
+            },
+            {
+              "seq": 529,
+              "isError": false
+            },
+            {
+              "seq": 530,
+              "isError": false
+            },
+            {
+              "seq": 601,
+              "isError": false
+            },
+            {
+              "seq": 1751,
+              "isError": false
+            },
+            {
+              "seq": 1752,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            147,
+            450,
+            529,
+            530,
+            601,
+            1751,
+            1752
+          ]
+        },
+        "pwsh": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 298,
+              "isError": false
+            },
+            {
+              "seq": 599,
+              "isError": false
+            },
+            {
+              "seq": 685,
+              "isError": false
+            },
+            {
+              "seq": 1754,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            298,
+            599,
+            685,
+            1754
+          ]
+        },
+        "write": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 4100,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            4100
+          ]
+        }
+      }
+    },
+    "verdict": {
+      "turn": "completed",
+      "execution": "success",
+      "effect": {
+        "glob": "success",
+        "read": "success",
+        "pwsh": "success",
+        "write": "success"
+      }
+    },
+    "unknownFields": [],
+    "usage": {
+      "inputTokens": 10872,
+      "outputTokens": 4762,
+      "cacheReadTokens": 107776,
+      "cacheWriteTokens": 0,
+      "reasoningTokens": 3367
+    },
+    "foldStats": {
+      "events": 4398,
+      "foldMs": 3.004
+    }
+  },
+  "hostTiming": {
+    "totalUs": 3003.900000050635,
+    "events": 4398,
+    "avgUsPerEvent": 0.68
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "agentApisCalled": 0,
+    "llmApisCalled": 0,
+    "promptEdits": 0
+  }
+}

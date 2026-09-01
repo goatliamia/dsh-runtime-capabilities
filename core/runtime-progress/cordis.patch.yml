@@ -1,0 +1,4 @@
+# dsh-runtime-progress bundle patch: the fact-layer projection plugin.
+- insert:
+    - id: runtime-progress
+      name: 'dsh-runtime-progress'

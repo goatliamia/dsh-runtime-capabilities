@@ -1,0 +1,1 @@
+RESULT: PASS — all 3 tests passed (add(2,3), add(-1,4), sub(5,2)).

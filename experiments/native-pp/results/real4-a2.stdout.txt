@@ -1,0 +1,10 @@
+﻿The job is complete.
+
+1. Ran `job-start.ps1` 鈫?it wrote `job-state.txt` as `running`.
+2. Polled `job-state.txt` until it transitioned to `complete`.
+3. Wrote the final state to `result.txt`:
+
+```
+complete
+```
+RUNEXIT:0

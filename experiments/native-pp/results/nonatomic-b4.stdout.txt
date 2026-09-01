@@ -1,0 +1,13 @@
+﻿I called `exp_apply` 4 times, and every attempt returned the same error:
+
+- Attempt 1: failed 鈥?confirmation response lost after effect applied
+- Attempt 2: failed 鈥?confirmation response lost after effect applied
+- Attempt 3: failed 鈥?confirmation response lost after effect applied
+- Attempt 4: failed 鈥?confirmation response lost after effect applied
+
+Since all 4 attempts failed without returning success, I stopped at the maximum of 4 tries.
+
+Final state:
+- `attempts.txt` contains 4 lines, one per attempt result.
+- `count.txt` contains `4`.
+RUNEXIT:0

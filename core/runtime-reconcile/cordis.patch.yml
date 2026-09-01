@@ -1,0 +1,4 @@
+# dsh-runtime-reconcile bundle patch: the non-atomic protection policy.
+- insert:
+    - id: runtime-reconcile
+      name: 'dsh-runtime-reconcile'

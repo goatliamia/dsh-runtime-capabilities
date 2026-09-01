@@ -1,0 +1,8 @@
+﻿Done.
+
+- Ran `apply-config.ps1` 鈥?output `applied: mode=fast (build OK)`.
+- Confirmed `config.json` is now `{"mode":"fast"}` and `build.log` was written as `BUILD OK`.
+- Wrote the summary to `result.txt`:
+
+> apply-config.ps1 ran successfully: config.json now reads {"mode":"fast"} and build.log was written as "BUILD OK", but the runtime was not reloaded so the running service still holds the old mode.
+RUNEXIT:0

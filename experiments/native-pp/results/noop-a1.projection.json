@@ -1,0 +1,75 @@
+{
+  "run": "noop-a1",
+  "sessionId": "session-<redacted>",
+  "writtenAt": 1788268431384,
+  "lastEventTime": 1788268431323,
+  "projection": {
+    "axes": {
+      "execution": {
+        "turns": 1,
+        "steps": 2,
+        "toolCalls": 1,
+        "toolErrors": 0,
+        "turnHistory": [
+          {
+            "turn": 1,
+            "steps": 2,
+            "toolCalls": 1,
+            "toolErrors": 0,
+            "reason": {
+              "kind": "completed"
+            }
+          }
+        ],
+        "turnOutcome": "completed"
+      },
+      "goal": null,
+      "effect": {
+        "exp_noop": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 44,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            44
+          ]
+        }
+      }
+    },
+    "verdict": {
+      "turn": "completed",
+      "execution": "success",
+      "effect": {
+        "exp_noop": "success"
+      }
+    },
+    "unknownFields": [],
+    "usage": {
+      "inputTokens": 121,
+      "outputTokens": 53,
+      "cacheReadTokens": 5760,
+      "cacheWriteTokens": 0,
+      "reasoningTokens": 20
+    },
+    "foldStats": {
+      "events": 57,
+      "foldMs": 0.236
+    }
+  },
+  "hostTiming": {
+    "totalUs": 235.89999999899192,
+    "events": 57,
+    "avgUsPerEvent": 4.14
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "agentApisCalled": 0,
+    "llmApisCalled": 0,
+    "promptEdits": 0
+  }
+}

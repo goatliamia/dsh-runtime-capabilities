@@ -1,0 +1,4 @@
+# dsh-native-pp-projection bundle patch: insert the pure projection host plugin.
+- insert:
+    - id: native-pp-projection
+      name: 'dsh-native-pp-projection'

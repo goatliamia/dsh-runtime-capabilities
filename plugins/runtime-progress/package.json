@@ -1,7 +1,7 @@
 {
-  "name": "dsh-runtime-progress",
+  "name": "dsh-runtime-progress-legacy",
   "version": "0.1.0",
-  "description": "Reference runtime-* plugin: no-progress circuit policy on top of the runtime seam (host-only).",
+  "description": "LEGACY reference plugin (superseded 2026-09-02): seam-based shell-lock reaction. The package name dsh-runtime-progress now belongs to core/runtime-progress (the Progress fact layer); this reference stays only as a seam-usage example.",
   "type": "module",
   "main": "lib/index.js",
   "exports": {

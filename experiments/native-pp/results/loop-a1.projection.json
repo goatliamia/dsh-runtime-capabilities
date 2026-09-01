@@ -1,0 +1,125 @@
+{
+  "run": "loop-a1",
+  "sessionId": "session-<redacted>",
+  "writtenAt": 1788275099633,
+  "lastEventTime": 1788275099587,
+  "projection": {
+    "axes": {
+      "execution": {
+        "turns": 1,
+        "steps": 7,
+        "toolCalls": 9,
+        "toolErrors": 3,
+        "turnHistory": [
+          {
+            "turn": 1,
+            "steps": 7,
+            "toolCalls": 9,
+            "toolErrors": 3,
+            "reason": {
+              "kind": "completed"
+            }
+          }
+        ],
+        "turnOutcome": "completed"
+      },
+      "goal": null,
+      "effect": {
+        "exp_flaky": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 100,
+              "isError": true
+            },
+            {
+              "seq": 400,
+              "isError": true
+            },
+            {
+              "seq": 484,
+              "isError": true
+            }
+          ],
+          "callResult": "failed",
+          "worldEffect": "failed",
+          "support": [
+            100,
+            400,
+            484
+          ]
+        },
+        "pwsh": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 398,
+              "isError": false
+            },
+            {
+              "seq": 482,
+              "isError": false
+            },
+            {
+              "seq": 2223,
+              "isError": false
+            },
+            {
+              "seq": 2452,
+              "isError": false
+            },
+            {
+              "seq": 2454,
+              "isError": false
+            },
+            {
+              "seq": 2508,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            398,
+            482,
+            2223,
+            2452,
+            2454,
+            2508
+          ]
+        }
+      }
+    },
+    "verdict": {
+      "turn": "completed",
+      "execution": "failed",
+      "effect": {
+        "exp_flaky": "failed",
+        "pwsh": "success"
+      }
+    },
+    "unknownFields": [],
+    "usage": {
+      "inputTokens": 863,
+      "outputTokens": 2878,
+      "cacheReadTokens": 29440,
+      "cacheWriteTokens": 0,
+      "reasoningTokens": 2122
+    },
+    "foldStats": {
+      "events": 2691,
+      "foldMs": 1.703
+    }
+  },
+  "hostTiming": {
+    "totalUs": 1703.2000000510834,
+    "events": 2691,
+    "avgUsPerEvent": 0.63
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "agentApisCalled": 0,
+    "llmApisCalled": 0,
+    "promptEdits": 0
+  }
+}

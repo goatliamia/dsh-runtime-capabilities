@@ -1,0 +1,43 @@
+{
+  "run": "noop-a1",
+  "sessionId": "session-<redacted>",
+  "policyModel": {
+    "exp_flaky": {
+      "kind": "pure",
+      "stallThreshold": 2
+    },
+    "exp_apply": {
+      "kind": "non-atomic"
+    },
+    "exp_noop": {
+      "kind": "noop"
+    }
+  },
+  "interventions": [],
+  "guardedDenials": 0,
+  "consumedProgress": {
+    "verdict": {
+      "turn": "completed",
+      "execution": "success",
+      "effect": {
+        "exp_noop": "success"
+      }
+    },
+    "unknownFields": [],
+    "effects": {
+      "exp_noop": {
+        "called": true,
+        "callResult": "success",
+        "worldEffect": "success",
+        "support": [
+          44
+        ]
+      }
+    }
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

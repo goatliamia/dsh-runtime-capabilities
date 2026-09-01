@@ -1,0 +1,105 @@
+{
+  "run": "ok-acc1",
+  "sessionId": "session-<redacted>",
+  "writtenAt": 1788275369899,
+  "lastEventTime": 1788275365977,
+  "projection": {
+    "axes": {
+      "execution": {
+        "turns": 1,
+        "steps": 4,
+        "toolCalls": 3,
+        "toolErrors": 1,
+        "turnHistory": [
+          {
+            "turn": 1,
+            "steps": 4,
+            "toolCalls": 3,
+            "toolErrors": 1,
+            "reason": {
+              "kind": "completed"
+            }
+          }
+        ],
+        "turnOutcome": "completed"
+      },
+      "goal": null,
+      "effect": {
+        "exp_report": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 64,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            64
+          ]
+        },
+        "write": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 142,
+              "isError": true
+            }
+          ],
+          "callResult": "failed",
+          "worldEffect": "failed",
+          "support": [
+            142
+          ]
+        },
+        "str_replace_editor": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 263,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            263
+          ]
+        }
+      }
+    },
+    "verdict": {
+      "turn": "completed",
+      "execution": "failed",
+      "effect": {
+        "exp_report": "success",
+        "write": "failed",
+        "str_replace_editor": "success"
+      }
+    },
+    "unknownFields": [],
+    "usage": {
+      "inputTokens": 426,
+      "outputTokens": 378,
+      "cacheReadTokens": 12032,
+      "cacheWriteTokens": 0,
+      "reasoningTokens": 106
+    },
+    "foldStats": {
+      "events": 313,
+      "foldMs": 0.502
+    }
+  },
+  "hostTiming": {
+    "totalUs": 501.80000000068503,
+    "events": 313,
+    "avgUsPerEvent": 1.6
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "agentApisCalled": 0,
+    "llmApisCalled": 0,
+    "promptEdits": 0
+  }
+}

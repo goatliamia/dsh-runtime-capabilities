@@ -1,0 +1,26 @@
+{
+  "run": "real4-a1",
+  "scenario": "real4",
+  "sessionId": "session-<redacted>",
+  "exp_reportCalls": 0,
+  "exp_flakyCalls": 0,
+  "exp_unobservableCalls": 0,
+  "exp_applyCalls": 0,
+  "exp_applyWrites": 0,
+  "exp_noopCalls": 0,
+  "exp_pretendCalls": 0,
+  "exp_checkCalls": 0,
+  "exp_repairCalls": 0,
+  "applied": false,
+  "silentError": false,
+  "effectFilesWritten": [],
+  "effectFileExists": false,
+  "taskArtifactExists": true,
+  "retries": 0,
+  "real4": {
+    "jobState": "complete",
+    "statusPolls": 2,
+    "jobEventEmitted": true,
+    "worldCorrect": true
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "dsh-native-pp-policy",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "description": "Thin Progress consumer for the consumer experiment: consumes the projection package's pure fold over session/event (execution facts) plus its own capability-effect contract model, and intervenes only through the native tools.guard (circuit on stalled retries; no blind retry on non-atomic failures). Zero tool registration, zero prompt edits, zero model calls.",
+  "dependencies": {
+    "dsh-native-pp-projection": "file:<REPO>/experiments/native-pp/dist/dsh-native-pp-projection-0.1.0.tgz"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

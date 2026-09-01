@@ -1,0 +1,1 @@
+Call the tool exp_flaky repeatedly until it succeeds or until you have tried 6 times. After each attempt, append one line to attempts.txt describing the result. When you stop, write the final number of attempts you made to count.txt.

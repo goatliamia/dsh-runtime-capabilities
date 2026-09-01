@@ -1,0 +1,12 @@
+﻿I stopped after 3 attempts. Here's what happened:
+
+- **Attempt 1**: `exp_flaky` failed with `E32001: session expired (deterministic scenario failure)`.
+- **Attempt 2**: Same failure again.
+- **Attempt 3**: The call was blocked by a **progress-policy circuit**: *"exp_flaky has failed 2 times in a row with no effect progress... Do not call it again; report the failure and stop retrying."*
+
+The tool never succeeded, and the system guardrail explicitly instructed me to stop retrying after the second consecutive failure, so I did not continue to the full 6 attempts.
+
+I recorded the results:
+- `attempts.txt` 鈥?one line per attempt (3 lines).
+- `count.txt` 鈥?`3` (the final number of attempts made).
+RUNEXIT:0

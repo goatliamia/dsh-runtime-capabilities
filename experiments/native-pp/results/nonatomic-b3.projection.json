@@ -1,0 +1,130 @@
+{
+  "run": "nonatomic-b3",
+  "sessionId": "session-<redacted>",
+  "writtenAt": 1788268991050,
+  "lastEventTime": 1788268990992,
+  "projection": {
+    "axes": {
+      "execution": {
+        "turns": 1,
+        "steps": 11,
+        "toolCalls": 10,
+        "toolErrors": 4,
+        "turnHistory": [
+          {
+            "turn": 1,
+            "steps": 11,
+            "toolCalls": 10,
+            "toolErrors": 4,
+            "reason": {
+              "kind": "completed"
+            }
+          }
+        ],
+        "turnOutcome": "completed"
+      },
+      "goal": null,
+      "effect": {
+        "exp_apply": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 201,
+              "isError": true
+            },
+            {
+              "seq": 623,
+              "isError": true
+            },
+            {
+              "seq": 785,
+              "isError": true
+            },
+            {
+              "seq": 952,
+              "isError": true
+            }
+          ],
+          "callResult": "failed",
+          "worldEffect": "failed",
+          "support": [
+            201,
+            623,
+            785,
+            952
+          ]
+        },
+        "str_replace_editor": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 456,
+              "isError": false
+            },
+            {
+              "seq": 592,
+              "isError": false
+            },
+            {
+              "seq": 768,
+              "isError": false
+            },
+            {
+              "seq": 925,
+              "isError": false
+            },
+            {
+              "seq": 1187,
+              "isError": false
+            },
+            {
+              "seq": 1244,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            456,
+            592,
+            768,
+            925,
+            1187,
+            1244
+          ]
+        }
+      }
+    },
+    "verdict": {
+      "turn": "completed",
+      "execution": "failed",
+      "effect": {
+        "exp_apply": "failed",
+        "str_replace_editor": "success"
+      }
+    },
+    "unknownFields": [],
+    "usage": {
+      "inputTokens": 3906,
+      "outputTokens": 1615,
+      "cacheReadTokens": 66944,
+      "cacheWriteTokens": 0,
+      "reasoningTokens": 522
+    },
+    "foldStats": {
+      "events": 1335,
+      "foldMs": 1.536
+    }
+  },
+  "hostTiming": {
+    "totalUs": 1535.9000000316883,
+    "events": 1335,
+    "avgUsPerEvent": 1.15
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "agentApisCalled": 0,
+    "llmApisCalled": 0,
+    "promptEdits": 0
+  }
+}

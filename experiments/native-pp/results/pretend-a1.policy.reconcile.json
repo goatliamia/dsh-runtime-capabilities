@@ -1,0 +1,27 @@
+{
+  "run": "pretend-a1",
+  "sessionId": "session-<redacted>",
+  "policy": "reconcile",
+  "contracts": [
+    {
+      "id": "exp_apply",
+      "match": {
+        "tool": "exp_apply"
+      }
+    },
+    {
+      "id": "deploy",
+      "match": {
+        "tool": "pwsh",
+        "pattern": {}
+      }
+    }
+  ],
+  "interventions": [],
+  "guardedDenials": 0,
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

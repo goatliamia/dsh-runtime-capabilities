@@ -1,0 +1,120 @@
+{
+  "run": "nonatomic-a3",
+  "sessionId": "session-<redacted>",
+  "writtenAt": 1788269079285,
+  "lastEventTime": 1788269079236,
+  "projection": {
+    "axes": {
+      "execution": {
+        "turns": 1,
+        "steps": 7,
+        "toolCalls": 8,
+        "toolErrors": 3,
+        "turnHistory": [
+          {
+            "turn": 1,
+            "steps": 7,
+            "toolCalls": 8,
+            "toolErrors": 3,
+            "reason": {
+              "kind": "completed"
+            }
+          }
+        ],
+        "turnOutcome": "completed"
+      },
+      "goal": null,
+      "effect": {
+        "exp_apply": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 189,
+              "isError": true
+            },
+            {
+              "seq": 576,
+              "isError": true
+            }
+          ],
+          "callResult": "failed",
+          "worldEffect": "failed",
+          "support": [
+            189,
+            576
+          ]
+        },
+        "str_replace_editor": {
+          "called": true,
+          "calls": [
+            {
+              "seq": 453,
+              "isError": true
+            },
+            {
+              "seq": 555,
+              "isError": false
+            },
+            {
+              "seq": 4382,
+              "isError": false
+            },
+            {
+              "seq": 4384,
+              "isError": false
+            },
+            {
+              "seq": 4484,
+              "isError": false
+            },
+            {
+              "seq": 4486,
+              "isError": false
+            }
+          ],
+          "callResult": "success",
+          "worldEffect": "success",
+          "support": [
+            453,
+            555,
+            4382,
+            4384,
+            4484,
+            4486
+          ]
+        }
+      }
+    },
+    "verdict": {
+      "turn": "completed",
+      "execution": "failed",
+      "effect": {
+        "exp_apply": "failed",
+        "str_replace_editor": "success"
+      }
+    },
+    "unknownFields": [],
+    "usage": {
+      "inputTokens": 713,
+      "outputTokens": 4910,
+      "cacheReadTokens": 32256,
+      "cacheWriteTokens": 0,
+      "reasoningTokens": 4000
+    },
+    "foldStats": {
+      "events": 4690,
+      "foldMs": 2.846
+    }
+  },
+  "hostTiming": {
+    "totalUs": 2846.000000097092,
+    "events": 4690,
+    "avgUsPerEvent": 0.61
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "agentApisCalled": 0,
+    "llmApisCalled": 0,
+    "promptEdits": 0
+  }
+}

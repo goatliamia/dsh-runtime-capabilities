@@ -1,0 +1,11 @@
+﻿Done. I stopped retrying after 3 attempts because the progress-policy circuit breaker tripped on the third call and explicitly told me to stop.
+
+Summary:
+- **Attempt 1**: `E32001: session expired` (deterministic scenario failure)
+- **Attempt 2**: `E32001: session expired` (deterministic scenario failure)
+- **Attempt 3**: blocked by the progress-policy circuit 鈥?the tool had failed 2 times in a row with no effect progress, and the system directed me to report the failure and stop retrying.
+
+Files written:
+- `attempts.txt` 鈥?one line per attempt describing its result.
+- `count.txt` 鈥?`3`, the total number of attempts I made.
+RUNEXIT:0

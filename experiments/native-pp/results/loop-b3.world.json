@@ -1,0 +1,20 @@
+{
+  "run": "loop-b3",
+  "scenario": "loop",
+  "sessionId": "session-<redacted>",
+  "exp_reportCalls": 0,
+  "exp_flakyCalls": 6,
+  "exp_unobservableCalls": 0,
+  "exp_applyCalls": 0,
+  "exp_applyWrites": 0,
+  "exp_noopCalls": 0,
+  "exp_pretendCalls": 0,
+  "exp_checkCalls": 0,
+  "exp_repairCalls": 0,
+  "applied": false,
+  "silentError": false,
+  "effectFilesWritten": [],
+  "effectFileExists": false,
+  "taskArtifactExists": true,
+  "retries": 5
+}

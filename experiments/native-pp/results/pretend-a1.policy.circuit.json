@@ -1,0 +1,21 @@
+{
+  "run": "pretend-a1",
+  "sessionId": "session-<redacted>",
+  "policy": "circuit",
+  "contracts": [
+    {
+      "threshold": 2,
+      "id": "exp_flaky",
+      "match": {
+        "tool": "exp_flaky"
+      }
+    }
+  ],
+  "interventions": [],
+  "guardedDenials": 0,
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

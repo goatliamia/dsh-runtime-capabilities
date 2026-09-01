@@ -1,0 +1,10 @@
+# Balanced mode: 明显无进展时停止；可疑结果做必要检查。
+# 职责组合（docs/17 §5、docs/18 §3）：
+#   guard      已知非法动作拦截
+#   circuit    连续无进展熔断（消费 Progress 的 stalled）
+#   reconcile  副作用可能已发生时不盲目重试（failure + progressed）
+#   delta      critical-delta-first 上下文（placement 实验定稿）
+agent-presets:
+  default: minimal
+runtime-seam:
+  preset: balanced

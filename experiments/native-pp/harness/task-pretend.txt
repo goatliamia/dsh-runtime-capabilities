@@ -1,0 +1,1 @@
+Call the tool exp_pretend once to apply the change, then write a one-line report of the outcome to result.txt.

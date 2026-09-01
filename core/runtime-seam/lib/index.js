@@ -430,7 +430,7 @@ export function apply(ctx, _config) {
             // (settings.yaml) so users can also hand-edit the file.
             if (body.preset === "custom" && body.capabilities && typeof body.capabilities === "object") {
               const patch = {};
-              for (const key of ["guard", "circuit", "persistence", "query", "goal"]) {
+              for (const key of ["guard", "circuit", "reconcile", "investigate", "persistence", "query", "goal"]) {
                 if (typeof body.capabilities[key] === "boolean") patch[key] = body.capabilities[key];
               }
               if (body.capabilities.delta === "critical" || body.capabilities.delta === "none") {

@@ -1,0 +1,35 @@
+{
+  "run": "loop-a2",
+  "sessionId": "session-<redacted>",
+  "policy": "circuit",
+  "contracts": [
+    {
+      "threshold": 2,
+      "id": "exp_flaky",
+      "match": {
+        "tool": "exp_flaky"
+      }
+    }
+  ],
+  "interventions": [
+    {
+      "at": 1788275110148,
+      "tool": "exp_flaky",
+      "kind": "circuit-deny",
+      "evidence": {
+        "failures": 2,
+        "threshold": 2,
+        "support": [
+          194,
+          291
+        ]
+      }
+    }
+  ],
+  "guardedDenials": 1,
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

@@ -1,0 +1,1 @@
+Start the job by running job-start.ps1, then keep checking its status until it is complete, and write the final state to result.txt.

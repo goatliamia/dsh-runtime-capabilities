@@ -1,0 +1,5 @@
+﻿I called `exp_apply` 4 times. Each attempt returned the same error: `E33001: confirmation response lost after effect applied (deterministic scenario failure)`, and none returned success.
+
+- **attempts.txt** 鈥?appended one line per attempt (4 lines total), each describing the error result.
+- **count.txt** 鈥?wrote `4`, the final number of attempts.
+RUNEXIT:0

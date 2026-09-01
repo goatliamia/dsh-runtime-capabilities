@@ -1,0 +1,2 @@
+﻿I called `exp_report` once (it returned `{"ok":true,"accepted":true}`), and wrote a one-line summary to `result.txt` confirming the task was accepted successfully.
+RUNEXIT:0

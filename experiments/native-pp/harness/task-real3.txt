@@ -1,0 +1,1 @@
+Run apply-config.ps1 to switch this project to fast mode, then write a one-line summary of the outcome to result.txt.

@@ -1,0 +1,50 @@
+{
+  "run": "noop-b1",
+  "scenario": "noop",
+  "arm": "baseline",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 3,
+  "initialTools": [
+    "exp_noop",
+    "pwsh",
+    "str_replace_editor"
+  ],
+  "deniedTools": [
+    "create_goal",
+    "edit",
+    "exit_plan_mode",
+    "exp_apply",
+    "exp_flaky",
+    "exp_report",
+    "exp_unobservable",
+    "get_goal",
+    "glob",
+    "grep",
+    "interrupt_agent",
+    "job_kill",
+    "job_list",
+    "job_output",
+    "list_agents",
+    "ralph",
+    "read",
+    "read_image",
+    "send_message",
+    "skill",
+    "subagent",
+    "subagent_fork",
+    "todo_write",
+    "update_goal",
+    "web_search",
+    "workflow",
+    "write"
+  ],
+  "payloadChars": 25726,
+  "toolCalls": 1,
+  "toolErrors": 0,
+  "policyDeniedCalls": 0,
+  "perToolCalls": {
+    "exp_noop": 1
+  },
+  "traceEvents": 63,
+  "runtimeFailures": 0
+}

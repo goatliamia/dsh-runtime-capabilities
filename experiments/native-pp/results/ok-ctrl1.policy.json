@@ -1,0 +1,52 @@
+{
+  "run": "ok-ctrl1",
+  "sessionId": "session-<redacted>",
+  "policyModel": {
+    "exp_flaky": {
+      "kind": "pure",
+      "stallThreshold": 2
+    },
+    "exp_apply": {
+      "kind": "non-atomic"
+    },
+    "exp_noop": {
+      "kind": "noop"
+    }
+  },
+  "interventions": [],
+  "guardedDenials": 0,
+  "consumedProgress": {
+    "verdict": {
+      "turn": "completed",
+      "execution": "success",
+      "effect": {
+        "exp_report": "success",
+        "str_replace_editor": "success"
+      }
+    },
+    "unknownFields": [],
+    "effects": {
+      "exp_report": {
+        "called": true,
+        "callResult": "success",
+        "worldEffect": "success",
+        "support": [
+          58
+        ]
+      },
+      "str_replace_editor": {
+        "called": true,
+        "callResult": "success",
+        "worldEffect": "success",
+        "support": [
+          150
+        ]
+      }
+    }
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

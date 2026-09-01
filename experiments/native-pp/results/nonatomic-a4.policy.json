@@ -1,0 +1,75 @@
+{
+  "run": "nonatomic-a4",
+  "sessionId": "session-<redacted>",
+  "policyModel": {
+    "exp_flaky": {
+      "kind": "pure",
+      "stallThreshold": 2
+    },
+    "exp_apply": {
+      "kind": "non-atomic"
+    },
+    "exp_noop": {
+      "kind": "noop"
+    },
+    "exp_pretend": {
+      "kind": "claimed"
+    },
+    "exp_check": {
+      "kind": "verify"
+    },
+    "exp_repair": {
+      "kind": "repair"
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788269090078,
+      "tool": "exp_apply",
+      "kind": "non-atomic-deny",
+      "evidence": {
+        "calls": 1,
+        "anyFailure": true
+      }
+    }
+  ],
+  "guardedDenials": 1,
+  "consumedProgress": {
+    "verdict": {
+      "turn": "completed",
+      "execution": "failed",
+      "effect": {
+        "exp_apply": "failed",
+        "str_replace_editor": "success"
+      }
+    },
+    "unknownFields": [],
+    "effects": {
+      "exp_apply": {
+        "called": true,
+        "callResult": "failed",
+        "worldEffect": "failed",
+        "support": [
+          135,
+          567
+        ]
+      },
+      "str_replace_editor": {
+        "called": true,
+        "callResult": "success",
+        "worldEffect": "success",
+        "support": [
+          419,
+          549,
+          1256,
+          1548
+        ]
+      }
+    }
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

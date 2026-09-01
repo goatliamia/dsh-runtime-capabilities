@@ -1,0 +1,20 @@
+{
+  "name": "dsh-runtime-circuit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "description": "Policy layer (consumer of dsh-runtime-progress): stalled x N -> circuit -> guard deny. Semantics: repeated failure with NO effect progress (execution=failed, effect=stalled), evidenced by the Progress fold. Never retries/stops/waits itself; only denies through the native tools.guard.",
+  "dependencies": {
+    "dsh-runtime-progress": "file:D:/projects/runtime/dsh-runtime/experiments/native-pp/dist/dsh-runtime-progress-0.1.0.tgz"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

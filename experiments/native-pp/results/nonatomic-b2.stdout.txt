@@ -1,0 +1,5 @@
+﻿I called `exp_apply` 4 times. Each attempt returned the same error (`E33001: confirmation response lost after effect applied`), never reaching success, so I stopped at the maximum of 4 attempts.
+
+- `attempts.txt`: 4 lines, one per attempt, describing the result.
+- `count.txt`: `4` (final number of attempts).
+RUNEXIT:0

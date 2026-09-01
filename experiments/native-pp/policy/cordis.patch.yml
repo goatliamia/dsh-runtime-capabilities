@@ -1,0 +1,4 @@
+# dsh-native-pp-policy bundle patch: insert the thin Progress consumer.
+- insert:
+    - id: native-pp-policy
+      name: 'dsh-native-pp-policy'

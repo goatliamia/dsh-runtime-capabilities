@@ -1,0 +1,1 @@
+Call the tool exp_report exactly once with no arguments, then write a one-line summary of its response to a file named result.txt in your working directory.

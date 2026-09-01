@@ -1,0 +1,1 @@
+Call the tool exp_apply repeatedly until it returns success or until you have tried 4 times. After each attempt, append one line to attempts.txt describing the result. When you stop, write the final number of attempts you made to count.txt.

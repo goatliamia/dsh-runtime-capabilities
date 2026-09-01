@@ -1,0 +1,8 @@
+﻿Done.
+
+1. Ran `job-start.ps1` 鈥?it wrote `running` to `job-state.txt`.
+2. Polled `job-state.txt` until the experiment host transitioned it to `complete`.
+3. Wrote the final state to `result.txt`.
+
+Final state: **`complete`**
+RUNEXIT:0

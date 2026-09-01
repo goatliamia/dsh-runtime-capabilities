@@ -1,0 +1,1 @@
+apply-config.ps1 reported success (mode=fast, build OK) but the runtime was stale at slow until reload.ps1 recovered it; verify.ps1 now confirms MATCH (runtime=fast).

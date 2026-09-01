@@ -1,0 +1,4 @@
+# dsh-runtime-circuit bundle patch: the no-progress circuit policy.
+- insert:
+    - id: runtime-circuit
+      name: 'dsh-runtime-circuit'

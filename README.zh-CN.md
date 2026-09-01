@@ -2,13 +2,21 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-**一组基于真实实验与轨迹证据提炼出来的 DeepSeek Harness 确定性能力。**
+**Small deterministic runtime capabilities for agents running on DeepSeek Harness.**
 
-阻止确定无效的动作，终止没有进展的执行路径，保留运行时状态，只暴露真正有意义的变化。
+一句话人话：**让 Harness 处理那些不值得交给模型猜的问题。**
+
+三个问题解释整个仓库：
+
+```text
+Guard     “这件事现在能不能做？”
+Progress  “刚才到底发生了什么？”
+Circuit / Reconcile “知道之后，还要不要继续？”
+```
 
 > **Agent = Model + Harness**
 
-这个仓库探索的是一组从真实 DeepSeek Harness trajectory 中逐步提取出来的 Runtime / Harness capabilities，包括 **Guard、Circuit、Delta、Silence、Persistence** 等。
+这个仓库探索的是一组从真实 DeepSeek Harness trajectory 中逐步提取出来的 Runtime / Harness capabilities，包括 **Guard、Progress（Event 投影）、Circuit、Reconcile、Investigate、Delta、Persistence** 等。
 
 它并不试图定义一个完整的 Universal Runtime。
 

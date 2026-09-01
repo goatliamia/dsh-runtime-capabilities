@@ -1,0 +1,4 @@
+# dsh-native-pp-fixture bundle patch: insert the experiment host plugin.
+- insert:
+    - id: native-pp-fixture
+      name: 'dsh-native-pp-fixture'

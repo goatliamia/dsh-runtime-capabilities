@@ -1,0 +1,95 @@
+{
+  "run": "real6-a1",
+  "sessionId": "session-<redacted>",
+  "policyModel": {
+    "exp_flaky": {
+      "kind": "pure",
+      "stallThreshold": 2
+    },
+    "exp_apply": {
+      "kind": "non-atomic"
+    },
+    "exp_noop": {
+      "kind": "noop"
+    },
+    "exp_pretend": {
+      "kind": "claimed"
+    },
+    "exp_check": {
+      "kind": "verify"
+    },
+    "exp_repair": {
+      "kind": "repair"
+    }
+  },
+  "interventions": [],
+  "guardedDenials": 0,
+  "consumedProgress": {
+    "verdict": {
+      "turn": "completed",
+      "execution": "success",
+      "effect": {
+        "glob": "success",
+        "read": "success",
+        "edit": "success",
+        "pwsh": "success",
+        "write": "success"
+      }
+    },
+    "unknownFields": [],
+    "effects": {
+      "glob": {
+        "called": true,
+        "callResult": "success",
+        "worldEffect": "success",
+        "support": [
+          63,
+          178,
+          180,
+          182,
+          184,
+          186
+        ]
+      },
+      "read": {
+        "called": true,
+        "callResult": "success",
+        "worldEffect": "success",
+        "support": [
+          241,
+          242,
+          243
+        ]
+      },
+      "edit": {
+        "called": true,
+        "callResult": "success",
+        "worldEffect": "success",
+        "support": [
+          352
+        ]
+      },
+      "pwsh": {
+        "called": true,
+        "callResult": "success",
+        "worldEffect": "success",
+        "support": [
+          418
+        ]
+      },
+      "write": {
+        "called": true,
+        "callResult": "success",
+        "worldEffect": "success",
+        "support": [
+          490
+        ]
+      }
+    }
+  },
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

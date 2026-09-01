@@ -1,0 +1,40 @@
+{
+  "run": "nonatomic-a2",
+  "sessionId": "session-<redacted>",
+  "policy": "reconcile",
+  "contracts": [
+    {
+      "id": "exp_apply",
+      "match": {
+        "tool": "exp_apply"
+      }
+    },
+    {
+      "id": "deploy",
+      "match": {
+        "tool": "pwsh",
+        "pattern": {}
+      }
+    }
+  ],
+  "interventions": [
+    {
+      "at": 1788275237037,
+      "tool": "exp_apply",
+      "kind": "non-atomic-deny",
+      "evidence": {
+        "matchedCalls": 1,
+        "anyFailure": true,
+        "support": [
+          98
+        ]
+      }
+    }
+  ],
+  "guardedDenials": 1,
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}
