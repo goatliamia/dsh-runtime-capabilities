@@ -2,13 +2,74 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-**Evidence-backed deterministic Harness capabilities for DeepSeek Harness.**
+**Small deterministic runtime capabilities for agents running on DeepSeek Harness.**
 
-Guard invalid actions. Stop no-progress execution. Preserve runtime state. Expose only meaningful changes.
+In plain words: **let the Harness handle the problems that are not worth making the model guess.**
 
 > **Agent = Model + Harness**
 
-This repository explores a small set of Runtime / Harness capabilities extracted from real DeepSeek Harness trajectories — including **Guard, Circuit, Delta, Silence, and Persistence**.
+---
+
+## Capability overview
+
+| Capability | Question it answers | Measured value |
+|---|---|---|
+| **Guard** | May this action run right now? | Deterministically blocks known-invalid actions |
+| **Progress** | What actually just happened? | Event → execution / effect / progress / unknown (pure projection, fact layer) |
+| **Circuit** | No progress after N tries — keep going? | Wasted retries 6→2 (−67%), cacheRead −27% |
+| **Reconcile** | It errored — but the side effect may have landed? | Duplicate side effects 4→1 (−75%), no blind retry |
+| **Investigate** | It said success — but did anything actually happen? | Silent failures 2/2→0/2 (verify → repair) |
+| **Delta** | Should the model be told about this? | Changes appear only when they happen; only committed changes are announced |
+| **Persistence** | Must known facts be rediscovered every session? | Deterministic state reused across sessions |
+
+Full data and scenarios: `docs/status/native-pp-*.md`. Normal-task control: **0 false interventions, zero quality regression** — the capabilities act only where the model cannot see through on its own.
+
+---
+
+## The core insight: Event is the single source of truth
+
+The reason Runtime can do all of this elegantly rests on one understanding of DSH:
+
+> **Every executed step is already a durable, append-only event stream. Event is the single source of truth; everything else is a projection.**
+
+Two inequalities follow, both backed by experiment data:
+
+```text
+tool error   ≠  world didn't change   (an error does not mean nothing happened → Reconcile)
+tool success ≠  world changed         (success does not mean anything happened → Investigate)
+```
+
+And one discipline:
+
+> **When an effect is not observable in the event stream, the projection honestly reports unknown — never fabricates.** (stalled ≠ stop; unknown ≠ failed)
+
+---
+
+## Why this is especially elegant in DSH
+
+On most frameworks, a "deterministic Runtime" like this starts with building your own event bus. In DSH, every layer is a thin wrapper over native capability:
+
+```text
+Event (durable session log, append-only, official replay API)
+  ↓
+Progress (pure fold: reads events → execution / effect / progress / unknown)
+  ↓
+Policy (circuit / reconcile / investigate, each consuming Progress)
+  ↓
+tools.guard / pre-step (native intervention points)
+```
+
+- **No second source of truth**: the projection builds no database and writes no state files — the event stream IS the truth;
+- **Denial is zero side effect**: guard sits before the tool body executes, so a rejection is physically real, not a post-hoc fix;
+- **Replay is free**: live fold == official cross-process replay == independent implementation, field-by-field equal;
+- **Zero cost surface**: the projection never touches the model — no context, no prompt edits, zero token growth (~2μs per event);
+- **Interventions are explainable**: every denial carries evidence (`support: [event seq]`), so the UI can answer "why did Runtime intervene".
+
+---
+
+## Where this starts
+
+This repository explores a small set of Runtime / Harness capabilities extracted from real DeepSeek Harness trajectories — including **Guard, Progress (Event projection), Circuit, Reconcile, Investigate, Delta, and Persistence**.
 
 It does not attempt to define a complete Universal Runtime.
 
@@ -417,6 +478,48 @@ State may be retained.
 That does not mean every Session should automatically inject it.
 
 Even less that it should be repeated every time.
+
+---
+
+## 7. Progress: Event is the single source of truth (2026-09 experiment line)
+
+We validated a mechanism more fundamental than "one more interceptor": **Progress needs no new runtime at all**.
+
+A DSH session is itself a durable, append-only event stream (every step is a record: `turn/end`, `tool/call`, `tool/result`, `goal/change`, …). Progress is just a pure fold:
+
+```text
+Event → { execution, effect, progress, unknown }
+```
+
+Three hard conclusions (`docs/status/native-pp-2026-09-02.md`):
+
+1. **The projection is a pure function**: live fold == official cross-process replay == independent implementation, field-by-field equal;
+2. **Zero cost surface**: no tools registered, no prompt edits, zero model calls; host cost ≈2μs per event;
+3. **Unobservable means unknown**: when an external side effect is not in the event stream, the projection honestly reports unknown — never fabricates.
+
+Its value is not "making the model reason better" — it is **giving the Agent loop a criterion closer to reality than the tool result**:
+
+```text
+tool error   ≠  world didn't change
+tool success ≠  world changed
+```
+
+`core/runtime-progress` is the fact layer and **owns no policy** — the most important structural decision in this repository.
+
+## 8. Circuit + Reconcile + Investigate: three policies consuming Progress
+
+The same `stalled` fact calls for three completely different responses — so they are three independent consumers, not one "smart Circuit" (`docs/status/native-pp-consumer-2026-09-02.md`):
+
+| Observed | Policy | Action | Measured |
+|---|---|---|---|
+| failure + stalled | **Circuit** | No progress after N → deny further retries | Real executions 6→2 (−67%), cacheRead −27%, stable at N=4 |
+| failure + progressed | **Reconcile** | Side effect may have landed → no blind retry | Duplicate side effects 4→1 (−75%) |
+| success + stalled | **Investigate** | Verify → discover the gap → repair | Silent failures 2/2 → 0/2 (buys correctness, costs extra tokens) |
+| success + progressed | (no intervention) | Continue | Control cell: 0 interventions |
+
+The principle: **stalled ≠ stop**. Circuit handles "repeated no-progress", Reconcile handles "the result is untrustworthy but a side effect may have happened", Investigate handles "claimed success that did not take effect" — never merged.
+
+Real-scenario boundary (`docs/status/native-pp-real-2026-09-02.md`): when the side effect is locally verifiable and the model is strong enough (deploy timeout, short polling), the baseline model handles it alone and the policy stays silent — **the value concentrates where the model cannot see through**. Normal tasks: 0 false interventions.
 
 ---
 
