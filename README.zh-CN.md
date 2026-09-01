@@ -6,15 +6,68 @@
 
 一句话人话：**让 Harness 处理那些不值得交给模型猜的问题。**
 
-三个问题解释整个仓库：
+> **Agent = Model + Harness**
+
+---
+
+## 功能总览
+
+| 能力 | 回答的问题 | 实测价值 |
+|---|---|---|
+| **Guard** | 这件事现在能不能做？ | 确定性拦截已知非法的动作 |
+| **Progress** | 刚才到底发生了什么？ | Event → execution / effect / progress / unknown（纯投影，事实层） |
+| **Circuit** | 连续没有进展，还要不要继续？ | 无用重试 6→2（−67%），cacheRead −27% |
+| **Reconcile** | 报错了，但副作用可能已经发生？ | 重复副作用 4→1（−75%），不盲目重试 |
+| **Investigate** | 说成功了，但真的生效了吗？ | 静默失败 2/2→0/2（verify → repair） |
+| **Delta** | 这件事要不要告诉模型？ | 变化才出现，只通知承诺过的变更 |
+| **Persistence** | 上一轮的确定事实还要重新发现吗？ | 跨会话复用确定状态 |
+
+完整数据与场景：`docs/status/native-pp-*.md`。正常任务对照：**0 误介入、质量零回退**——能力只在模型看不穿的地方出手。
+
+---
+
+## 核心认识：Event 是唯一真源
+
+Runtime 能优雅地做上面这些事，根基是一个对 DSH 的认识：
+
+> **执行过的每一步，都已经成为一条持久化的事件流。Event 是唯一真源，其余一切都是投影。**
+
+由此得到两个关键不等式（都有实验数据支持）：
 
 ```text
-Guard     “这件事现在能不能做？”
-Progress  “刚才到底发生了什么？”
-Circuit / Reconcile “知道之后，还要不要继续？”
+tool error   ≠  world didn't change   （报错不代表世界没变 → Reconcile）
+tool success ≠  world changed         （成功不代表事情发生 → Investigate）
 ```
 
-> **Agent = Model + Harness**
+以及一条纪律：
+
+> **观察不到的 effect，投影如实返回 unknown，绝不编造。**（stalled ≠ stop；unknown ≠ failed）
+
+---
+
+## 为什么这件事在 DSH 里特别优雅
+
+同样的「确定性 Runtime」在别的框架里通常要从事件总线开始自己搭；在 DSH 里，每一层都是**原生能力的薄封装**：
+
+```text
+Event（session 持久化日志，append-only，官方重放 API）
+  ↓
+Progress（纯 fold：读事件 → execution / effect / progress / unknown）
+  ↓
+Policy（circuit / reconcile / investigate，各自消费 Progress）
+  ↓
+tools.guard / pre-step（原生介入点）
+```
+
+- **没有第二真源**：投影不建数据库、不写状态文件——事件流本身就是真相；
+- **拦截即零副作用**：guard 拦在工具体执行之前，拒绝是物理成立的；
+- **重放免费**：live fold == 官方跨进程重放 == 独立实现，三路逐字段一致；
+- **零成本面**：投影不碰模型——不占上下文、不改 prompt、零 token 增量（每事件约 2μs）；
+- **介入可解释**：每条拒绝带证据引用（`support: [event seq]`），UI 能回答「为什么这次介入」。
+
+---
+
+## 从哪个问题开始
 
 这个仓库探索的是一组从真实 DeepSeek Harness trajectory 中逐步提取出来的 Runtime / Harness capabilities，包括 **Guard、Progress（Event 投影）、Circuit、Reconcile、Investigate、Delta、Persistence** 等。
 
@@ -423,6 +476,48 @@ pickup
 不代表每个 Session 都应该自动把它注入模型。
 
 更不代表每次都应该重复告诉模型。
+
+---
+
+## 7. Progress：Event 是唯一真源（2026-09 实验线）
+
+我们验证了一个比「再做一个拦截」更根本的机制：**Progress 不需要任何新运行时**。
+
+DSH 的会话本身就是一条持久化、append-only 的事件流（每一步都有 record：`turn/end`、`tool/call`、`tool/result`、`goal/change`……）。Progress 只是一个纯 fold：
+
+```text
+Event → { execution, effect, progress, unknown }
+```
+
+三个硬结论（`docs/status/native-pp-2026-09-02.md`）：
+
+1. **投影是纯函数**：live fold == 官方跨进程重放 == 独立实现，三路逐字段一致；
+2. **零成本面**：不注册工具、不改 prompt、零模型调用，host 成本约 2μs/事件；
+3. **观察不到就说 unknown**：外部副作用不在事件流里时，投影如实返回 unknown，绝不编造。
+
+它的价值不是「帮模型更会推理」，而是**给 Agent loop 提供比 tool result 更接近现实的判据**：
+
+```text
+tool error   ≠  world didn't change
+tool success ≠  world changed
+```
+
+`core/runtime-progress` 是事实层，**不拥有任何 policy**——这是本仓库最重要的结构决策。
+
+## 8. Circuit + Reconcile + Investigate：三种消费 Progress 的 Policy
+
+同一个 `stalled` 事实，三种完全不同的应对——所以它们是三个独立的 consumer，而不是一个「聪明 Circuit」（`docs/status/native-pp-consumer-2026-09-02.md`）：
+
+| 观察到 | Policy | 动作 | 实测 |
+|---|---|---|---|
+| failure + stalled | **Circuit** | 连续无进展 → 拒绝继续重试 | 真实执行 6→2（−67%），cacheRead −27%，N=4 稳定 |
+| failure + progressed | **Reconcile** | 副作用可能已发生 → 不盲目重试 | 重复副作用 4→1（−75%） |
+| success + stalled | **Investigate** | 验证 → 发现缺失 → 修复 | 静默失败 2/2 → 0/2（买正确性，代价是更多 token） |
+| success + progressed | （不介入） | 继续 | 对照格 0 介入 |
+
+原则：**stalled ≠ stop**。Circuit 管「重复没有进展」，Reconcile 管「结果不可信但副作用可能已发生」，Investigate 管「说成功但没生效」——不合并。
+
+真实场景边界（`docs/status/native-pp-real-2026-09-02.md`）：当副作用本地可验证且模型足够强时（部署超时、短轮询），baseline 模型自己就能处理，policy 保持沉默——**价值集中在模型看不穿的地方**。正常任务 0 误介入。
 
 ---
 
