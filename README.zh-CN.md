@@ -1,16 +1,21 @@
-# DSH Runtime
+# DSH Runtime Capabilities
 
-[简体中文](README.zh-CN.md) | [English](README.md)
+[English](README.md) | [简体中文](README.zh-CN.md)
 
-**面向 DeepSeek Harness 的实验性 Runtime / Harness 能力集合。**
+**一组基于真实实验与轨迹证据提炼出来的 DeepSeek Harness 确定性能力。**
+
+阻止确定无效的动作，终止没有进展的执行路径，保留运行时状态，只暴露真正有意义的变化。
 
 > **Agent = Model + Harness**
 
-这个仓库并不是在定义一个完整的 Universal Runtime。
+这个仓库探索的是一组从真实 DeepSeek Harness trajectory 中逐步提取出来的 Runtime / Harness capabilities，包括 **Guard、Circuit、Delta、Silence、Persistence** 等。
 
-它来自一个更简单的问题：
+它并不试图定义一个完整的 Universal Runtime。
 
-> **当一个 Agent 在真实环境中反复遇到问题时，其中有多少部分已经确定到"不应该继续由模型负责"？**
+它从一个更简单的问题开始：
+
+> **当 Agent 在真实环境中反复遇到问题时，其中有多少工作其实已经足够确定，不应该再继续由模型负责？**
+
 
 如果一个能力真的需要，它可以作为 Plugin 被加载。
 
