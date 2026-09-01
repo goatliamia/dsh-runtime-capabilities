@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/goatliamia/dsh-runtime.git",
+    "url": "git+https://github.com/goatliamia/dsh-runtime-capabilities.git",
     "directory": "core/runtime-seam"
   },
   "engines": {
