@@ -1,16 +1,21 @@
-# DSH Runtime
+# DSH Runtime Capabilities
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-**An experimental Runtime / Harness capability set for DeepSeek Harness.**
+**Evidence-backed deterministic Harness capabilities for DeepSeek Harness.**
+
+Guard invalid actions. Stop no-progress execution. Preserve runtime state. Expose only meaningful changes.
 
 > **Agent = Model + Harness**
 
-This repository does not attempt to define a complete Universal Runtime.
+This repository explores a small set of Runtime / Harness capabilities extracted from real DeepSeek Harness trajectories — including **Guard, Circuit, Delta, Silence, and Persistence**.
 
-It starts from a much simpler question:
+It does not attempt to define a complete Universal Runtime.
 
-> **When an Agent repeatedly runs into problems in a real environment, how much of it is already deterministic enough that the model should no longer be responsible for it?**
+Instead, it starts from a simpler question:
+
+> **When an Agent repeatedly runs into problems in a real environment, how much of that work is already deterministic enough that the model should no longer be responsible for it?**
+
 
 If a capability is genuinely needed, it can be loaded as a Plugin.
 
