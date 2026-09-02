@@ -1,0 +1,42 @@
+{
+  "run": "rc-c2",
+  "sessionId": "session-<redacted>",
+  "eventsDecoded": 5255,
+  "checks": [
+    {
+      "id": "provenance-fields-seq1925",
+      "ok": true,
+      "detail": {
+        "outcome": "discarded",
+        "basedOn": {
+          "artifactRev": 12,
+          "artifactSeq": 1920,
+          "runtimeRev": 11,
+          "runtimeSeq": 914
+        },
+        "revision": null
+      }
+    },
+    {
+      "id": "stale-actor-contract-stale_1788353450991",
+      "ok": true,
+      "detail": {
+        "pairSeq": 1922,
+        "callSeq": 1923,
+        "resultSeq": 1924
+      }
+    }
+  ],
+  "verdicts": {
+    "confoundedByCompaction": false,
+    "continuationRecords": 1,
+    "continuationToolCalls": 0,
+    "staleActorToolCalls": 1,
+    "officialReplayCompatible": false,
+    "dispatched": 0,
+    "discarded": 1
+  },
+  "notes": [
+    "persistence read path would REFUSE this log (assertEventsSupported): unknown non-ignorable type(s) runtime/continuation@1925 — expected for the runtime/continuation custom kind on the pinned version; feeds the route-B seam proposal"
+  ]
+}

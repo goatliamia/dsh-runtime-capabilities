@@ -1,0 +1,18 @@
+{
+  "run": "rc-cp1",
+  "scenario": "rc",
+  "arm": "cpartial",
+  "sessionId": "session-<redacted>",
+  "staleBumps": 1,
+  "taskArtifactExists": true,
+  "rc": {
+    "artifactRev": 13,
+    "runtimeRev": 13,
+    "reloadCount": 1,
+    "rollbackCount": 0,
+    "reloadMarkerExists": true,
+    "verifyResult": "MATCH (artifact=13 runtime=13)",
+    "healthCheck": null,
+    "worldAligned": true
+  }
+}

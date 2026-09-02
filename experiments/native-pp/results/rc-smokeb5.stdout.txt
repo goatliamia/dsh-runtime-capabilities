@@ -1,0 +1,7 @@
+﻿Done.
+
+1. **Ran `build.ps1`** → produced `artifact.json` = `{"revision":12}` (`BUILD OK artifact=12`).
+2. **Confirmed the plugin takes effect in the runtime** → the continuation plugin detected the deterministic `plugin-revision-mismatch` (artifact=12 vs runtime=11), dispatched `reload.ps1`, which aligned `runtime-state.txt` to `runtime_revision=12`; `verify.ps1` then reported `MATCH (artifact=12 runtime=12)`.
+3. **Wrote `result.txt`** with a one-line summary.
+
+Final state: `artifact.json` = revision 12, `runtime-state.txt` = `runtime_revision=12`, `verify-result.txt` = `MATCH`, and `result.txt` records the outcome.

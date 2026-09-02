@@ -1,0 +1,5 @@
+﻿Done. Summary of the outcome:
+
+1. **Build** — `build.ps1` produced `artifact.json` with `revision: 12` (`BUILD OK artifact=12`).
+2. **Plugin effect** — `reload.ps1` aligned the runtime state to `runtime_revision=12`, and `verify.ps1` confirmed the plugin took effect: `verify: artifact=12 runtime_revision=12 => MATCH`.
+3. **Result** — wrote the one-line summary to `result.txt`.

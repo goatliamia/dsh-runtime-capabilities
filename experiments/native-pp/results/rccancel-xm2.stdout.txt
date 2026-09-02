@@ -1,0 +1,1 @@
+﻿I now understand the setup: this is the `rccancel`/`cancelmid` deterministic world — `build.ps1` writes `artifact.json` (revision 12), the runtime is stale at `runtime_revision=11`, and the `dsh-native-pp-continuation` plugin is active in this runtime (dispatches `reload-slow.ps1` on mismatch). Let me run the build.

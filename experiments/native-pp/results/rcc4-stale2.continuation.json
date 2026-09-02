@@ -1,0 +1,74 @@
+{
+  "run": "rcc4-stale2",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision",
+    "post"
+  ],
+  "metrics": {
+    "run": "rcc4-stale2",
+    "scenario": "rcc4",
+    "arm": "chainstale",
+    "intents": 1,
+    "dispatches": 1,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 1,
+    "casChecks": 1,
+    "guardDenials": 0,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 8,
+      "complete": 4
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788366229010,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788366245891,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788366266220,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 2172,
+        "runtimeRev": 11,
+        "runtimeSeq": 852
+      }
+    },
+    {
+      "at": 1788366266541,
+      "kind": "dispatched",
+      "contract": "plugin-revision-mismatch",
+      "callId": "cont_1788366266221_1",
+      "callSeq": 2175,
+      "resultSeq": 2176,
+      "resultIsError": false
+    },
+    {
+      "at": 1788366280804,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 1,
+    "modelCallsInitiated": 0
+  }
+}

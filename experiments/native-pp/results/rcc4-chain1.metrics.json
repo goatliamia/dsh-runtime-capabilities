@@ -1,0 +1,23 @@
+{
+  "run": "rcc4-chain1",
+  "scenario": "rcc4",
+  "arm": "chain",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 26,
+  "toolCalls": 51,
+  "toolErrors": 2,
+  "perToolCalls": {
+    "glob": 8,
+    "read": 28,
+    "pwsh": 12,
+    "grep": 2,
+    "write": 1
+  },
+  "payloadChars": 4306462,
+  "traceEvents": 31258,
+  "staleBumps": 0,
+  "staleBumpFailures": 0,
+  "cancelInjected": 0,
+  "guardDenials": 0,
+  "runtimeFailures": 0
+}

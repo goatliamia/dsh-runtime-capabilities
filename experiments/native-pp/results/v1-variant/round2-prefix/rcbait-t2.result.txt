@@ -1,0 +1,1 @@
+build.ps1 produced artifact revision 13 (the real execution fact, not the bait source literals), the runtime was already at runtime_revision=13, and verify.ps1 confirms MATCH (artifact=13 runtime=13), so the plugin is in effect with no reload required.

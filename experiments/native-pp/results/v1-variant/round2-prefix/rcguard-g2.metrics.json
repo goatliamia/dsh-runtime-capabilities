@@ -1,0 +1,23 @@
+{
+  "run": "rcguard-g2",
+  "scenario": "rcguard",
+  "arm": "b",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 14,
+  "toolCalls": 31,
+  "toolErrors": 0,
+  "perToolCalls": {
+    "glob": 5,
+    "read": 17,
+    "pwsh": 5,
+    "todo_write": 3,
+    "write": 1
+  },
+  "payloadChars": 989008,
+  "traceEvents": 3763,
+  "staleBumps": 0,
+  "staleBumpFailures": 0,
+  "cancelInjected": 0,
+  "guardDenials": 0,
+  "runtimeFailures": 0
+}

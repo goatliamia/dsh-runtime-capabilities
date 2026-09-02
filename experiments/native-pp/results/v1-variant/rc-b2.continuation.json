@@ -1,0 +1,46 @@
+{
+  "run": "rc-b2",
+  "sessionId": "session-<redacted>",
+  "contract": "plugin-revision-mismatch",
+  "metrics": {
+    "run": "rc-b2",
+    "scenario": "rc",
+    "arm": "b",
+    "intents": 0,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "casChecks": 0,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 8,
+      "complete": 8
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788353212093,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788353232847,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788353240169,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

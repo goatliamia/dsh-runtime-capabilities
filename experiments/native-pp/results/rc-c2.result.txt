@@ -1,0 +1,1 @@
+build.ps1 produced a new artifact (BUILD OK) and verify.ps1 confirms MATCH (artifact=13 runtime_revision=13): the plugin is in effect in the runtime, with the redundant reload discarded as stale after a competing pipeline already aligned the world.

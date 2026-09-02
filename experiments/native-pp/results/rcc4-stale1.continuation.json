@@ -1,0 +1,103 @@
+{
+  "run": "rcc4-stale1",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision",
+    "post"
+  ],
+  "metrics": {
+    "run": "rcc4-stale1",
+    "scenario": "rcc4",
+    "arm": "chainstale",
+    "intents": 2,
+    "dispatches": 2,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 2,
+    "casChecks": 2,
+    "guardDenials": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 11,
+      "complete": 7
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788366123484,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788366149450,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788366164595,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    },
+    {
+      "at": 1788366180813,
+      "kind": "facts-guard-deny",
+      "artifactRev": 12,
+      "artifactSeq": 3293,
+      "runtimeRev": 12,
+      "runtimeSeq": 2231,
+      "callId": "call_00_mh8Ojk2UPYWWHtq5rFrc6819"
+    },
+    {
+      "at": 1788366180824,
+      "kind": "required",
+      "contract": "post-reload-healthcheck",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 3293,
+        "runtimeRev": 12,
+        "runtimeSeq": 3360
+      }
+    },
+    {
+      "at": 1788366181129,
+      "kind": "dispatched",
+      "contract": "post-reload-healthcheck",
+      "callId": "cont_1788366180825_1",
+      "callSeq": 3363,
+      "resultSeq": 3364,
+      "resultIsError": false
+    },
+    {
+      "at": 1788366194066,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 4291,
+        "runtimeRev": 11,
+        "runtimeSeq": 4292
+      }
+    },
+    {
+      "at": 1788366194394,
+      "kind": "dispatched",
+      "contract": "plugin-revision-mismatch",
+      "callId": "cont_1788366194067_2",
+      "callSeq": 4298,
+      "resultSeq": 4299,
+      "resultIsError": false
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 2,
+    "modelCallsInitiated": 0
+  }
+}

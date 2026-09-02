@@ -1,0 +1,24 @@
+{
+  "run": "rccancel-xm1",
+  "scenario": "rccancel",
+  "arm": "cancelmid",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 25,
+  "toolCalls": 62,
+  "toolErrors": 0,
+  "perToolCalls": {
+    "glob": 4,
+    "read": 44,
+    "pwsh": 8,
+    "grep": 1,
+    "todo_write": 4,
+    "write": 1
+  },
+  "payloadChars": 3106720,
+  "traceEvents": 12597,
+  "staleBumps": 0,
+  "staleBumpFailures": 0,
+  "cancelInjected": 0,
+  "guardDenials": 0,
+  "runtimeFailures": 0
+}

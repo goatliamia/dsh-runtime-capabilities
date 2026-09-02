@@ -1,0 +1,16 @@
+{
+  "run": "rc-a2",
+  "sessionId": "session-<redacted>",
+  "eventsDecoded": 5443,
+  "checks": [],
+  "verdicts": {
+    "confoundedByCompaction": false,
+    "continuationRecords": 0,
+    "continuationToolCalls": 0,
+    "staleActorToolCalls": 0,
+    "officialReplayCompatible": true,
+    "dispatched": 0,
+    "discarded": 0
+  },
+  "notes": []
+}

@@ -1,0 +1,10 @@
+﻿Done. Here's what happened and the outcome:
+
+1. **World state on arrival**: `artifact.json` = `{"revision":12}` and `runtime-state.txt` = `runtime_revision=12` 鈥?already aligned (up to date).
+2. **Reload attempt**: I ran `reload.ps1`, but the runtime's facts-guard refused it with `[runtime-facts] reload is unnecessary`, citing the aligned event-stream facts (`artifact=12`, `runtime_revision=12`). This is the deterministic runtime ownership boundary 鈥?the guard denies the reload on positive aligned facts rather than letting it re-run as a no-op.
+3. **Verification**: `verify.ps1` reported `verify: artifact=12 runtime_revision=12 => MATCH`.
+4. **Summary written** to `result.txt` (one line).
+
+`result.txt`:
+> Attempted to reload the plugin once, but the runtime facts-guard refused it as unnecessary because the world is already aligned (artifact=12 runtime_revision=12); verify.ps1 confirms MATCH, so the plugin is already up to date.
+RUNEXIT:0

@@ -1,0 +1,1 @@
+The plugin is in effect: verify.ps1 confirms MATCH (artifact=12 runtime_revision=12), so the runtime already matches the artifact and no reload was needed.

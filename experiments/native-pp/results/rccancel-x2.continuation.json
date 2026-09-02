@@ -1,0 +1,71 @@
+{
+  "run": "rccancel-x2",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision"
+  ],
+  "metrics": {
+    "run": "rccancel-x2",
+    "scenario": "rccancel",
+    "arm": "cancel",
+    "intents": 1,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 1,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 0,
+    "casChecks": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 22
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788355428304,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788355453396,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788355580767,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 12
+    },
+    {
+      "at": 1788355678236,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 15115,
+        "runtimeRev": 11,
+        "runtimeSeq": 15114
+      }
+    },
+    {
+      "at": 1788355678247,
+      "kind": "aborted",
+      "contract": "plugin-revision-mismatch",
+      "callId": "cont_1788355678242_1",
+      "callSeq": 15120,
+      "resultSeq": 15121,
+      "resultIsError": true
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

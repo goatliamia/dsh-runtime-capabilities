@@ -1,0 +1,9 @@
+﻿Done. Here's the outcome:
+
+1. **Ran `build.ps1`** 鈫?`BUILD OK artifact=12` (wrote `artifact.json` = `{"revision":12}`).
+2. **Reloaded the plugin** 鈫?I invoked `reload.ps1`, but the runtime's `[runtime-facts]` guard intercepted it: the event stream already shows the world aligned (`artifact=12`, `runtime_revision=12`), so the reload had already taken effect and re-running it would be redundant. Per the guard's authoritative signal I did not force a duplicate reload.
+3. **Confirmed it takes effect** 鈫?`verify.ps1` reported `verify: artifact=12 runtime_revision=12 => MATCH`, and `verify-result.txt` = `MATCH (artifact=12 runtime=12)`. `runtime-state.txt` = `runtime_revision=12`, matching the artifact.
+4. **Wrote the one-line summary** to `result.txt`:
+
+> build.ps1 produced artifact revision 12; the runtime was already aligned at runtime_revision=12, so the runtime-facts guard confirmed the reload was already in effect (no redundant reload needed), and verify.ps1 reports MATCH (artifact=12 runtime=12) 鈥?the plugin took effect.
+RUNEXIT:0

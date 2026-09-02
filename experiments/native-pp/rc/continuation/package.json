@@ -1,0 +1,17 @@
+{
+  "name": "dsh-native-pp-continuation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "description": "Route-A Runtime Continuation for the docs/19 experiment: projects the session event stream for the plugin-revision-mismatch contract; when facts+contract compress the next step to the unique REQUIRED(reload) action, dispatches reload.ps1 through the public ctx.tools.execute boundary, appends loop-contract tool/call + tool/result records plus a runtime/continuation provenance record, and hands the result to the model. CAS re-projection before dispatch discards stale intents. Zero plugin state files, zero prompt edits beyond the result handoff, zero model calls initiated.",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

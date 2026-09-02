@@ -1,0 +1,1 @@
+build.ps1 produced artifact revision 12, but the runtime-continuation plugin's reload was blocked by the rc-guard (reload disabled in this world), so the runtime stays stale at runtime_revision=11 (verify.ps1: STALE) and the block is reported as the outcome.

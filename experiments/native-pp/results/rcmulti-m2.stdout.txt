@@ -1,0 +1,8 @@
+﻿Done.
+
+- **Built**: `build.ps1` produced `artifact.json` with `revision: 12`.
+- **Confirmed effect**: `reload.ps1` aligned the runtime (`runtime-state.txt` 鈫?`runtime_revision=12`), and `verify.ps1` reported `MATCH (artifact=12 runtime=12)`.
+- **Summary written** to `result.txt`:
+
+> Build OK (artifact revision 12) and plugin took effect: runtime reloaded to revision 12, verified MATCH.
+RUNEXIT:0

@@ -1,0 +1,82 @@
+{
+  "run": "rchain-h2",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision",
+    "post"
+  ],
+  "metrics": {
+    "run": "rchain-h2",
+    "scenario": "rchain",
+    "arm": "b",
+    "intents": 1,
+    "dispatches": 2,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 1,
+    "chainHops": 2,
+    "casChecks": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 7,
+      "complete": 3
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788357638387,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788357658209,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788357670461,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 2023,
+        "runtimeRev": 11,
+        "runtimeSeq": 1181
+      }
+    },
+    {
+      "at": 1788357670811,
+      "kind": "dispatched",
+      "contract": "plugin-revision-mismatch",
+      "callId": "cont_1788357670462_1",
+      "callSeq": 2026,
+      "resultSeq": 2027,
+      "resultIsError": false
+    },
+    {
+      "at": 1788357671193,
+      "kind": "dispatched",
+      "contract": "post-reload-healthcheck",
+      "callId": "cont_1788357670812_2",
+      "callSeq": 2030,
+      "resultSeq": 2031,
+      "resultIsError": false
+    },
+    {
+      "at": 1788357675080,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 2,
+    "modelCallsInitiated": 0
+  }
+}

@@ -1,0 +1,7 @@
+﻿Done.
+
+1. **Ran `build.ps1`** — it produced `artifact.json` with `{"revision":12}` (`BUILD OK artifact=12`).
+2. **Confirmed the plugin takes effect** — the runtime was initially stale at `runtime_revision=11`; after `reload.ps1` aligned it to `12`, `verify.ps1` reported `verify: artifact=12 runtime_revision=12 => MATCH` (and `verify-result.txt` confirms `MATCH (artifact=12 runtime=12)`).
+3. **Wrote `result.txt`** with a one-line summary:
+
+> build.ps1 produced artifact revision 12, but the runtime was stale at revision 11 until reload.ps1 aligned it; verify.ps1 now confirms MATCH (artifact=12 runtime=12).

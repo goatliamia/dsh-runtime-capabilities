@@ -1,0 +1,9 @@
+﻿Done.
+
+- **Build**: `build.ps1` produced `artifact.json` with revision 12.
+- **Plugin takes effect**: `reload.ps1` aligned the runtime to `runtime_revision=12`; `verify.ps1` confirms `MATCH` (artifact=12 vs runtime=12).
+- **Health check**: `healthcheck.ps1` returned `health=ok`.
+- **Summary**: written to `result.txt`:
+
+> build.ps1 produced artifact revision 12, reload.ps1 aligned the runtime to runtime_revision=12 (verify.ps1: MATCH, plugin takes effect), and healthcheck.ps1 returned health=ok.
+RUNEXIT:0

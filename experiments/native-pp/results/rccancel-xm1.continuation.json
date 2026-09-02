@@ -1,0 +1,58 @@
+{
+  "run": "rccancel-xm1",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision"
+  ],
+  "metrics": {
+    "run": "rccancel-xm1",
+    "scenario": "rccancel",
+    "arm": "cancelmid",
+    "intents": 0,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 0,
+    "casChecks": 0,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 17,
+      "complete": 7
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788358690826,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788358711708,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788358724702,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 12
+    },
+    {
+      "at": 1788358852254,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

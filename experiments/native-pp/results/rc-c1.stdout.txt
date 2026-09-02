@@ -1,0 +1,8 @@
+﻿Done.
+
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (`BUILD OK artifact=12`).
+2. **Confirmed the plugin takes effect** 鈫?a competing pipeline (the `EXP_ARM=c` staleness injection) bumped `artifact.json` and `runtime-state.txt` to revision 13 while the reload decision was in flight, so the stale 12鈫?2 reload was discarded. The world ended aligned: `verify.ps1` reported `MATCH (artifact=13 runtime=13)`.
+3. **Wrote `result.txt`** with the one-line outcome summary.
+
+Final state: `artifact.json` = revision 13, `runtime-state.txt` = `runtime_revision=13`, `verify-result.txt` = `MATCH (artifact=13 runtime=13)`.
+RUNEXIT:0

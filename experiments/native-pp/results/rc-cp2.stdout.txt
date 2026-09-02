@@ -1,0 +1,9 @@
+﻿Done.
+
+- Ran `build.ps1` 鈫?produced artifact revision 12, then the external pipeline bumped it to **13**.
+- Ran `reload.ps1` 鈫?runtime aligned to `runtime_revision=13`.
+- Ran `verify.ps1` 鈫?**MATCH (artifact=13 runtime=13)**, confirming the plugin takes effect in the runtime.
+- Wrote the one-line summary to `result.txt`:
+
+> Build produced artifact revision 13, runtime was reloaded to match, and verify confirmed the plugin takes effect: MATCH (artifact=13 runtime=13).
+RUNEXIT:0

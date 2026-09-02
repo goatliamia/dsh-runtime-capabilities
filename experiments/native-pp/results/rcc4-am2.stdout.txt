@@ -1,0 +1,12 @@
+﻿Done.
+
+**What I found and did:** The world started misaligned (`runtime-state.txt` = `runtime_revision=11`, no `artifact.json`). To make the Runtime Continuation plugin's invariant hold:
+
+1. **`build.ps1`** produced `artifact.json` = `{"revision":12}`.
+2. **`reload.ps1`** aligned the runtime to `runtime_revision=12` 鈥?the continuation plugin also independently dispatched the same idempotent reload upon detecting the `plugin-revision-mismatch` fact (artifact=12 vs runtime=11).
+3. **`verify.ps1`** reported `MATCH (artifact=12 runtime_revision=12)`.
+
+**Outcome written to `result.txt`:**
+
+> Built artifact revision 12, the runtime aligned to runtime_revision=12 (the continuation plugin dispatched reload.ps1), and verify.ps1 confirms MATCH (artifact=12 runtime=12) so the plugin is in effect.
+RUNEXIT:0

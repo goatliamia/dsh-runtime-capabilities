@@ -1,0 +1,58 @@
+{
+  "run": "rc-smokeb2",
+  "sessionId": "session-<redacted>",
+  "contract": "plugin-revision-mismatch",
+  "metrics": {
+    "run": "rc-smokeb2",
+    "scenario": "rc",
+    "arm": "b",
+    "intents": 1,
+    "dispatches": 1,
+    "discards": 0,
+    "blocked": 0,
+    "casChecks": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 6
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788351713684,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788351723917,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788351729518,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 724,
+        "runtimeRev": 11,
+        "runtimeSeq": 439
+      }
+    },
+    {
+      "at": 1788351729862,
+      "kind": "dispatched",
+      "callId": "cont_1788351729518_1",
+      "callSeq": 726,
+      "resultSeq": 727,
+      "resultIsError": false
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 1,
+    "modelCallsInitiated": 0
+  }
+}

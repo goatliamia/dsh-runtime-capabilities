@@ -1,0 +1,16 @@
+{
+  "run": "rcc4-ca2",
+  "sessionId": "session-<redacted>",
+  "eventsDecoded": 7603,
+  "checks": [],
+  "verdicts": {
+    "confoundedByCompaction": false,
+    "continuationRecords": 0,
+    "continuationToolCalls": 0,
+    "staleActorToolCalls": 0,
+    "officialReplayCompatible": true,
+    "dispatched": 0,
+    "discarded": 0
+  },
+  "notes": []
+}

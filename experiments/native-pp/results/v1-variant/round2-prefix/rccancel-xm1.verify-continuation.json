@@ -1,0 +1,71 @@
+{
+  "run": "rccancel-xm1",
+  "sessionId": "session-<redacted>",
+  "eventsDecoded": 16390,
+  "checks": [
+    {
+      "id": "provenance-fields-seq16389",
+      "ok": true,
+      "detail": {
+        "outcome": "aborted",
+        "basedOn": {
+          "artifactRev": 12,
+          "artifactSeq": 16384,
+          "runtimeRev": 11,
+          "runtimeSeq": 3318
+        },
+        "revision": null
+      }
+    },
+    {
+      "id": "loop-contract-cont_1788355934273_1",
+      "ok": true,
+      "detail": {
+        "call": {
+          "turn": 1,
+          "step": 20,
+          "callId": "cont_1788355934273_1",
+          "name": "pwsh",
+          "argumentsIsString": true,
+          "arguments": "{\"command\":\"& .\\\\reload-slow.ps1\",\"description\":\"Reload runtime slowly to match artifact revision\"}"
+        },
+        "pair": {
+          "seq": 16386,
+          "turn": 1,
+          "step": 20,
+          "sourceKind": "runtime-continuation",
+          "blockId": "cont_1788355934273_1",
+          "blockType": "tool-call",
+          "blockName": "pwsh",
+          "surfaceOp": "append"
+        },
+        "result": {
+          "seq": 16388,
+          "turn": 1,
+          "step": 20,
+          "sourceKind": "tool",
+          "sourceCallId": "cont_1788355934273_1",
+          "contentBlockType": "tool-result",
+          "toolCallId": "cont_1788355934273_1",
+          "isError": true,
+          "surfaceOp": "append",
+          "sourceEventSeqs": [
+            16387
+          ]
+        }
+      }
+    }
+  ],
+  "verdicts": {
+    "confoundedByCompaction": false,
+    "continuationRecords": 1,
+    "continuationToolCalls": 1,
+    "staleActorToolCalls": 0,
+    "officialReplayCompatible": false,
+    "dispatched": 0,
+    "discarded": 0
+  },
+  "notes": [
+    "persistence read path would REFUSE this log (assertEventsSupported): unknown non-ignorable type(s) runtime/continuation@16389 — expected for the runtime/continuation custom kind on the pinned version; feeds the route-B seam proposal"
+  ]
+}

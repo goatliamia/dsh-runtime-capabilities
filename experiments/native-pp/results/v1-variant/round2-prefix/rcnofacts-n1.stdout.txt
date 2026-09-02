@@ -1,0 +1,16 @@
+﻿Task complete. Here's the outcome:
+
+**What I did**
+1. Ran `build.ps1` 鈫?produced `artifact.json` = `{"revision":12}` (output `BUILD OK`).
+2. Confirmed the plugin took effect: the **runtime-continuation plugin** projected the revision mismatch (artifact=12 vs runtime=11) and dispatched `reload.ps1` itself 鈥?visible in the `runtime/continuation` event record with `outcome: dispatched`. The world is now aligned (`runtime-state.txt` = `runtime_revision=12`, `reload-count.txt` = 1 entry).
+3. Ran `verify.ps1` 鈫?`verify: MATCH`, writing `verify-result.txt` = `MATCH`.
+4. Wrote the one-line summary to `result.txt`.
+
+**Final world state**
+- `artifact.json` 鈫?revision 12
+- `runtime-state.txt` 鈫?`runtime_revision=12`
+- `verify-result.txt` 鈫?`MATCH`
+- `result.txt` 鈫?one-line summary written
+
+One note for the experiment record: this was the `rcnofacts` scenario (fact formats deliberately stripped from the world's `pwsh` output), which is designed to produce **zero** plugin takeovers. My exploration reads of the source template files under `rc/world/` (e.g. `rc/world/runtime-state.txt` containing `runtime_revision=11`) fed that fact into the plugin's `read` channel, which is what let the contract fire and dispatch the reload rather than abstain. The world is correctly aligned either way, but if a clean zero-takeover sample is needed, the run should avoid reading the source-template world files.
+RUNEXIT:0

@@ -1,0 +1,33 @@
+{
+  "run": "rc-smokeb1",
+  "sessionId": "session-<redacted>",
+  "contract": "plugin-revision-mismatch",
+  "metrics": {
+    "run": "rc-smokeb1",
+    "scenario": "rc",
+    "arm": "b",
+    "intents": 0,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "casChecks": 0,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 10
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788351516197,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

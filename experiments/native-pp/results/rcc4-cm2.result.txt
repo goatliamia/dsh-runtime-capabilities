@@ -1,0 +1,1 @@
+Reloaded the plugin once: build.ps1 produced artifact revision 12 and reload.ps1 aligned runtime_revision from 11 to 12 (reload-count=1), and verify.ps1 confirms MATCH (artifact=12 runtime=12).

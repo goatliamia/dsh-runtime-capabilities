@@ -1,0 +1,20 @@
+{
+  "run": "rc-c2",
+  "scenario": "rc",
+  "arm": "c",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 12,
+  "toolCalls": 23,
+  "toolErrors": 0,
+  "perToolCalls": {
+    "glob": 8,
+    "read": 11,
+    "grep": 2,
+    "pwsh": 2
+  },
+  "payloadChars": 1000052,
+  "traceEvents": 2954,
+  "staleBumps": 1,
+  "staleBumpFailures": 0,
+  "runtimeFailures": 0
+}

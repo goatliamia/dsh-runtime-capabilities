@@ -1,0 +1,14 @@
+﻿Done.
+
+**Outcome summary**
+
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (`BUILD OK artifact=12`).
+2. **Competing pipeline race** 鈥?while the reload decision was in flight, the C-arm staleness injection (`stale-bump.ps1`) bumped both `artifact.json` and `runtime-state.txt` to revision 13. The runtime-continuation plugin's CAS re-projection detected the moved world and **discarded the stale reload** (never executed).
+3. **Confirmed the plugin takes effect** 鈥?`verify.ps1` reported `MATCH (artifact=13 runtime_revision=13)`, so the runtime now reflects the artifact revision.
+4. **Wrote `result.txt`** with the one-line summary.
+
+Final state: `artifact.json` = `{"revision":13}`, `runtime-state.txt` = `runtime_revision=13`, `verify-result.txt` = `MATCH (artifact=13 runtime=13)`.
+
+`result.txt` content:
+> build.ps1 produced artifact revision 12, but a competing pipeline bumped the world to revision 13 while the reload was in flight (the stale reload was discarded), and verify.ps1 confirms MATCH (artifact=13 runtime=13) 鈥?the plugin takes effect in the runtime.
+RUNEXIT:0

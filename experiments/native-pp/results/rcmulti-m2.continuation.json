@@ -1,0 +1,64 @@
+{
+  "run": "rcmulti-m2",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision",
+    "revision"
+  ],
+  "metrics": {
+    "run": "rcmulti-m2",
+    "scenario": "rcmulti",
+    "arm": "b",
+    "intents": 0,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 2,
+    "chainRuns": 0,
+    "chainHops": 0,
+    "casChecks": 0,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 7,
+      "ambiguous": 2,
+      "complete": 3
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788356181851,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788356198803,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788356203515,
+      "kind": "decision-ambiguous",
+      "artifact": 12,
+      "runtime": 11,
+      "candidates": [
+        "plugin-revision-mismatch",
+        "plugin-revision-rollback"
+      ]
+    },
+    {
+      "at": 1788356208444,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

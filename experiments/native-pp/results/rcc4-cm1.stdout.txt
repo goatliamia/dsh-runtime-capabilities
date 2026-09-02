@@ -1,0 +1,10 @@
+﻿Done. The plugin was reloaded once and the outcome is recorded.
+
+**What happened:**
+- `build.ps1` produced the artifact (`{"revision":12}`).
+- The runtime was stale at `runtime_revision=11`, so `reload.ps1` aligned it to `runtime_revision=12` (exactly one reload, `reload-count.txt` = 1 entry).
+- `verify.ps1` confirms `MATCH (artifact=12 runtime=12)` 鈥?the plugin is now in effect.
+
+**`result.txt`** (one line):
+> Reloaded the plugin once: build.ps1 produced artifact revision 12 and reload.ps1 aligned runtime_revision from 11 to 12 (reload-count=1), so verify.ps1 confirms MATCH (artifact=12 runtime=12).
+RUNEXIT:0

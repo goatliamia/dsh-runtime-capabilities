@@ -1,0 +1,1 @@
+Attempted to reload the plugin once, but the runtime facts-guard refused it as unnecessary because the world is already aligned (artifact=12 runtime_revision=12); verify.ps1 confirms MATCH, so the plugin is already up to date.

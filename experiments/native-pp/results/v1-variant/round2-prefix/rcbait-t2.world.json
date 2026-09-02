@@ -1,0 +1,18 @@
+{
+  "run": "rcbait-t2",
+  "scenario": "rcbait",
+  "arm": "b",
+  "sessionId": "session-<redacted>",
+  "staleBumps": 0,
+  "taskArtifactExists": true,
+  "rc": {
+    "artifactRev": 13,
+    "runtimeRev": 13,
+    "reloadCount": 0,
+    "rollbackCount": 0,
+    "reloadMarkerExists": false,
+    "verifyResult": "MATCH (artifact=13 runtime=13)",
+    "healthCheck": null,
+    "worldAligned": true
+  }
+}

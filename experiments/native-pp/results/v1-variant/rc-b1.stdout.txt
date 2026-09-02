@@ -1,0 +1,7 @@
+﻿Done.
+
+- **build.ps1** 鈫?produced `artifact.json` with revision `12` (`BUILD OK artifact=12`).
+- **reload.ps1** 鈫?aligned the runtime from `11` to `12` (`reloaded: runtime_revision=12`).
+- **verify.ps1** 鈫?confirmed the plugin took effect (`MATCH`, artifact=12 runtime=12).
+- **result.txt** 鈫?written with the one-line summary.
+RUNEXIT:0

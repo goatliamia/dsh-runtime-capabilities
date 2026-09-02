@@ -1,0 +1,7 @@
+﻿The plugin is confirmed in effect and the outcome is recorded.
+
+**Summary of what happened:**
+- The world starts aligned: `artifact.json` = `{"revision":12}` and `runtime-state.txt` = `runtime_revision=12`.
+- `verify.ps1` reports `MATCH (artifact=12 runtime_revision=12)`, confirming the plugin's effect (runtime aligned to artifact) is already active.
+- No reload was needed, and I wrote the one-line summary to `result.txt`.
+RUNEXIT:0

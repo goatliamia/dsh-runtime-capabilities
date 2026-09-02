@@ -1,0 +1,18 @@
+{
+  "run": "rcc4-am2",
+  "scenario": "rcc4",
+  "arm": "b",
+  "sessionId": "session-<redacted>",
+  "staleBumps": 0,
+  "taskArtifactExists": true,
+  "rc": {
+    "artifactRev": 12,
+    "runtimeRev": 12,
+    "reloadCount": 1,
+    "rollbackCount": 0,
+    "reloadMarkerExists": true,
+    "verifyResult": "MATCH (artifact=12 runtime=12)",
+    "healthCheck": null,
+    "worldAligned": true
+  }
+}

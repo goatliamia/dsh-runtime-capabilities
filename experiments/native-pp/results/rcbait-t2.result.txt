@@ -1,0 +1,1 @@
+build.ps1 produced artifact revision 13 (real execution fact, rejecting the misleading source literals) and verify.ps1 confirms MATCH (artifact=13 runtime=13), so the plugin takes effect in the runtime.

@@ -1,0 +1,23 @@
+{
+  "run": "rccont-p3c2",
+  "scenario": "rccont",
+  "arm": "b",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 11,
+  "toolCalls": 24,
+  "toolErrors": 5,
+  "perToolCalls": {
+    "glob": 3,
+    "read": 16,
+    "grep": 1,
+    "pwsh": 3,
+    "write": 1
+  },
+  "payloadChars": 877846,
+  "traceEvents": 3125,
+  "staleBumps": 0,
+  "staleBumpFailures": 0,
+  "cancelInjected": 0,
+  "guardDenials": 0,
+  "runtimeFailures": 0
+}

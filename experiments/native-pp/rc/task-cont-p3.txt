@@ -1,0 +1,1 @@
+Run build.ps1, then check whether the plugin takes effect. Do NOT reload anything yourself - only observe and report. Then write a one-line summary of the outcome to result.txt.

@@ -1,0 +1,21 @@
+{
+  "run": "rccancel-x1",
+  "scenario": "rccancel",
+  "arm": "cancel",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 16,
+  "toolCalls": 56,
+  "toolErrors": 6,
+  "perToolCalls": {
+    "glob": 13,
+    "read": 40,
+    "pwsh": 3
+  },
+  "payloadChars": 1221860,
+  "traceEvents": 10005,
+  "staleBumps": 0,
+  "staleBumpFailures": 0,
+  "cancelInjected": 1,
+  "guardDenials": 0,
+  "runtimeFailures": 0
+}

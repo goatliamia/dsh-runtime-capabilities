@@ -1,0 +1,24 @@
+{
+  "run": "rcnofacts-n1",
+  "scenario": "rcnofacts",
+  "arm": "b",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 37,
+  "toolCalls": 61,
+  "toolErrors": 2,
+  "perToolCalls": {
+    "glob": 11,
+    "read": 40,
+    "pwsh": 6,
+    "todo_write": 2,
+    "grep": 1,
+    "write": 1
+  },
+  "payloadChars": 6578128,
+  "traceEvents": 26545,
+  "staleBumps": 0,
+  "staleBumpFailures": 0,
+  "cancelInjected": 0,
+  "guardDenials": 0,
+  "runtimeFailures": 0
+}

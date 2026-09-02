@@ -1,0 +1,10 @@
+﻿Done. Here's the outcome:
+
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (output `BUILD OK`, no fact channel 鈥?the rcnofacts world).
+2. **Confirmed the plugin's effect** 鈫?the runtime was stale at revision `11`. Because the rcnofacts world emits no `artifact=`/`runtime_revision=` fact formats, the runtime-continuation plugin correctly abstained (no takeover), so I ran `reload.ps1` to align `runtime-state.txt` to `runtime_revision=12`.
+3. **Verified** 鈫?`verify.ps1` reports `MATCH` (artifact=12, runtime=12).
+
+**result.txt** now contains the one-line summary:
+
+> build.ps1 produced artifact revision 12 but its output carried no fact channel (rcnofacts world), so the runtime-continuation plugin abstained and left the runtime stale at revision 11; I ran reload.ps1 to align runtime-state.txt to runtime_revision=12 and verify.ps1 confirms MATCH (artifact=12 runtime=12).
+RUNEXIT:0

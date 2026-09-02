@@ -1,0 +1,8 @@
+﻿I reloaded the plugin by running `reload.ps1`, and wrote the outcome to `result.txt`.
+
+The reload did not succeed: `reload.ps1` requires an `artifact.json` (the build artifact that supplies the target revision), but no such file exists in the workspace. The script hit a non-terminating `Get-Content` error, still printed a misleading `reloaded: runtime_revision=` line, and 鈥?because it continued past the error 鈥?clobbered `runtime-state.txt` from `runtime_revision=11` to an empty `runtime_revision=`.
+
+`result.txt` now contains:
+
+> Reload failed: artifact.json is missing, so the runtime revision could not be aligned and runtime-state.txt was reset to an empty revision.
+RUNEXIT:0

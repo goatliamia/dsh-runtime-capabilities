@@ -1,0 +1,85 @@
+{
+  "run": "rcguard-g2",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision"
+  ],
+  "metrics": {
+    "run": "rcguard-g2",
+    "scenario": "rcguard",
+    "arm": "b",
+    "intents": 1,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 1,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 0,
+    "casChecks": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 8,
+      "already-continuated": 5,
+      "complete": 4
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788358155048,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788358174783,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788358185549,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 1796,
+        "runtimeRev": 11,
+        "runtimeSeq": 1077
+      }
+    },
+    {
+      "at": 1788358185555,
+      "kind": "blocked",
+      "contract": "plugin-revision-mismatch",
+      "callId": "cont_1788358185550_1",
+      "callSeq": 1799,
+      "resultSeq": 1800,
+      "resultIsError": true
+    },
+    {
+      "at": 1788358192999,
+      "kind": "decision-already-continuated",
+      "contract": "plugin-revision-mismatch",
+      "continuationSeq": 1801
+    },
+    {
+      "at": 1788358206576,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    },
+    {
+      "at": 1788358243091,
+      "kind": "decision-already-continuated",
+      "contract": "plugin-revision-mismatch",
+      "continuationSeq": 1801
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

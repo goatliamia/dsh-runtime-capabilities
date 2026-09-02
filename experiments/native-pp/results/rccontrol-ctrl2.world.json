@@ -1,0 +1,12 @@
+{
+  "run": "rccontrol-ctrl2",
+  "scenario": "rccontrol",
+  "arm": "ctrl",
+  "sessionId": "session-<redacted>",
+  "staleBumps": 0,
+  "taskArtifactExists": true,
+  "rccontrol": {
+    "testResult": "PASS",
+    "worldCorrect": true
+  }
+}

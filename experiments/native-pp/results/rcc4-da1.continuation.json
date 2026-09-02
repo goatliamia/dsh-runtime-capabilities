@@ -1,0 +1,62 @@
+{
+  "run": "rcc4-da1",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision"
+  ],
+  "metrics": {
+    "run": "rcc4-da1",
+    "scenario": "rcc4",
+    "arm": "b",
+    "intents": 0,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 0,
+    "casChecks": 0,
+    "guardDenials": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 3,
+      "complete": 5
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788365552413,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788365562261,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 12
+    },
+    {
+      "at": 1788365569687,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    },
+    {
+      "at": 1788365606770,
+      "kind": "facts-guard-deny",
+      "artifactRev": 12,
+      "artifactSeq": 870,
+      "runtimeRev": 12,
+      "runtimeSeq": 539,
+      "callId": "call_00_z22IJyjbY69gt26fbWca8624"
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

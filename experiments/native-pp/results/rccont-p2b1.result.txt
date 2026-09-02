@@ -1,0 +1,1 @@
+build.ps1 produced artifact revision 12; runtime already aligned at runtime_revision=12 (runtime-facts confirmed reload already applied, verify.ps1 => MATCH), so the plugin took effect.

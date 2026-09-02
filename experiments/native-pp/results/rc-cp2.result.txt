@@ -1,0 +1,1 @@
+Build produced artifact revision 13, runtime was reloaded to match, and verify confirmed the plugin takes effect: MATCH (artifact=13 runtime=13).

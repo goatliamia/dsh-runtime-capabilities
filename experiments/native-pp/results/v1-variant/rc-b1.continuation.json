@@ -1,0 +1,65 @@
+{
+  "run": "rc-b1",
+  "sessionId": "session-<redacted>",
+  "contract": "plugin-revision-mismatch",
+  "metrics": {
+    "run": "rc-b1",
+    "scenario": "rc",
+    "arm": "b",
+    "intents": 1,
+    "dispatches": 1,
+    "discards": 0,
+    "blocked": 0,
+    "casChecks": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 7,
+      "complete": 3
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788353179191,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788353188350,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788353200501,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 1305,
+        "runtimeRev": 11,
+        "runtimeSeq": 434
+      }
+    },
+    {
+      "at": 1788353200806,
+      "kind": "dispatched",
+      "callId": "cont_1788353200501_1",
+      "callSeq": 1308,
+      "resultSeq": 1309,
+      "resultIsError": false
+    },
+    {
+      "at": 1788353203211,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 1,
+    "modelCallsInitiated": 0
+  }
+}

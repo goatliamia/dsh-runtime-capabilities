@@ -1,0 +1,1 @@
+Build OK (artifact revision 12) and plugin took effect: runtime reloaded to revision 12, verified MATCH.

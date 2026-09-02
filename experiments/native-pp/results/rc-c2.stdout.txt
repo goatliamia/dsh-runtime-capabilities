@@ -1,0 +1,8 @@
+﻿Done. Summary of the outcome:
+
+1. **Ran `build.ps1`** 鈫?produced a new artifact (`BUILD OK artifact=12`).
+2. **Runtime mismatch arose** 鈥?the runtime was still at revision 11 when the reload was being decided, and a competing pipeline completed during that window.
+3. **Reload was correctly discarded as stale** (CAS re-projection) rather than redundantly re-applied, per the `plugin-revision-mismatch` contract.
+4. **Confirmed plugin effect** via `verify.ps1` 鈫?`MATCH (artifact=13 runtime_revision=13)` 鈥?the runtime now reflects the artifact, so the plugin is in effect.
+5. **Wrote the one-line summary** to `result.txt`.
+RUNEXIT:0

@@ -1,0 +1,1 @@
+Run build.ps1 to produce a new artifact, then confirm the plugin takes effect in the runtime, and write a one-line summary of the outcome to result.txt.

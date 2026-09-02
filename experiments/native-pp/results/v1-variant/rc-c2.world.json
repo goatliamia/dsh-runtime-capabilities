@@ -1,0 +1,16 @@
+{
+  "run": "rc-c2",
+  "scenario": "rc",
+  "arm": "c",
+  "sessionId": "session-<redacted>",
+  "staleBumps": 1,
+  "taskArtifactExists": false,
+  "rc": {
+    "artifactRev": 13,
+    "runtimeRev": 13,
+    "reloadCount": 0,
+    "reloadMarkerExists": false,
+    "verifyResult": null,
+    "worldAligned": true
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "run": "rcbait-t2",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision"
+  ],
+  "metrics": {
+    "run": "rcbait-t2",
+    "scenario": "rcbait",
+    "arm": "b",
+    "intents": 0,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 0,
+    "casChecks": 0,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 13,
+      "complete": 3
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788358357605,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788358382263,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 13
+    },
+    {
+      "at": 1788358415476,
+      "kind": "decision-complete",
+      "artifact": 13,
+      "runtime": 13
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

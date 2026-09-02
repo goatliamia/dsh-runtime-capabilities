@@ -1,0 +1,1 @@
+build.ps1 produced artifact revision 12, the runtime-continuation plugin dispatched reload.ps1 to align runtime_revision from 11 to 12, and verify.ps1 confirms MATCH (artifact=12 runtime=12) — the plugin takes effect in the runtime.

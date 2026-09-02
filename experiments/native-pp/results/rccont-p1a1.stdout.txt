@@ -1,0 +1,7 @@
+﻿Done.
+
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (output: `BUILD OK artifact=12`).
+2. **Reloaded the plugin** 鈫?the runtime reported reload was already aligned (`artifact=12`, `runtime_revision=12`), so no redundant reload was needed.
+3. **Confirmed it takes effect** 鈫?`verify.ps1` returned `verify: artifact=12 runtime_revision=12 => MATCH`, and `verify-result.txt` now reads `MATCH (artifact=12 runtime=12)`.
+4. **Wrote one-line summary** to `result.txt`.
+RUNEXIT:0

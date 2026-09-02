@@ -1,0 +1,71 @@
+{
+  "run": "rc-c2",
+  "sessionId": "session-<redacted>",
+  "contract": "plugin-revision-mismatch",
+  "metrics": {
+    "run": "rc-c2",
+    "scenario": "rc",
+    "arm": "c",
+    "intents": 1,
+    "dispatches": 0,
+    "discards": 1,
+    "blocked": 0,
+    "casChecks": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 7,
+      "complete": 4
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788353407608,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788353423890,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788353450991,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 1920,
+        "runtimeRev": 11,
+        "runtimeSeq": 914
+      }
+    },
+    {
+      "at": 1788353451255,
+      "kind": "discarded-stale",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 1920,
+        "runtimeRev": 11,
+        "runtimeSeq": 914
+      },
+      "observed": {
+        "artifactRev": 12,
+        "runtimeRev": 13
+      }
+    },
+    {
+      "at": 1788353471134,
+      "kind": "decision-complete",
+      "artifact": 13,
+      "runtime": 13
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

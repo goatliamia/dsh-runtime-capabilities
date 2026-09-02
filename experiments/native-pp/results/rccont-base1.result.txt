@@ -1,0 +1,1 @@
+build.ps1 produced artifact revision 12; the runtime was already at runtime_revision=12, and verify.ps1 confirms MATCH (artifact=12 runtime=12), so the plugin takes effect in the runtime with no reload required.

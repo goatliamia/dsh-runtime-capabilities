@@ -1,0 +1,4 @@
+# dsh-native-pp-rc-fixture bundle patch: insert the rc experiment host plugin.
+- insert:
+    - id: native-pp-rc-fixture
+      name: 'dsh-native-pp-rc-fixture'

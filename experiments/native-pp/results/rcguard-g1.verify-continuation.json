@@ -1,0 +1,71 @@
+{
+  "run": "rcguard-g1",
+  "sessionId": "session-<redacted>",
+  "eventsDecoded": 21137,
+  "checks": [
+    {
+      "id": "provenance-fields-seq6732",
+      "ok": true,
+      "detail": {
+        "outcome": "blocked",
+        "basedOn": {
+          "artifactRev": 12,
+          "artifactSeq": 6727,
+          "runtimeRev": 11,
+          "runtimeSeq": 807
+        },
+        "revision": null
+      }
+    },
+    {
+      "id": "loop-contract-cont_1788357947690_1",
+      "ok": true,
+      "detail": {
+        "call": {
+          "turn": 1,
+          "step": 14,
+          "callId": "cont_1788357947690_1",
+          "name": "pwsh",
+          "argumentsIsString": true,
+          "arguments": "{\"command\":\"& .\\\\reload.ps1\",\"description\":\"Reload runtime to match artifact revision\"}"
+        },
+        "pair": {
+          "seq": 6729,
+          "turn": 1,
+          "step": 14,
+          "sourceKind": "runtime-continuation",
+          "blockId": "cont_1788357947690_1",
+          "blockType": "tool-call",
+          "blockName": "pwsh",
+          "surfaceOp": "append"
+        },
+        "result": {
+          "seq": 6731,
+          "turn": 1,
+          "step": 14,
+          "sourceKind": "tool",
+          "sourceCallId": "cont_1788357947690_1",
+          "contentBlockType": "tool-result",
+          "toolCallId": "cont_1788357947690_1",
+          "isError": true,
+          "surfaceOp": "append",
+          "sourceEventSeqs": [
+            6730
+          ]
+        }
+      }
+    }
+  ],
+  "verdicts": {
+    "confoundedByCompaction": false,
+    "continuationRecords": 1,
+    "continuationToolCalls": 1,
+    "staleActorToolCalls": 0,
+    "officialReplayCompatible": false,
+    "dispatched": 0,
+    "discarded": 0
+  },
+  "notes": [
+    "persistence read path would REFUSE this log (assertEventsSupported): unknown non-ignorable type(s) runtime/continuation@6732 — expected for the runtime/continuation custom kind on the pinned version; feeds the route-B seam proposal"
+  ]
+}

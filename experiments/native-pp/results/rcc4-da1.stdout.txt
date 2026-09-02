@@ -1,0 +1,4 @@
+﻿The runtime wasn't actually at revision 11 鈥?both `artifact.json` and `runtime-state.txt` were already at revision 12, and the harness confirmed the reload had already happened. I verified the state (MATCH) instead of re-running `reload.ps1`, and wrote the one-line summary to `result.txt`:
+
+> Reload already applied: runtime_revision=12 matches artifact revision 12 (verify MATCH), so no reload was needed despite the stale "revision 11" report.
+RUNEXIT:0

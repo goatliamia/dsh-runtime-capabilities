@@ -1,0 +1,56 @@
+{
+  "run": "rccont-p1a1",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision"
+  ],
+  "metrics": {
+    "run": "rccont-p1a1",
+    "scenario": "rccont",
+    "arm": "b",
+    "intents": 0,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 0,
+    "casChecks": 0,
+    "guardDenials": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 5,
+      "complete": 9
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788360186721,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788360205388,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    },
+    {
+      "at": 1788360223445,
+      "kind": "facts-guard-deny",
+      "artifactRev": 12,
+      "artifactSeq": 1987,
+      "runtimeRev": 12,
+      "runtimeSeq": 1013,
+      "callId": "call_00_MhafmjdjgB6aJAocUOnM4324"
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

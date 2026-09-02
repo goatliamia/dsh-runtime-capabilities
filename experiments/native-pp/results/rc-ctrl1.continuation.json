@@ -1,0 +1,33 @@
+{
+  "run": "rccontrol-ctrl1",
+  "sessionId": "session-<redacted>",
+  "contract": "plugin-revision-mismatch",
+  "metrics": {
+    "run": "rccontrol-ctrl1",
+    "scenario": "rccontrol",
+    "arm": "ctrl",
+    "intents": 0,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "casChecks": 0,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 6
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788353501622,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

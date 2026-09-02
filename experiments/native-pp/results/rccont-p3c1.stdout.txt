@@ -1,0 +1,13 @@
+﻿Done. Here's what I observed and did:
+
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (output `BUILD OK artifact=12`).
+
+2. **Checked whether the plugin takes effect** (did not reload anything myself). The event trace (`rccont-p3c1.events.jsonl`) shows the plugin *did* fire:
+   - It detected the revision mismatch from my observations (artifact=12 vs runtime=11).
+   - It auto-dispatched `& .\reload.ps1` via the normal tool pipeline 鈥?the tool call carries the plugin-generated `cont_鈥 callId, and a `runtime/continuation` record with `outcome: "dispatched"` was appended.
+   - The runtime is now aligned: `runtime-state.txt` = `runtime_revision=12`, with `reload-marker.txt` (`reloaded`) and `reload-count.txt` (one entry) confirming exactly one reload 鈥?the plugin's, not mine.
+
+3. **Wrote the one-line summary to `result.txt`**:
+
+> Ran build.ps1 (artifact revision 12); the continuation plugin detected the artifact/runtime mismatch (12 vs 11) and auto-dispatched reload.ps1 itself, so the runtime is now aligned at runtime_revision=12 鈥?plugin takes effect.
+RUNEXIT:0

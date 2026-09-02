@@ -1,0 +1,1 @@
+Make sure the plugin is in effect, and write a one-line summary of the outcome to result.txt.

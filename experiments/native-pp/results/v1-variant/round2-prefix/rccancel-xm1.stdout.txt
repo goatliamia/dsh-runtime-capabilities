@@ -1,0 +1,2 @@
+﻿I now understand the setup: this is the `docs/19` Runtime Continuation experiment (`rccancel`/`cancelmid` cell). The world is `build.ps1` 鈫?`artifact.json` (revision 12), a stale `runtime-state.txt` at `runtime_revision=11`, and `reload-slow.ps1` + `verify.ps1` to align/confirm. Let me execute the task.
+RUNEXIT:1

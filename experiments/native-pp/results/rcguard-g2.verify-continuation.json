@@ -1,0 +1,71 @@
+{
+  "run": "rcguard-g2",
+  "sessionId": "session-<redacted>",
+  "eventsDecoded": 6470,
+  "checks": [
+    {
+      "id": "provenance-fields-seq1801",
+      "ok": true,
+      "detail": {
+        "outcome": "blocked",
+        "basedOn": {
+          "artifactRev": 12,
+          "artifactSeq": 1796,
+          "runtimeRev": 11,
+          "runtimeSeq": 1077
+        },
+        "revision": null
+      }
+    },
+    {
+      "id": "loop-contract-cont_1788358185550_1",
+      "ok": true,
+      "detail": {
+        "call": {
+          "turn": 1,
+          "step": 9,
+          "callId": "cont_1788358185550_1",
+          "name": "pwsh",
+          "argumentsIsString": true,
+          "arguments": "{\"command\":\"& .\\\\reload.ps1\",\"description\":\"Reload runtime to match artifact revision\"}"
+        },
+        "pair": {
+          "seq": 1798,
+          "turn": 1,
+          "step": 9,
+          "sourceKind": "runtime-continuation",
+          "blockId": "cont_1788358185550_1",
+          "blockType": "tool-call",
+          "blockName": "pwsh",
+          "surfaceOp": "append"
+        },
+        "result": {
+          "seq": 1800,
+          "turn": 1,
+          "step": 9,
+          "sourceKind": "tool",
+          "sourceCallId": "cont_1788358185550_1",
+          "contentBlockType": "tool-result",
+          "toolCallId": "cont_1788358185550_1",
+          "isError": true,
+          "surfaceOp": "append",
+          "sourceEventSeqs": [
+            1799
+          ]
+        }
+      }
+    }
+  ],
+  "verdicts": {
+    "confoundedByCompaction": false,
+    "continuationRecords": 1,
+    "continuationToolCalls": 1,
+    "staleActorToolCalls": 0,
+    "officialReplayCompatible": false,
+    "dispatched": 0,
+    "discarded": 0
+  },
+  "notes": [
+    "persistence read path would REFUSE this log (assertEventsSupported): unknown non-ignorable type(s) runtime/continuation@1801 — expected for the runtime/continuation custom kind on the pinned version; feeds the route-B seam proposal"
+  ]
+}

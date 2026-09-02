@@ -1,0 +1,1 @@
+build.ps1 produced artifact revision 12 but its output carries no fact channel (rcnofacts world), so the runtime-continuation plugin abstained and left the runtime stale at revision 11; I ran reload.ps1 to align runtime-state.txt to runtime_revision=12 and verify.ps1 confirms MATCH (artifact=12 runtime=12).

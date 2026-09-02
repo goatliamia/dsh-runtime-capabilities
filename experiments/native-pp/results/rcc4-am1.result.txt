@@ -1,0 +1,1 @@
+Built artifact revision 12, the runtime aligned to runtime_revision=12 (the continuation plugin dispatched reload.ps1), and verify.ps1 confirms MATCH (artifact=12 runtime=12) so the plugin is in effect.

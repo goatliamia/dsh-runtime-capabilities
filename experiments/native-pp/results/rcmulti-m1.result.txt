@@ -1,0 +1,1 @@
+Built artifact revision 12, reloaded the runtime to runtime_revision=12, and verify.ps1 confirms MATCH (plugin takes effect in the runtime).

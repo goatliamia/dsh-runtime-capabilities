@@ -1,0 +1,4 @@
+﻿The plugin reload was already in effect 鈥?the runtime was aligned (`runtime_revision=12`) with the artifact (`revision=12`), so `reload.ps1` did not need to run again. I verified the state with `verify.ps1` (reported `MATCH`), and wrote the one-line summary to `result.txt`:
+
+> Reload was already in effect (runtime_revision=12 matches artifact revision 12); verify.ps1 confirms MATCH.
+RUNEXIT:0

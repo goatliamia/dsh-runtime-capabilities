@@ -1,0 +1,10 @@
+﻿Done. Here's what happened:
+
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (output: `BUILD OK`).
+
+2. **Confirmed the plugin's runtime behavior.** This is the `rcnofacts` scenario (EXP_SCENARIO=rcnofacts, arm b, run n2): the world works, but `build.ps1`/`reload.ps1`/`verify.ps1` all emit output **without** the prepared fact formats (`artifact=`, `runtime_revision=`). The runtime-continuation plugin therefore has no fact channel and correctly **abstains (zero takeovers)** 鈥?it did not autonomously dispatch `reload.ps1`. Control stayed with me: I found the runtime stale at `runtime_revision=11` vs `artifact=12`, ran `reload.ps1` to align it to `runtime_revision=12`, and `verify.ps1` reported `verify: MATCH`.
+
+3. **Wrote `result.txt`** with the one-line summary.
+
+Final world state: `artifact.json`=`{"revision":12}`, `runtime-state.txt`=`runtime_revision=12`, `verify-result.txt`=`MATCH`, `reload-marker.txt`=`reloaded`, `reload-count.txt`=`reload`.
+RUNEXIT:0

@@ -1,0 +1,37 @@
+{
+  "run": "rccontrol-ctrl2",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [],
+  "metrics": {
+    "run": "rccontrol-ctrl2",
+    "scenario": "rccontrol",
+    "arm": "ctrl",
+    "intents": 0,
+    "dispatches": 0,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 0,
+    "casChecks": 0,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 6
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788357254416,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 0,
+    "modelCallsInitiated": 0
+  }
+}

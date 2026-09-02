@@ -1,0 +1,21 @@
+{
+  "run": "rc-b2",
+  "scenario": "rc",
+  "arm": "b",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 17,
+  "toolCalls": 44,
+  "toolErrors": 1,
+  "perToolCalls": {
+    "glob": 4,
+    "read": 30,
+    "pwsh": 7,
+    "todo_write": 2,
+    "write": 1
+  },
+  "payloadChars": 1227395,
+  "traceEvents": 4317,
+  "staleBumps": 0,
+  "staleBumpFailures": 0,
+  "runtimeFailures": 0
+}

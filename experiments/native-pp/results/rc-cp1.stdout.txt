@@ -1,0 +1,10 @@
+﻿Done. Here's the outcome:
+
+1. **`build.ps1`** ran and produced `artifact.json` with revision 12 (`BUILD OK artifact=12`).
+2. A competing pipeline (`stale-bump-artifact.ps1`) then bumped the artifact to **13** while the runtime was still stale at 11. Per the `plugin-revision-mismatch` contract, I discarded the stale decision and re-derived from fresh facts (artifact=13, runtime=11).
+3. **`reload.ps1`** aligned the runtime to the new artifact (`runtime_revision=13`), and **`verify.ps1`** confirmed the plugin now takes effect: `MATCH (artifact=13 runtime=13)`.
+
+`result.txt` contains the one-line summary:
+
+> build.ps1 produced artifact revision 13 (bumped from 12 by a competing pipeline), reload.ps1 aligned the runtime to it, and verify.ps1 confirms MATCH (artifact=13 runtime=13) 鈥?the plugin is now effective.
+RUNEXIT:0

@@ -1,0 +1,14 @@
+﻿The task is complete. Here's the outcome:
+
+1. **Build** 鈥?`build.ps1` produced a new artifact: `artifact.json` = `{"revision":12}` (`BUILD OK artifact=12`).
+
+2. **Plugin takes effect** 鈥?an initial `reload.ps1` attempt was intercepted by the runtime's facts-guard with a false "already aligned" claim (`runtime_revision=12`), caused by a projection leak from reading a stale previous-run file (`rchain-h1.runtime-state.txt`). I verified ground truth (`runtime-state.txt` was actually `11`, a genuine mismatch vs artifact `12`), refreshed the runtime fact, and re-ran the reload 鈥?the runtime continuation then dispatched it and aligned `runtime-state.txt` to `runtime_revision=12`.
+
+3. **Health check** 鈥?`healthcheck.ps1` returned `health=ok` (`health-check.txt` = `ok`).
+
+4. **Verification** 鈥?`verify.ps1` confirms `MATCH (artifact=12 runtime=12)`.
+
+5. **Summary** 鈥?wrote the one-line outcome to `result.txt`:
+
+> build.ps1 produced artifact revision 12, the runtime was reloaded to runtime_revision=12 (verify.ps1: MATCH, plugin takes effect), and healthcheck.ps1 returned health=ok.
+RUNEXIT:0

@@ -1,0 +1,9 @@
+﻿Done.
+
+- **Build:** `build.ps1` produced `artifact.json` at revision 12.
+- **Runtime effect:** `reload.ps1` aligned `runtime-state.txt` to `runtime_revision=12`, and `verify.ps1` confirmed **MATCH**.
+- **Summary:** wrote a one-line outcome to `result.txt`.
+
+`result.txt` now reads:
+
+> build.ps1 produced artifact revision 12, reload.ps1 aligned the runtime to it, and verify.ps1 confirms MATCH (runtime_revision=12).

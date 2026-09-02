@@ -1,0 +1,8 @@
+﻿Done. Here's the outcome:
+
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (output: `BUILD OK artifact=12`).
+2. **Confirmed the plugin takes effect** 鈫?the runtime was already at `runtime_revision=12` (aligned world), so no reload was needed; `verify.ps1` reported `MATCH (artifact=12 runtime_revision=12)`, satisfying the `artifact == runtime` contract.
+3. **Wrote the one-line summary** to `result.txt`:
+
+> build.ps1 produced artifact revision 12; the runtime was already at runtime_revision=12, and verify.ps1 confirms MATCH (artifact=12 runtime=12), so the plugin takes effect in the runtime with no reload required.
+RUNEXIT:0

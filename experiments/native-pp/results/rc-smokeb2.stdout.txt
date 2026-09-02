@@ -1,0 +1,8 @@
+﻿
+node.exe : dsh: INVALID_REQUEST: Messages with role 'tool' must be a response to a preceding message with 'tool_calls'
+At <HOME>\AppData\Roaming\npm\dsh.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/@deepseek-ai/dsh/lib/bin.js" ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (dsh: INVALID_RE...th 'tool_calls':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

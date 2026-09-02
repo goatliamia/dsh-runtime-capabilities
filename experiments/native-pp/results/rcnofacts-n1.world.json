@@ -1,0 +1,18 @@
+{
+  "run": "rcnofacts-n1",
+  "scenario": "rcnofacts",
+  "arm": "b",
+  "sessionId": "session-<redacted>",
+  "staleBumps": 0,
+  "taskArtifactExists": true,
+  "rc": {
+    "artifactRev": 12,
+    "runtimeRev": 12,
+    "reloadCount": 1,
+    "rollbackCount": 0,
+    "reloadMarkerExists": true,
+    "verifyResult": "MATCH",
+    "healthCheck": null,
+    "worldAligned": true
+  }
+}

@@ -1,0 +1,7 @@
+﻿Done.
+
+**Outcome:** I ran `reload.ps1` (the deterministic plugin-reload action). It failed because `artifact.json` is missing in the workspace 鈥?the script's `Get-Content` hit a non-terminating error, printed a misleading `reloaded: runtime_revision=`, and clobbered `runtime-state.txt` from `runtime_revision=11` to an empty `runtime_revision=`.
+
+**`result.txt` (one line):**
+> Reload failed: artifact.json is missing, so the runtime revision could not be aligned and runtime-state.txt was reset to an empty revision.
+RUNEXIT:0

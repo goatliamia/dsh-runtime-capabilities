@@ -1,0 +1,129 @@
+{
+  "run": "rchain-h2",
+  "sessionId": "session-<redacted>",
+  "eventsDecoded": 2640,
+  "checks": [
+    {
+      "id": "provenance-fields-seq2028",
+      "ok": true,
+      "detail": {
+        "outcome": "dispatched",
+        "basedOn": {
+          "artifactRev": 12,
+          "artifactSeq": 2023,
+          "runtimeRev": 11,
+          "runtimeSeq": 1181
+        },
+        "revision": {
+          "artifact": 12,
+          "runtime": 11
+        }
+      }
+    },
+    {
+      "id": "provenance-fields-seq2032",
+      "ok": true,
+      "detail": {
+        "outcome": "dispatched",
+        "basedOn": {
+          "artifactRev": 12,
+          "artifactSeq": 2023,
+          "runtimeRev": 12,
+          "runtimeSeq": 2027
+        },
+        "revision": {
+          "artifact": 12,
+          "runtime": 12
+        }
+      }
+    },
+    {
+      "id": "loop-contract-cont_1788357670462_1",
+      "ok": true,
+      "detail": {
+        "call": {
+          "turn": 1,
+          "step": 8,
+          "callId": "cont_1788357670462_1",
+          "name": "pwsh",
+          "argumentsIsString": true,
+          "arguments": "{\"command\":\"& .\\\\reload.ps1\",\"description\":\"Reload runtime to match artifact revision\"}"
+        },
+        "pair": {
+          "seq": 2025,
+          "turn": 1,
+          "step": 8,
+          "sourceKind": "runtime-continuation",
+          "blockId": "cont_1788357670462_1",
+          "blockType": "tool-call",
+          "blockName": "pwsh",
+          "surfaceOp": "append"
+        },
+        "result": {
+          "seq": 2027,
+          "turn": 1,
+          "step": 8,
+          "sourceKind": "tool",
+          "sourceCallId": "cont_1788357670462_1",
+          "contentBlockType": "tool-result",
+          "toolCallId": "cont_1788357670462_1",
+          "isError": false,
+          "surfaceOp": "append",
+          "sourceEventSeqs": [
+            2026
+          ]
+        }
+      }
+    },
+    {
+      "id": "loop-contract-cont_1788357670812_2",
+      "ok": true,
+      "detail": {
+        "call": {
+          "turn": 1,
+          "step": 8,
+          "callId": "cont_1788357670812_2",
+          "name": "pwsh",
+          "argumentsIsString": true,
+          "arguments": "{\"command\":\"& .\\\\healthcheck.ps1\",\"description\":\"Run the post-reload health check\"}"
+        },
+        "pair": {
+          "seq": 2029,
+          "turn": 1,
+          "step": 8,
+          "sourceKind": "runtime-continuation",
+          "blockId": "cont_1788357670812_2",
+          "blockType": "tool-call",
+          "blockName": "pwsh",
+          "surfaceOp": "append"
+        },
+        "result": {
+          "seq": 2031,
+          "turn": 1,
+          "step": 8,
+          "sourceKind": "tool",
+          "sourceCallId": "cont_1788357670812_2",
+          "contentBlockType": "tool-result",
+          "toolCallId": "cont_1788357670812_2",
+          "isError": false,
+          "surfaceOp": "append",
+          "sourceEventSeqs": [
+            2030
+          ]
+        }
+      }
+    }
+  ],
+  "verdicts": {
+    "confoundedByCompaction": false,
+    "continuationRecords": 2,
+    "continuationToolCalls": 2,
+    "staleActorToolCalls": 0,
+    "officialReplayCompatible": false,
+    "dispatched": 2,
+    "discarded": 0
+  },
+  "notes": [
+    "persistence read path would REFUSE this log (assertEventsSupported): unknown non-ignorable type(s) runtime/continuation@2028 — expected for the runtime/continuation custom kind on the pinned version; feeds the route-B seam proposal"
+  ]
+}

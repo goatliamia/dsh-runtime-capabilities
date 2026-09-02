@@ -1,0 +1,18 @@
+{
+  "run": "rccancel-xm1",
+  "scenario": "rccancel",
+  "arm": "cancelmid",
+  "sessionId": "session-<redacted>",
+  "staleBumps": 0,
+  "taskArtifactExists": false,
+  "rc": {
+    "artifactRev": 12,
+    "runtimeRev": 11,
+    "reloadCount": 0,
+    "rollbackCount": 0,
+    "reloadMarkerExists": false,
+    "verifyResult": null,
+    "healthCheck": null,
+    "worldAligned": false
+  }
+}

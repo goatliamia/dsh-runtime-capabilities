@@ -1,0 +1,2 @@
+﻿Fixed `add()` in math.js (was multiplying, now adds), ran `run-tests.ps1` (all 3 tests pass, `RESULT: PASS`), and wrote the one-line summary to result.txt.
+RUNEXIT:0

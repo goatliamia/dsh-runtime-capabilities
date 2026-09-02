@@ -1,0 +1,1 @@
+build.ps1 produced artifact revision 12, but a competing pipeline bumped the world to revision 13 while the reload was in flight (the stale reload was discarded), and verify.ps1 confirms MATCH (artifact=13 runtime=13) — the plugin takes effect in the runtime.

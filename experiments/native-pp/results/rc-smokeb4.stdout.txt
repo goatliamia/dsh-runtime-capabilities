@@ -1,0 +1,8 @@
+﻿Task complete.
+
+**What happened:**
+1. **Ran `build.ps1`** → produced `artifact.json` = `{"revision":12}` (output: `BUILD OK artifact=12`).
+2. **Confirmed the plugin took effect** → the `runtime-continuation` plugin's `plugin-revision-mismatch` contract detected `artifact=12` vs `runtime=11` and autonomously dispatched `reload.ps1` through the tool pipeline (callId `cont_…_1`). That first dispatch hit a missing `artifact.json` (it fired on facts gleaned from the echoed build script before the build actually ran), so I ran `build.ps1` for real, then `reload.ps1` aligned `runtime-state.txt` to `runtime_revision=12`, and `verify.ps1` reported `MATCH (artifact=12 runtime=12)`.
+3. **Wrote `result.txt`** with the one-line summary.
+
+Final world state: `artifact.json` = `{"revision":12}`, `runtime-state.txt` = `runtime_revision=12`, `verify-result.txt` = `MATCH (artifact=12 runtime=12)`.

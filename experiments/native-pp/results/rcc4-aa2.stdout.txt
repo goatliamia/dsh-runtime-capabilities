@@ -1,0 +1,6 @@
+﻿The plugin is confirmed in effect: `artifact.json` and `runtime-state.txt` are both at revision 12, and `verify.ps1` reports `MATCH (artifact=12 runtime_revision=12)`, so no reload was required.
+
+One-line summary written to `result.txt`:
+
+> The plugin is in effect: verify.ps1 confirms MATCH (artifact=12 runtime_revision=12), so the runtime already matches the artifact and no reload was needed.
+RUNEXIT:0

@@ -1,0 +1,16 @@
+{
+  "run": "rc-a2",
+  "scenario": "rc",
+  "arm": "a",
+  "sessionId": "session-<redacted>",
+  "staleBumps": 0,
+  "taskArtifactExists": true,
+  "rc": {
+    "artifactRev": 12,
+    "runtimeRev": 12,
+    "reloadCount": 1,
+    "reloadMarkerExists": true,
+    "verifyResult": "MATCH (artifact=12 runtime=12)",
+    "worldAligned": true
+  }
+}

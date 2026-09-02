@@ -1,0 +1,16 @@
+{
+  "run": "rc-smokeb2",
+  "scenario": "rc",
+  "arm": "b",
+  "sessionId": "session-<redacted>",
+  "staleBumps": 0,
+  "taskArtifactExists": false,
+  "rc": {
+    "artifactRev": 12,
+    "runtimeRev": 12,
+    "reloadCount": 1,
+    "reloadMarkerExists": true,
+    "verifyResult": null,
+    "worldAligned": true
+  }
+}

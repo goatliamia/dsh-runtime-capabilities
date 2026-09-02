@@ -1,0 +1,17 @@
+{
+  "name": "dsh-native-pp-rc-fixture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "description": "Isolated-home fixture for the docs/19 Runtime Continuation experiment: deterministic plugin-revision world (build/verify/reload), raw event trace, world-truth record, and the C-arm staleness injection (competing pipeline bump via the public tools.execute boundary). No state files, no SQLite, no prompt edits.",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

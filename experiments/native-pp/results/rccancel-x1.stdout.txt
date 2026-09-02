@@ -1,0 +1,4 @@
+﻿I now understand the setup. This is the `rc` (Runtime Continuation) deterministic world: `build.ps1` produces `artifact.json` (revision 12), while `runtime-state.txt` is stale at `runtime_revision=11`. The "plugin" (reload) must align the runtime to the artifact, and `verify.ps1` confirms MATCH.
+
+Let me run the build first.
+RUNEXIT:1

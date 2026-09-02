@@ -1,0 +1,1 @@
+Ran build.ps1 (artifact revision 12); the continuation plugin detected the artifact/runtime mismatch (12 vs 11) and auto-dispatched reload.ps1 itself, so the runtime is now aligned at runtime_revision=12 — plugin takes effect.

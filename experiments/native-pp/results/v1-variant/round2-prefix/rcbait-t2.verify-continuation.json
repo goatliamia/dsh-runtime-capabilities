@@ -1,0 +1,16 @@
+{
+  "run": "rcbait-t2",
+  "sessionId": "session-<redacted>",
+  "eventsDecoded": 2280,
+  "checks": [],
+  "verdicts": {
+    "confoundedByCompaction": false,
+    "continuationRecords": 0,
+    "continuationToolCalls": 0,
+    "staleActorToolCalls": 0,
+    "officialReplayCompatible": true,
+    "dispatched": 0,
+    "discarded": 0
+  },
+  "notes": []
+}

@@ -1,0 +1,10 @@
+﻿Done.
+
+**Outcome:**
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (`BUILD OK artifact=12`).
+2. **Plugin took effect automatically** 鈥?I did *not* reload anything myself. The runtime was stale at `runtime_revision=11`; the runtime-continuation plugin detected the mismatch and auto-dispatched `reload.ps1` through the tool pipeline, aligning `runtime-state.txt` to `runtime_revision=12` (`reload-count.txt` = `reload`, `reload-marker.txt` = `reloaded`).
+3. **`verify.ps1`** 鈫?`verify: artifact=12 runtime_revision=12 => MATCH`.
+4. **Wrote `result.txt`** with the one-line summary:
+
+> build.ps1 produced artifact revision 12; the runtime-continuation plugin auto-dispatched reload.ps1 (no manual reload) to align runtime_revision from 11 to 12, and verify.ps1 confirms MATCH (artifact=12 runtime=12) so the plugin takes effect.
+RUNEXIT:0

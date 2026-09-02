@@ -1,0 +1,98 @@
+{
+  "run": "rcc4-chain1",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision",
+    "post"
+  ],
+  "metrics": {
+    "run": "rcc4-chain1",
+    "scenario": "rcc4",
+    "arm": "chain",
+    "intents": 1,
+    "dispatches": 1,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 1,
+    "casChecks": 1,
+    "guardDenials": 2,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 8,
+      "complete": 16
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788365628388,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788365648576,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788365654993,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 12
+    },
+    {
+      "at": 1788365676574,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    },
+    {
+      "at": 1788365680110,
+      "kind": "facts-guard-deny",
+      "artifactRev": 12,
+      "artifactSeq": 3068,
+      "runtimeRev": 12,
+      "runtimeSeq": 1547,
+      "callId": "call_00_3DZ6tRAPqXJ7wjPBQOPy5918"
+    },
+    {
+      "at": 1788365722509,
+      "kind": "facts-guard-deny",
+      "artifactRev": 12,
+      "artifactSeq": 5580,
+      "runtimeRev": 12,
+      "runtimeSeq": 3220,
+      "callId": "call_00_IAMBljUmxAeagwI6fQfb0271"
+    },
+    {
+      "at": 1788366097843,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 5580,
+        "runtimeRev": 11,
+        "runtimeSeq": 29652
+      }
+    },
+    {
+      "at": 1788366098181,
+      "kind": "dispatched",
+      "contract": "plugin-revision-mismatch",
+      "callId": "cont_1788366097845_1",
+      "callSeq": 29655,
+      "resultSeq": 29656,
+      "resultIsError": false
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 1,
+    "modelCallsInitiated": 0
+  }
+}

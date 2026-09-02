@@ -1,0 +1,9 @@
+﻿
+dsh: INVALID_REQUEST: The `reasoning_content` in the thinking mode must be passed back to the API.
+所在位置 <HOME>\AppData\Roaming\npm\dsh.ps1:24 字符: 5
++     & "node$exe"  "$basedir/node_modules/@deepseek-ai/dsh/lib/bin.js" ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (dsh: INVALID_RE...ack to the API.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+RUNEXIT:1

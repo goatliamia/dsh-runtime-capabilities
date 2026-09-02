@@ -1,0 +1,9 @@
+﻿Done.
+
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (stdout: `BUILD OK`).
+2. **Confirmed plugin behavior in the runtime**: this is the `rcnofacts` world 鈥?`build.ps1` emits no fact-format channel (no `artifact=`, no `runtime_revision=`), so the runtime-continuation plugin **abstained** (zero takeovers) and left `runtime-state.txt` stale at `11`. Control correctly stayed with me rather than the plugin auto-reloading.
+3. **Aligned the runtime manually**: ran `reload.ps1` 鈫?`runtime-state.txt` = `runtime_revision=12`, then `verify.ps1` 鈫?`MATCH`.
+4. **Wrote `result.txt`** with the one-line summary.
+
+Final state: `artifact.json`=`{"revision":12}`, `runtime-state.txt`=`runtime_revision=12`, `verify-result.txt`=`MATCH`.
+RUNEXIT:0

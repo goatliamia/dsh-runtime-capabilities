@@ -1,0 +1,21 @@
+{
+  "run": "rc-smokeb4",
+  "scenario": "rc",
+  "arm": "b",
+  "sessionId": "session-<redacted>",
+  "modelCalls": 16,
+  "toolCalls": 26,
+  "toolErrors": 0,
+  "perToolCalls": {
+    "glob": 4,
+    "read": 13,
+    "grep": 2,
+    "pwsh": 6,
+    "write": 1
+  },
+  "payloadChars": 2081918,
+  "traceEvents": 9159,
+  "staleBumps": 0,
+  "staleBumpFailures": 0,
+  "runtimeFailures": 0
+}

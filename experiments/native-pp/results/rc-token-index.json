@@ -1,0 +1,252 @@
+[
+  {
+    "run": "rc-a1",
+    "arm": "a",
+    "scenario": "rc",
+    "sessionId": "session-<redacted>",
+    "modelCalls": 16,
+    "toolCalls": 29,
+    "toolErrors": 1,
+    "pwshCalls": 4,
+    "steps": 14,
+    "turnReason": "completed",
+    "compactionEvents": 0,
+    "confounded": false,
+    "officialReplayCompatible": true,
+    "continuation": null,
+    "world": {
+      "artifactRev": 12,
+      "runtimeRev": 12,
+      "reloadCount": 1,
+      "reloadMarkerExists": true,
+      "verifyResult": "MATCH (artifact=12 runtime=12)",
+      "worldAligned": true
+    },
+    "taskArtifactExists": true,
+    "inputTokens": 23918,
+    "outputTokens": 8396,
+    "cacheReadTokens": 449280,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 4868
+  },
+  {
+    "run": "rc-a2",
+    "arm": "a",
+    "scenario": "rc",
+    "sessionId": "session-<redacted>",
+    "modelCalls": 22,
+    "toolCalls": 43,
+    "toolErrors": 0,
+    "pwshCalls": 4,
+    "steps": 20,
+    "turnReason": "completed",
+    "compactionEvents": 0,
+    "confounded": false,
+    "officialReplayCompatible": true,
+    "continuation": null,
+    "world": {
+      "artifactRev": 12,
+      "runtimeRev": 12,
+      "reloadCount": 1,
+      "reloadMarkerExists": true,
+      "verifyResult": "MATCH (artifact=12 runtime=12)",
+      "worldAligned": true
+    },
+    "taskArtifactExists": true,
+    "inputTokens": 29548,
+    "outputTokens": 12588,
+    "cacheReadTokens": 707328,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 6960
+  },
+  {
+    "run": "rc-b1",
+    "arm": "b",
+    "scenario": "rc",
+    "sessionId": "session-<redacted>",
+    "modelCalls": 14,
+    "toolCalls": 31,
+    "toolErrors": 0,
+    "pwshCalls": 3,
+    "steps": 13,
+    "turnReason": "completed",
+    "compactionEvents": 0,
+    "confounded": false,
+    "officialReplayCompatible": false,
+    "continuation": {
+      "intents": 1,
+      "dispatches": 1,
+      "discards": 0,
+      "blocked": 0,
+      "decisions": {
+        "needs-decision": 9,
+        "complete": 3
+      }
+    },
+    "world": {
+      "artifactRev": 12,
+      "runtimeRev": 12,
+      "reloadCount": 1,
+      "reloadMarkerExists": true,
+      "verifyResult": "MATCH (artifact=12 runtime=12)",
+      "worldAligned": true
+    },
+    "taskArtifactExists": true,
+    "inputTokens": 10202,
+    "outputTokens": 6448,
+    "cacheReadTokens": 308736,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 2674
+  },
+  {
+    "run": "rc-b2",
+    "arm": "b",
+    "scenario": "rc",
+    "sessionId": "session-<redacted>",
+    "modelCalls": 16,
+    "toolCalls": 23,
+    "toolErrors": 0,
+    "pwshCalls": 7,
+    "steps": 15,
+    "turnReason": "completed",
+    "compactionEvents": 0,
+    "confounded": false,
+    "officialReplayCompatible": false,
+    "continuation": {
+      "intents": 1,
+      "dispatches": 1,
+      "discards": 0,
+      "blocked": 0,
+      "decisions": {
+        "needs-decision": 9,
+        "complete": 5
+      }
+    },
+    "world": {
+      "artifactRev": 12,
+      "runtimeRev": 12,
+      "reloadCount": 1,
+      "reloadMarkerExists": true,
+      "verifyResult": "MATCH (artifact=12 runtime=12)",
+      "worldAligned": true
+    },
+    "taskArtifactExists": true,
+    "inputTokens": 41482,
+    "outputTokens": 13582,
+    "cacheReadTokens": 692480,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 8794
+  },
+  {
+    "run": "rc-c1",
+    "arm": "c",
+    "scenario": "rc",
+    "sessionId": "session-<redacted>",
+    "modelCalls": 21,
+    "toolCalls": 52,
+    "toolErrors": 0,
+    "pwshCalls": 6,
+    "steps": 19,
+    "turnReason": "completed",
+    "compactionEvents": 0,
+    "confounded": false,
+    "officialReplayCompatible": false,
+    "continuation": {
+      "intents": 1,
+      "dispatches": 0,
+      "discards": 1,
+      "blocked": 0,
+      "decisions": {
+        "needs-decision": 11,
+        "complete": 7
+      }
+    },
+    "world": {
+      "artifactRev": 13,
+      "runtimeRev": 13,
+      "reloadCount": 0,
+      "reloadMarkerExists": false,
+      "verifyResult": "MATCH (artifact=13 runtime=13)",
+      "worldAligned": true
+    },
+    "taskArtifactExists": true,
+    "inputTokens": 26826,
+    "outputTokens": 16820,
+    "cacheReadTokens": 676352,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 10604
+  },
+  {
+    "run": "rc-c2",
+    "arm": "c",
+    "scenario": "rc",
+    "sessionId": "session-<redacted>",
+    "modelCalls": 14,
+    "toolCalls": 30,
+    "toolErrors": 0,
+    "pwshCalls": 3,
+    "steps": 12,
+    "turnReason": "completed",
+    "compactionEvents": 0,
+    "confounded": false,
+    "officialReplayCompatible": false,
+    "continuation": {
+      "intents": 1,
+      "dispatches": 0,
+      "discards": 1,
+      "blocked": 0,
+      "decisions": {
+        "needs-decision": 7,
+        "complete": 4
+      }
+    },
+    "world": {
+      "artifactRev": 13,
+      "runtimeRev": 13,
+      "reloadCount": 0,
+      "reloadMarkerExists": false,
+      "verifyResult": "MATCH (artifact=13 runtime=13)",
+      "worldAligned": true
+    },
+    "taskArtifactExists": true,
+    "inputTokens": 14170,
+    "outputTokens": 11546,
+    "cacheReadTokens": 326400,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 8352
+  },
+  {
+    "run": "rc-ctrl1",
+    "arm": "ctrl",
+    "scenario": "rccontrol",
+    "sessionId": "session-<redacted>",
+    "modelCalls": 7,
+    "toolCalls": 7,
+    "toolErrors": 0,
+    "pwshCalls": 1,
+    "steps": 6,
+    "turnReason": "completed",
+    "compactionEvents": 0,
+    "confounded": false,
+    "officialReplayCompatible": true,
+    "continuation": {
+      "intents": 0,
+      "dispatches": 0,
+      "discards": 0,
+      "blocked": 0,
+      "decisions": {
+        "needs-decision": 6
+      }
+    },
+    "world": {
+      "testResult": "PASS",
+      "worldCorrect": true
+    },
+    "taskArtifactExists": true,
+    "inputTokens": 3488,
+    "outputTokens": 1360,
+    "cacheReadTokens": 110848,
+    "cacheWriteTokens": 0,
+    "reasoningTokens": 182
+  }
+]

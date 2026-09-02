@@ -1,0 +1,6 @@
+﻿Done.
+
+I attempted the plugin reload exactly once by running `reload.ps1`, but the runtime's facts-guard refused it (`[runtime-facts] reload is unnecessary`) because the world was already aligned (`artifact=12`, `runtime_revision=12`). I then confirmed the current state with `verify.ps1` 鈫?`MATCH (artifact=12 runtime_revision=12)`, and wrote the one-line outcome to `result.txt`:
+
+> Attempted to reload the plugin once, but the runtime facts-guard refused it as unnecessary because the world is already aligned (artifact=12 runtime_revision=12); verify.ps1 confirms MATCH, so the plugin is already up to date.
+RUNEXIT:0

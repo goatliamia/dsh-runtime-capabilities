@@ -1,0 +1,101 @@
+{
+  "run": "rcc4-cm2",
+  "sessionId": "session-<redacted>",
+  "activeContracts": [
+    "revision"
+  ],
+  "metrics": {
+    "run": "rcc4-cm2",
+    "scenario": "rcc4",
+    "arm": "b",
+    "intents": 1,
+    "dispatches": 1,
+    "discards": 0,
+    "blocked": 0,
+    "aborted": 0,
+    "ambiguous": 0,
+    "chainRuns": 0,
+    "chainHops": 1,
+    "casChecks": 1,
+    "guardDenials": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 14,
+      "already-continuated": 7,
+      "complete": 12
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788364560189,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788364618782,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": 11
+    },
+    {
+      "at": 1788364712705,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 9412,
+        "runtimeRev": 11,
+        "runtimeSeq": 9414
+      }
+    },
+    {
+      "at": 1788364713047,
+      "kind": "dispatched",
+      "contract": "plugin-revision-mismatch",
+      "callId": "cont_1788364712706_1",
+      "callSeq": 9419,
+      "resultSeq": 9420,
+      "resultIsError": false
+    },
+    {
+      "at": 1788364745404,
+      "kind": "decision-already-continuated",
+      "contract": "plugin-revision-mismatch",
+      "continuationSeq": 9421
+    },
+    {
+      "at": 1788364912832,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    },
+    {
+      "at": 1788365158723,
+      "kind": "facts-guard-deny",
+      "artifactRev": 12,
+      "artifactSeq": 22685,
+      "runtimeRev": 12,
+      "runtimeSeq": 22684,
+      "callId": "call_00_BkKUisfmmQFKhnR49ZvG3107"
+    },
+    {
+      "at": 1788365520703,
+      "kind": "decision-already-continuated",
+      "contract": "plugin-revision-mismatch",
+      "continuationSeq": 9421
+    },
+    {
+      "at": 1788365524546,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 1,
+    "modelCallsInitiated": 0
+  }
+}

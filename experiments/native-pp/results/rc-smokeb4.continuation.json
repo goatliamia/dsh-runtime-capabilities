@@ -1,0 +1,67 @@
+{
+  "run": "rc-smokeb4",
+  "sessionId": "session-<redacted>",
+  "contract": "plugin-revision-mismatch",
+  "metrics": {
+    "run": "rc-smokeb4",
+    "scenario": "rc",
+    "arm": "b",
+    "intents": 1,
+    "dispatches": 1,
+    "discards": 0,
+    "blocked": 0,
+    "casChecks": 1,
+    "recordFailures": 0,
+    "handlerErrors": 0,
+    "decisions": {
+      "needs-decision": 8,
+      "already-continuated": 2,
+      "complete": 4
+    }
+  },
+  "interventions": [
+    {
+      "at": 1788352799040,
+      "kind": "decision-needs-decision",
+      "artifact": null,
+      "runtime": null
+    },
+    {
+      "at": 1788352837095,
+      "kind": "required",
+      "contract": "plugin-revision-mismatch",
+      "basedOn": {
+        "artifactRev": 12,
+        "artifactSeq": 2190,
+        "runtimeRev": 11,
+        "runtimeSeq": 2190
+      }
+    },
+    {
+      "at": 1788352837436,
+      "kind": "dispatched",
+      "callId": "cont_1788352837096_1",
+      "callSeq": 2193,
+      "resultSeq": 2194,
+      "resultIsError": false
+    },
+    {
+      "at": 1788352900238,
+      "kind": "decision-already-continuated",
+      "artifact": 12,
+      "runtime": 11,
+      "continuationSeq": 2195
+    },
+    {
+      "at": 1788352914048,
+      "kind": "decision-complete",
+      "artifact": 12,
+      "runtime": 12
+    }
+  ],
+  "surface": {
+    "toolsRegistered": 0,
+    "promptEdits": 1,
+    "modelCallsInitiated": 0
+  }
+}

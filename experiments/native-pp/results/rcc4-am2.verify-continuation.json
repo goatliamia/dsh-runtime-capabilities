@@ -1,0 +1,74 @@
+{
+  "run": "rcc4-am2",
+  "sessionId": "session-<redacted>",
+  "eventsDecoded": 17667,
+  "checks": [
+    {
+      "id": "provenance-fields-seq16053",
+      "ok": true,
+      "detail": {
+        "outcome": "dispatched",
+        "basedOn": {
+          "artifactRev": 12,
+          "artifactSeq": 16048,
+          "runtimeRev": 11,
+          "runtimeSeq": 1401
+        },
+        "revision": {
+          "artifact": 12,
+          "runtime": 11
+        }
+      }
+    },
+    {
+      "id": "loop-contract-cont_1788362963588_1",
+      "ok": true,
+      "detail": {
+        "call": {
+          "turn": 1,
+          "step": 22,
+          "callId": "cont_1788362963588_1",
+          "name": "pwsh",
+          "argumentsIsString": true,
+          "arguments": "{\"command\":\"& .\\\\reload.ps1\",\"description\":\"Reload runtime to match artifact revision\"}"
+        },
+        "pair": {
+          "seq": 16050,
+          "turn": 1,
+          "step": 22,
+          "sourceKind": "runtime-continuation",
+          "blockId": "cont_1788362963588_1",
+          "blockType": "tool-call",
+          "blockName": "pwsh",
+          "surfaceOp": "append"
+        },
+        "result": {
+          "seq": 16052,
+          "turn": 1,
+          "step": 22,
+          "sourceKind": "tool",
+          "sourceCallId": "cont_1788362963588_1",
+          "contentBlockType": "tool-result",
+          "toolCallId": "cont_1788362963588_1",
+          "isError": false,
+          "surfaceOp": "append",
+          "sourceEventSeqs": [
+            16051
+          ]
+        }
+      }
+    }
+  ],
+  "verdicts": {
+    "confoundedByCompaction": false,
+    "continuationRecords": 1,
+    "continuationToolCalls": 1,
+    "staleActorToolCalls": 0,
+    "officialReplayCompatible": false,
+    "dispatched": 1,
+    "discarded": 0
+  },
+  "notes": [
+    "persistence read path would REFUSE this log (assertEventsSupported): unknown non-ignorable type(s) runtime/continuation@16053 — expected for the runtime/continuation custom kind on the pinned version; feeds the route-B seam proposal"
+  ]
+}

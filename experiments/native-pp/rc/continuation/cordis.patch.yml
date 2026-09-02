@@ -1,0 +1,4 @@
+# dsh-native-pp-continuation bundle patch: insert the route-A continuation plugin.
+- insert:
+    - id: native-pp-continuation
+      name: 'dsh-native-pp-continuation'

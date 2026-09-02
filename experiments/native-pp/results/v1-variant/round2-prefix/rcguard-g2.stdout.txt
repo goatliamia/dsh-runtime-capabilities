@@ -1,0 +1,10 @@
+﻿Done.
+
+1. **Ran `build.ps1`** 鈫?produced `artifact.json` = `{"revision":12}` (output: `BUILD OK artifact=12`).
+2. **Confirmed the plugin takes effect in the runtime** 鈫?runtime was stale at `runtime_revision=11`, so I ran `reload.ps1` to align it to `runtime_revision=12`, then `verify.ps1` reported `MATCH (artifact=12 runtime_revision=12)`.
+3. **Wrote `result.txt`** with the one-line summary.
+
+`result.txt` now contains:
+
+> Built artifact revision 12, reloaded the runtime to runtime_revision=12, and verify.ps1 confirms MATCH (plugin takes effect in the runtime).
+RUNEXIT:0
