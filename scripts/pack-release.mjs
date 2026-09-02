@@ -54,4 +54,76 @@ for (const pkg of ["runtime-circuit", "runtime-reconcile", "runtime-investigate"
   rmSync(tmp, { recursive: true, force: true });
 }
 
+// 3) umbrella bundle dsh-runtime: ONE install for users. Bundles all five
+//    modules under one package; each module keeps its original plugin id.
+//    Users then pick the mode / scene / custom toggles in the settings UI —
+//    they never choose packages.
+{
+  const tmp = join(OUT, ".tmp-dsh-runtime");
+  mkdirSync(join(tmp, "lib", "progress"), { recursive: true });
+  mkdirSync(join(tmp, "lib", "circuit"), { recursive: true });
+  mkdirSync(join(tmp, "lib", "reconcile"), { recursive: true });
+  mkdirSync(join(tmp, "lib", "investigate"), { recursive: true });
+  mkdirSync(join(tmp, "lib", "seam"), { recursive: true });
+
+  writeFileSync(
+    join(tmp, "package.json"),
+    `${JSON.stringify({
+      name: "dsh-runtime",
+      version: "0.1.0",
+      description: "DSH Runtime: progress fact layer + circuit/reconcile/investigate policies + runtime seam. One install; choose the mode, scene preset, or custom capability toggles in the settings UI.",
+      type: "module",
+      main: "./lib/progress/index.js",
+      exports: {
+        ".": "./lib/progress/index.js",
+        "./lib/progress": "./lib/progress/index.js",
+        "./lib/circuit": "./lib/circuit/index.js",
+        "./lib/reconcile": "./lib/reconcile/index.js",
+        "./lib/investigate": "./lib/investigate/index.js",
+        "./lib/seam": "./lib/seam/index.js",
+        "./client": "./lib/client.js",
+        "./package.json": "./package.json",
+      },
+      dependencies: {
+        "@deepseek-ai/schemastery": "^3.18.1",
+      },
+      dsh: {
+        bundle: { patch: "./cordis.patch.yml" },
+        client: { platform: "web", inject: [] },
+      },
+    }, null, 2)}\n`,
+  );
+
+  writeFileSync(
+    join(tmp, "cordis.patch.yml"),
+    [
+      "# dsh-runtime umbrella: mount all five modules (one install, choose mode in settings).",
+      "- insert:",
+      "    - id: runtime-progress",
+      "      name: 'dsh-runtime/lib/progress'",
+      "    - id: runtime-circuit",
+      "      name: 'dsh-runtime/lib/circuit'",
+      "    - id: runtime-reconcile",
+      "      name: 'dsh-runtime/lib/reconcile'",
+      "    - id: runtime-investigate",
+      "      name: 'dsh-runtime/lib/investigate'",
+      "    - id: dsh-runtime-seam",
+      "      name: 'dsh-runtime/lib/seam'",
+      "",
+    ].join("\n"),
+  );
+
+  copyFileSync(PROGRESS_LIB, join(tmp, "lib", "progress", "index.js"));
+  for (const pkg of ["runtime-circuit", "runtime-reconcile", "runtime-investigate"]) {
+    const lib = readFileSync(join(REPO, "core", pkg, "lib", "index.js"), "utf8");
+    writeFileSync(join(tmp, "lib", pkg.replace("runtime-", ""), "index.js"), lib.replaceAll('from "dsh-runtime-progress"', 'from "../progress/index.js"'));
+  }
+  copyFileSync(join(REPO, "core", "runtime-seam", "lib", "index.js"), join(tmp, "lib", "seam", "index.js"));
+  copyFileSync(join(REPO, "core", "runtime-seam", "lib", "core.mjs"), join(tmp, "lib", "seam", "core.mjs"));
+  copyFileSync(join(REPO, "core", "runtime-seam", "lib", "client.js"), join(tmp, "lib", "client.js"));
+
+  pack(tmp);
+  rmSync(tmp, { recursive: true, force: true });
+}
+
 console.log(`release tarballs written to ${OUT}`);

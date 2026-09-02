@@ -12,23 +12,17 @@ In plain words: **let the Harness handle the problems that are not worth making 
 
 ## Install
 
-`release/` ships pre-built, self-contained tarballs — each one installable on its own:
+One command installs everything (all capabilities ship in a single package; pick the mode / scene preset / custom toggles in the settings UI afterwards):
 
 ```powershell
-# clone first, or download release/*.tgz directly from the GitHub page
-git clone https://github.com/goatliamia/dsh-runtime-capabilities.git
-
-# install into your profile (each tarball is self-contained; order does not matter)
-dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-progress-0.1.0.tgz
-dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-circuit-0.1.0.tgz
-dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-reconcile-0.1.0.tgz
-dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-investigate-0.1.0.tgz
-dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-seam-0.1.0.tgz
+# download release/dsh-runtime-0.1.0.tgz from the GitHub page, or clone the repo first
+dsh plugin --profile <your-profile> add dsh-runtime-0.1.0.tgz
 ```
 
-`dsh --profile <your-profile> --dump-config` should list the five runtime-* rows.
+`dsh --profile <your-profile> --dump-config` should list runtime-progress / circuit / reconcile / investigate / seam — that is success.
 
-- **No build step**: the release tarballs are self-contained (the policy bundles embed the Progress fact layer; no cross-package dependencies);
+- **Users never pick packages**: modes (Off / Minimal / Balanced / Strict), scene presets (Creative / Coding / External / Safe) and custom toggles all live in the Runtime settings page;
+- **Developers, per capability**: `release/` also carries the five individual tarballs (progress + circuit + reconcile + investigate + seam) for when only some capabilities are wanted;
 - **Developers rebuild**: run `node scripts/pack-release.mjs` after code changes to regenerate `release/`.
 
 ---

@@ -23,23 +23,17 @@
 
 ## 安装
 
-仓库 `release/` 里是打好包的独立安装包（tgz），每个都自带依赖、可直接安装：
+一条命令装完（所有能力都在一个包里；装完去设置页选模式 / 场景 / 自定义即可）：
 
 ```powershell
-# 先 clone，或从 GitHub 页面直接下载 release/*.tgz
-git clone https://github.com/goatliamia/dsh-runtime-capabilities.git
-
-# 用你的 profile 安装（每个包自包含，顺序无关）
-dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-progress-0.1.0.tgz
-dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-circuit-0.1.0.tgz
-dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-reconcile-0.1.0.tgz
-dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-investigate-0.1.0.tgz
-dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-seam-0.1.0.tgz
+# 从 GitHub 页面直接下载 release/dsh-runtime-0.1.0.tgz，或先 clone 仓库
+dsh plugin --profile <你的profile> add dsh-runtime-0.1.0.tgz
 ```
 
-装完 `dsh --profile <你的profile> --dump-config` 能看到五行 runtime-* 即成功。
+装完 `dsh --profile <你的profile> --dump-config` 能看到 runtime-progress / circuit / reconcile / investigate / seam 五行，即成功。
 
-- **不需要 build**：release 包已自包含（policy 包内嵌了 Progress 事实层，无跨包依赖）；
+- **用户不需要选包**：模式（Off / Minimal / Balanced / Strict）、场景预设（Creative / Coding / External / Safe）和自定义勾选都在 Runtime 设置页里完成；
+- **开发者按需**：`release/` 里另有五个单独包（progress + circuit + reconcile + investigate + seam），只想装某几个能力时才用；
 - **开发者重建**：改完代码跑 `node scripts/pack-release.mjs` 重新生成 `release/`。
 
 ---
