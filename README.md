@@ -10,6 +10,29 @@ In plain words: **let the Harness handle the problems that are not worth making 
 
 ---
 
+## Install
+
+`release/` ships pre-built, self-contained tarballs — each one installable on its own:
+
+```powershell
+# clone first, or download release/*.tgz directly from the GitHub page
+git clone https://github.com/goatliamia/dsh-runtime-capabilities.git
+
+# install into your profile (each tarball is self-contained; order does not matter)
+dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-progress-0.1.0.tgz
+dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-circuit-0.1.0.tgz
+dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-reconcile-0.1.0.tgz
+dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-investigate-0.1.0.tgz
+dsh plugin --profile <your-profile> add dsh-runtime-capabilities/release/dsh-runtime-seam-0.1.0.tgz
+```
+
+`dsh --profile <your-profile> --dump-config` should list the five runtime-* rows.
+
+- **No build step**: the release tarballs are self-contained (the policy bundles embed the Progress fact layer; no cross-package dependencies);
+- **Developers rebuild**: run `node scripts/pack-release.mjs` after code changes to regenerate `release/`.
+
+---
+
 ## Capability overview
 
 | Capability | Question it answers | Measured value |

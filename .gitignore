@@ -2,3 +2,6 @@ node_modules/
 *.tgz
 .DS_Store
 *.log
+
+# pre-built release tarballs are committed (README install flow)
+!release/*.tgz

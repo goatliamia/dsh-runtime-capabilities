@@ -21,6 +21,29 @@
 
 ---
 
+## 安装
+
+仓库 `release/` 里是打好包的独立安装包（tgz），每个都自带依赖、可直接安装：
+
+```powershell
+# 先 clone，或从 GitHub 页面直接下载 release/*.tgz
+git clone https://github.com/goatliamia/dsh-runtime-capabilities.git
+
+# 用你的 profile 安装（每个包自包含，顺序无关）
+dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-progress-0.1.0.tgz
+dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-circuit-0.1.0.tgz
+dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-reconcile-0.1.0.tgz
+dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-investigate-0.1.0.tgz
+dsh plugin --profile <你的profile> add dsh-runtime-capabilities/release/dsh-runtime-seam-0.1.0.tgz
+```
+
+装完 `dsh --profile <你的profile> --dump-config` 能看到五行 runtime-* 即成功。
+
+- **不需要 build**：release 包已自包含（policy 包内嵌了 Progress 事实层，无跨包依赖）；
+- **开发者重建**：改完代码跑 `node scripts/pack-release.mjs` 重新生成 `release/`。
+
+---
+
 ## 它是怎么工作的？
 
 最简单的理解：
