@@ -190,7 +190,7 @@ window.__ModuleLoader__.load({
               style: { accentColor: "var(--dsw-alias-brand-primary)" },
             }))),
         el("div", { style: { ...secondary, marginTop: 6 } },
-          "实验验证中：能力随 agent/continue seam 上线（docs/status/native-pp-rc*.md）。"));
+          "实验验证中：能力随 agent/continue seam 上线（docs/status/runtime-continuation-*.md）。"));
     }
 
     // ---- 设置页：事后模式 + 自定义勾选 ----

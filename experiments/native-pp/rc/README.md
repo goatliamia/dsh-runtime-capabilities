@@ -6,7 +6,7 @@
 - **B. Fact boundary**：误导文本诱骗（rcbait）与事实缺失（rcnofacts）下 Runtime 0 触发（修复前曾因模板泄漏误触发——泄漏本身就是本轴发现）。
 - 链式（rchain）：单 pre-step 内 Runtime reload → Runtime healthcheck 两跳、零模型间隔、单条消化消息，模型正确接住世界状态。
 
-结论与验收细节：`docs/status/native-pp-rc-2026-09-02.md`（首轮）、`docs/status/native-pp-rc2-2026-09-02.md`（第二轮）。
+结论与验收细节：`docs/status/runtime-continuation-2026-09-02.md`（首轮）、`docs/status/runtime-continuation-boundaries-2026-09-02.md`（第二轮）、`runtime-continuation-instruction-2026-09-02.md`（第三轮）、`runtime-continuation-ownership-2026-09-03.md`（第四轮）、`runtime-continuation-summary-2026-09-03.md`（汇总）。
 
 ## 资产
 

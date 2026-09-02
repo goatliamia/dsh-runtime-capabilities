@@ -1,7 +1,7 @@
 /**
  * dsh-native-pp-continuation — Route-A Runtime Continuation, round 2 (v5).
  *
- * Round 2 hardens the boundaries (docs/status/native-pp-rc-2026-09-02.md §8
+ * Round 2 hardens the boundaries (docs/status/runtime-continuation-2026-09-02.md §8
  * follow-up), two axes:
  *
  * A. Runtime boundary:

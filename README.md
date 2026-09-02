@@ -279,7 +279,7 @@ Closer to the truth:
 
 > **Where the model can see clearly, it stays quiet; where the model cannot see reality, it adds a bit of certainty.**
 
-Full experiment process, raw data, and limitations: see [`docs/`](docs/) — in particular the Runtime Continuation line: [`docs/status/native-pp-rc-2026-09-02.md`](docs/status/native-pp-rc-2026-09-02.md) (proposition), [`native-pp-rc2-2026-09-02.md`](docs/status/native-pp-rc2-2026-09-02.md) (boundaries), [`native-pp-rc3-2026-09-02.md`](docs/status/native-pp-rc3-2026-09-02.md) (instruction continuity), [`native-pp-rc4-2026-09-03.md`](docs/status/native-pp-rc4-2026-09-03.md) (ownership boundary), and the four-round summary [`native-pp-rc-summary-2026-09-03.md`](docs/status/native-pp-rc-summary-2026-09-03.md).
+Full experiment process, raw data, and limitations: see [`docs/`](docs/) — in particular the Runtime Continuation line: [`docs/status/runtime-continuation-2026-09-02.md`](docs/status/runtime-continuation-2026-09-02.md) (proposition), [`runtime-continuation-boundaries-2026-09-02.md`](docs/status/runtime-continuation-boundaries-2026-09-02.md) (boundaries), [`runtime-continuation-instruction-2026-09-02.md`](docs/status/runtime-continuation-instruction-2026-09-02.md) (instruction continuity), [`runtime-continuation-ownership-2026-09-03.md`](docs/status/runtime-continuation-ownership-2026-09-03.md) (ownership boundary), and the four-round summary [`runtime-continuation-summary-2026-09-03.md`](docs/status/runtime-continuation-summary-2026-09-03.md).
 
 ---
 

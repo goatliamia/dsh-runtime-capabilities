@@ -278,7 +278,7 @@ Runtime 不是一个新的“大管家”。
 
 > **模型自己看得清的地方，它不打扰；模型看不清现实的地方，它补上一点确定性。**
 
-完整实验过程、原始数据和限制条件见 [`docs/`](docs/)——尤其是 Runtime Continuation 线：[`docs/status/native-pp-rc-2026-09-02.md`](docs/status/native-pp-rc-2026-09-02.md)（命题）、[`native-pp-rc2-2026-09-02.md`](docs/status/native-pp-rc2-2026-09-02.md)（边界）、[`native-pp-rc3-2026-09-02.md`](docs/status/native-pp-rc3-2026-09-02.md)（instruction continuity）、[`native-pp-rc4-2026-09-03.md`](docs/status/native-pp-rc4-2026-09-03.md)（所有权边界），以及四轮汇总 [`native-pp-rc-summary-2026-09-03.md`](docs/status/native-pp-rc-summary-2026-09-03.md)。
+完整实验过程、原始数据和限制条件见 [`docs/`](docs/)——尤其是 Runtime Continuation 线：[`docs/status/runtime-continuation-2026-09-02.md`](docs/status/runtime-continuation-2026-09-02.md)（命题）、[`runtime-continuation-boundaries-2026-09-02.md`](docs/status/runtime-continuation-boundaries-2026-09-02.md)（边界）、[`runtime-continuation-instruction-2026-09-02.md`](docs/status/runtime-continuation-instruction-2026-09-02.md)（instruction continuity）、[`runtime-continuation-ownership-2026-09-03.md`](docs/status/runtime-continuation-ownership-2026-09-03.md)（所有权边界），以及四轮汇总 [`runtime-continuation-summary-2026-09-03.md`](docs/status/runtime-continuation-summary-2026-09-03.md)。
 
 ---
 

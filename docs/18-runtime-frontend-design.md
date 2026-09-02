@@ -23,7 +23,7 @@
 ## 3. 三层结构
 
 > **2026-09-03 双轴改版（已实现）**：第 0/1/2 层重构为两根独立轴——
-> **事前 PRE（一个开关）**：continuation，唯一确定的下一步由 Runtime 执行、模型只消化结果；无把握一律不接管（docs/status/native-pp-rc*.md 实测边界）。
+> **事前 PRE（一个开关）**：continuation，唯一确定的下一步由 Runtime 执行、模型只消化结果；无把握一律不接管（docs/status/runtime-continuation-*.md 实测边界）。
 > **事后 POST（模式选择器）**：Off/Minimal/Balanced/Strict/Custom，对应 guard/circuit/reconcile/investigate 职责组合。
 > 两轴不必落在同一个模式里：preset 键只表示 POST 模式，continuation 键独立开关（settings.yaml 同构）。
 

@@ -1,6 +1,6 @@
 # 状态：Runtime Continuation 第四轮——Intent/Event/Runtime/Model 所有权边界（2026-09-03 凌晨）
 
-前置：`native-pp-rc3-2026-09-02.md`（instruction continuity + §7 意图归用户定调）| 原始结果：`results/rcc4-*`（16 格）+ `rc4-comparison.md` + `rc4-token-index.json` | 行为证据：六格叙述原文见 §4/§5
+前置：`runtime-continuation-instruction-2026-09-02.md`（instruction continuity + §7 意图归用户定调）| 原始结果：`results/rcc4-*`（16 格）+ `rc4-comparison.md` + `rc4-token-index.json` | 行为证据：六格叙述原文见 §4/§5
 
 ## 0. 研究问题（用户定稿）
 

@@ -1,6 +1,6 @@
 # 状态：Runtime Continuation 第二轮——边界做实（2026-09-02 深夜）
 
-前置：`docs/status/native-pp-rc-2026-09-02.md`（首轮 7 格）| 实现：`experiments/native-pp/rc/`（v5 插件 + fixture v2 + 新世界）| 原始结果：`results/rc2-*` + `results/v1-variant/round2-prefix/`（修复前证据）| 对比表：`results/rc2-comparison.md`
+前置：`docs/status/runtime-continuation-2026-09-02.md`（首轮 7 格）| 实现：`experiments/native-pp/rc/`（v5 插件 + fixture v2 + 新世界）| 原始结果：`results/rc2-*` + `results/v1-variant/round2-prefix/`（修复前证据）| 对比表：`results/rc2-comparison.md`
 
 ## 0. 结论摘要
 

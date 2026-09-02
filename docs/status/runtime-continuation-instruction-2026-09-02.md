@@ -1,6 +1,6 @@
 # 状态：Runtime Continuation 第三轮——Instruction Continuity（2026-09-02 深夜）
 
-前置：首轮 `native-pp-rc-2026-09-02.md`、第二轮 `native-pp-rc2-2026-09-02.md` | 原始结果：`results/rccont-*` + `rc3-comparison.md` + `rc3-token-index.json` | 行为分析：`results/rc-trajectory-analysis.md`（含 A/B 逐步时间线）
+前置：首轮 `runtime-continuation-2026-09-02.md`、第二轮 `runtime-continuation-boundaries-2026-09-02.md` | 原始结果：`results/rccont-*` + `rc3-comparison.md` + `rc3-token-index.json` | 行为分析：`results/rc-trajectory-analysis.md`（含 A/B 逐步时间线）
 
 ## 0. 研究问题的收窄（用户定稿）
 

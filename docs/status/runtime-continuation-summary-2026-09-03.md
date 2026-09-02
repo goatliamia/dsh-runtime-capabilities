@@ -1,6 +1,6 @@
 # Runtime Continuation 四轮全景汇总（2026-09-03）
 
-四轮报告：`native-pp-rc-2026-09-02.md`（命题成立）、`native-pp-rc2-2026-09-02.md`（边界做实）、`native-pp-rc3-2026-09-02.md`（instruction continuity + 意图归用户定调）、`native-pp-rc4-2026-09-03.md`（四者所有权边界）。
+四轮报告：`runtime-continuation-2026-09-02.md`（命题成立）、`runtime-continuation-boundaries-2026-09-02.md`（边界做实）、`runtime-continuation-instruction-2026-09-02.md`（instruction continuity + 意图归用户定调）、`runtime-continuation-ownership-2026-09-03.md`（四者所有权边界）。
 
 ## 正向收益（实测成立）
 
