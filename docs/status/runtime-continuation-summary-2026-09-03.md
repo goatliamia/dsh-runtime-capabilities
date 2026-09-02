@@ -73,7 +73,7 @@
 
 | 候选 | 原生机制（file:line） | 判定 |
 |---|---|---|
-| 1. `fs/observed` 事实通道：projection 订阅权威文件观察事件（kind=present/absent + 版本号），替代「从工具输出文本抠事实」的 pattern 契约 | `dsh-tool-fs:277/431/664/817/1057`；编辑器同款 | **做**（候选待用户确认后动工）。把四轮实验中最大的 B 类负担（文本≠事实的三种泄漏）在真实平台上一并消掉；verify 升级为版本号比对 |
+| 1. `fs/observed` 事实通道：projection 订阅权威文件观察事件（kind=present/absent + 版本号），替代「从工具输出文本抠事实」的 pattern 契约 | `dsh-tool-fs:277/431/664/817/1057`；编辑器同款 | **暂定 → 转上游提案（第四缺口：观察未落账）**。用户反问命中死穴：fs/observed 是活事件（ephemeral、不重放），不是持久化记录——用它做事实通道会破坏可回放/水位哲学/且覆盖有盲区（pwsh 直接写文件无观察）。正解是上游把权威观察升级为持久化记录，与 vocab 注册缺口同路 |
 | 2. approval 防重问：session 内同 tool+同 reason 已 deny → 直接以用户当时的结果回答，不再发起新 ask | `dsh-user-approval:148/155`（asked/decided durable 审计对） | **暂定**（用户否决）：同一个「不」在不同阶段可能应有不同答案，自动挡新请求判断太大 |
 | 3. repeat-tool-reminder 定位修正：原生已有同参数重复调用检测（提醒式），与 circuit（失败指纹熔断式）互补，不重造 | `dsh-repeat-tool-reminder:163-317` | 组合而非重复；若将来组装，把 circuit 的 deny 接到 reminder 的 detailed 阈值之后 |
 
