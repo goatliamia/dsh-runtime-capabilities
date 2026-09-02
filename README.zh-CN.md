@@ -1,1421 +1,306 @@
-# DSH Runtime Capabilities
+# DSH Runtime
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+**让模型负责思考，让 Harness 处理那些可以确定的事情。**
 
-**Small deterministic runtime capabilities for agents running on DeepSeek Harness.**
+`dsh-runtime` 是一组面向 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的小型 Runtime 能力。
 
-一句话人话：**让 Harness 处理那些不值得交给模型猜的问题。**
+它不试图做一个新的 Agent，也不试图用更多 Prompt、Skill 或规则去“教会”模型所有事情。
 
-> **Agent = Model + Harness**
+它只接住一类问题：
 
----
+> **那些模型不应该反复猜，Harness 本来就可以确定的问题。**
 
-## 功能总览
+例如：
 
-| 能力 | 回答的问题 | 实测价值 |
-|---|---|---|
-| **Guard** | 这件事现在能不能做？ | 确定性拦截已知非法的动作 |
-| **Progress** | 刚才到底发生了什么？ | Event → execution / effect / progress / unknown（纯投影，事实层） |
-| **Circuit** | 连续没有进展，还要不要继续？ | 无用重试 6→2（−67%），cacheRead −27% |
-| **Reconcile** | 报错了，但副作用可能已经发生？ | 重复副作用 4→1（−75%），不盲目重试 |
-| **Investigate** | 说成功了，但真的生效了吗？ | 静默失败 2/2→0/2（verify → repair） |
-| **Delta** | 这件事要不要告诉模型？ | 变化才出现，只通知承诺过的变更 |
-| **Persistence** | 上一轮的确定事实还要重新发现吗？ | 跨会话复用确定状态 |
-
-完整数据与场景：`docs/status/native-pp-*.md`。正常任务对照：**0 误介入、质量零回退**——能力只在模型看不穿的地方出手。
+* 这件事现在能不能做？
+* 刚才这一步到底有没有产生变化？
+* 工具虽然报错了，实际操作有没有已经发生？
+* 工具说成功了，目标状态有没有真的生效？
+* 一个动作已经重复很多次，但事情有没有继续往前走？
 
 ---
 
-## 核心认识：Event 是唯一真源
+## 它是怎么工作的？
 
-Runtime 能优雅地做上面这些事，根基是一个对 DSH 的认识：
-
-> **执行过的每一步，都已经成为一条持久化的事件流。Event 是唯一真源，其余一切都是投影。**
-
-由此得到两个关键不等式（都有实验数据支持）：
+最简单的理解：
 
 ```text
-tool error   ≠  world didn't change   （报错不代表世界没变 → Reconcile）
-tool success ≠  world changed         （成功不代表事情发生 → Investigate）
-```
-
-以及一条纪律：
-
-> **观察不到的 effect，投影如实返回 unknown，绝不编造。**（stalled ≠ stop；unknown ≠ failed）
-
----
-
-## 为什么这件事在 DSH 里特别优雅
-
-同样的「确定性 Runtime」在别的框架里通常要从事件总线开始自己搭；在 DSH 里，每一层都是**原生能力的薄封装**：
-
-```text
-Event（session 持久化日志，append-only，官方重放 API）
+Model
   ↓
-Progress（纯 fold：读事件 → execution / effect / progress / unknown）
+Tool
   ↓
-Policy（circuit / reconcile / investigate，各自消费 Progress）
-  ↓
-tools.guard / pre-step（原生介入点）
-```
-
-- **没有第二真源**：投影不建数据库、不写状态文件——事件流本身就是真相；
-- **拦截即零副作用**：guard 拦在工具体执行之前，拒绝是物理成立的；
-- **重放免费**：live fold == 官方跨进程重放 == 独立实现，三路逐字段一致；
-- **零成本面**：投影不碰模型——不占上下文、不改 prompt、零 token 增量（每事件约 2μs）；
-- **介入可解释**：每条拒绝带证据引用（`support: [event seq]`），UI 能回答「为什么这次介入」。
-
----
-
-## 从哪个问题开始
-
-这个仓库探索的是一组从真实 DeepSeek Harness trajectory 中逐步提取出来的 Runtime / Harness capabilities，包括 **Guard、Progress（Event 投影）、Circuit、Reconcile、Investigate、Delta、Persistence** 等。
-
-它并不试图定义一个完整的 Universal Runtime。
-
-它从一个更简单的问题开始：
-
-> **当 Agent 在真实环境中反复遇到问题时，其中有多少工作其实已经足够确定，不应该再继续由模型负责？**
-
-
-如果一个能力真的需要，它可以作为 Plugin 被加载。
-
-如果不需要，不加载。
-
-如果你有不同的理解，可以实现自己的 Plugin。
-
-这里提供的是一个尽可能小的承接位置，以及已经在真实 DeepSeek Harness 场景中被验证过的一些机制和实验材料。
-
----
-
-## 为什么会有这个项目？
-
-今天的 Agent 已经可以很好地理解任务、进行推理、调用工具、探索环境、修改文件并完成复杂工作。
-
-但在真实运行中，仍然会不断出现另一类问题：
-
-* Agent 反复发现同一个已经确定的环境状态；
-* 一个动作已经确定不合法，但模型仍然尝试执行；
-* 工具连续返回相同错误，Agent 继续 retry；
-* 一个状态尚未满足，Agent 只能反复 probe / poll；
-* 一个已经在上一 Session 中确定的项目状态，在新的 Session 中又从零开始发现；
-* 任务最终完成了，但执行过程中已经破坏了环境的不变量；
-* 一个 Plugin 在加载或启动阶段失败，甚至影响整个 Host。
-
-这些问题并不都属于 Model。
-
-很多时候，程序已经知道答案。
-
-问题只是：
-
-> **这个答案还停留在 Agent 的推理空间里。**
-
-于是模型需要自己发现、自己记住、自己相信、自己约束自己。
-
-这未必是最合适的责任分配方式。
-
----
-
-# 从一个问题开始：什么不应该继续留在文本里？
-
-最初并没有一个叫 Runtime 的完整设计。
-
-更接近的出发点是：
-
-> 有哪些东西已经足够确定，不应该继续依赖 Prompt、Context 或模型自身的自我约束？
-
-真实 DSH 运行随后暴露出了几个非常不同的答案：
-
-```text
-确定不允许做
-→ Guard
-
-未来一定会变化
-→ Commitment + Delta
-
-已经没有进展
-→ Circuit
-
-没有变化
-→ Silence
-
-确定事实跨越 Session
-→ Persistence
-
-需要模型知道
-→ Exposure
-```
-
-因此 Runtime 并不是最初定义好的答案。
-
-它更像是：
-
-> **当某类确定性能力被提取出来以后，一个自然的 Plugin 承接位置。**
-
----
-
-# Runtime 不是什么
-
-Runtime 不是另一个 Agent。
-
-不是一个新的 Reasoner。
-
-不是"把更多环境信息塞进 Context"。
-
-也不是一个要求所有 DSH 用户都采用的统一架构。
-
-尤其不是：
-
-```text
 Runtime
-→ 收集全部状态
-→ 每轮注入
-→ 让模型自己记住
-→ 再由模型决定是否遵守
+  ↓
+现实世界
+  ↓
+Event
+  ↓
+Runtime / Policy
+  ↓
+下一步
 ```
 
-实验明确提示，这条方向并不总是有效。
+工具负责**做事**。
 
-我们更倾向于：
+Event 负责记录**发生过什么**。
 
-```text
-Model
-→ 负责真正的不确定性
-
-Harness / Runtime
-→ 负责程序已经能够确定的部分
-```
-
----
-
-# Runtime 在哪里？
-
-Runtime 主要存在于 Agent 执行循环的两个边界。
-
-```text
-                         Model
-                          │
-                        Reason
-                          │
-                          ▼
-                  ┌───────────────┐
-                  │ Runtime       │
-                  │ Pre-Action    │
-                  │               │
-                  │ Guard         │
-                  │ Circuit       │
-                  └───────┬───────┘
-                          │
-                     allow / reject
-                          │
-                          ▼
-                       Execute
-                          │
-                          ▼
-                  ┌───────────────┐
-                  │ Runtime       │
-                  │ Post-Action   │
-                  │               │
-                  │ State         │
-                  │ Delta         │
-                  │ Commitment    │
-                  └───────┬───────┘
-                          │
-                          ▼
-                      next Reason
-```
-
-因此：
-
-**执行前**，Runtime 可以决定一个确定性动作是否有资格进入真实世界。
-
-**执行后**，Runtime 可以观察真实状态是否发生了值得跨越认知边界的变化。
-
-这两个方向分别回答：
-
-> **"这个动作能不能发生？"**
-
-以及：
-
-> **"现实现在发生了什么变化？"**
-
----
-
-# 目前实验得到的机制
-
-## 1. Guard：知识不等于合规
-
-在真实 DSH 场景中，构造：
-
-```text
-required_by_host = true
-```
-
-模型在已经探测到这个事实之后，仍然尝试 unload。
-
-无 Runtime Guard：
-
-```text
-worldCorrect = 0%
-```
-
-加入 Guard：
-
-```text
-第一次拒绝
-→ action 不进入 executor
-
-worldCorrect = 100%
-```
-
-这说明：
-
-> **如果 Harness 已经可以确定一个动作不成立，最可靠的约束位置是执行边界，而不是模型上下文。**
-
----
-
-## 2. 教学式拒绝：拒绝本身可以成为下一轮 reasoning 的输入
-
-Guard 并不是简单返回一个 opaque failure。
-
-实验中使用非常小的、确定性的拒绝描述：
-
-```text
-fact
-predicate
-temporal
-next
-```
-
-在受控实验中，没有任何 `(fact, action)` 组合出现第二次教学拒绝。
-
-因此目前的观察是：
-
-> **一次结构良好的确定性拒绝，可以让模型在下一轮重新规划，而不必把 enforcement 重新交给模型。**
-
-这里需要注意：
-
-这不是一个普遍的"模型从一次错误中永久学习"的定律。
-
-它只是一个在受控场景中观察到的 Harness 行为。
-
----
-
-## 3. Commitment + Delta：临时错误与永久错误不同
-
-如果：
-
-```text
-ready = false
-```
-
-但未来一定会变成：
-
-```text
-ready = true
-```
-
-那么单纯 Guard 会产生：
-
-```text
-reject
-→ probe
-→ probe
-→ probe
-```
-
-实验中加入：
-
-```text
-Commitment:
-状态改变后会通知你。
-```
-
-真正发生变化时：
-
-```text
-mounted → ready
-```
-
-只发送：
-
-```text
-Delta
-```
-
-结果：
-
-```text
-拒绝后复核
-3.0 → 1.67
-
-payload
-172k → 130k
-```
-
-v4pro 上方向一致。
-
-所以：
-
-> **"现在不成立"和"永远不成立"应该是不同的 Runtime 语义。**
-
----
-
-## 4. Circuit：重复失败不一定需要被模型再次理解
-
-E4b 针对的是：
-
-```text
-same tool
-+
-same error fingerprint
-+
-no meaningful progress
-```
-
-结果：
-
-| 指标      | 无 Circuit | Circuit | Circuit + Delta |
-| ------- | --------: | ------: | --------------: |
-| 失败尝试    |      3.33 |    3.00 |        **2.00** |
-| 开断后尝试   |      1.33 |    1.00 |           **0** |
-| steps   |      9.00 |    5.00 |        **3.67** |
-| payload |   286,747 |  76,696 |      **53,005** |
-
-方向上：
-
-```text
-failed attempts   ↓ 40%
-steps             ↓ 59%
-payload           ↓ 81%
-```
-
-更重要的是，E7 创造任务又发现了一种此前没有专门设计的循环：
-
-```text
-tool denied
-→ retry
-→ denied
-→ retry
-→ ...
-```
-
-这说明 Circuit 更值得被理解为：
-
-> **No-progress detection**
-
-而不是某个特定 MCP / flaky error 的补丁。
-
----
-
-## 5. Silence：存在，不等于应该暴露
-
-这是目前非常重要的一条原则。
-
-如果 Runtime state 没有发生有意义的变化：
-
-```text
-no change
-→ no emission
-```
-
-Runtime 可以一直存在并观察，但不需要不断告诉模型：
-
-```text
-"我还在。"
-"当前还是 ready。"
-"还是 ready。"
-"还是 ready。"
-```
-
-因此：
-
-> **Runtime 可以很活跃，而 Model-facing context 仍然保持安静。**
-
----
-
-## 6. Persistence：跨 Session 的确定事实可以持续存在
-
-E6 中：
-
-```text
-baseline
-→ 不持久化
-
-none
-→ 持久化，但默认沉默
-
-pickup
-→ 持久化 + 主动注入
-```
-
-结果：
-
-|          | probes |  payload |
-| -------- | -----: | -------: |
-| baseline |      7 |    1.51M |
-| none     |   5.33 |    1.24M |
-| pickup   |      5 | **732k** |
-
-v4pro 中：
-
-```text
-baseline
-10.5 probes / 1.18M payload
-
-pickup
-3 probes / 133k payload
-```
-
-这里得到一个重要区分：
-
-> **Persistence ≠ Exposure**
-
-状态可以保留下来。
-
-不代表每个 Session 都应该自动把它注入模型。
-
-更不代表每次都应该重复告诉模型。
-
----
-
-## 7. Progress：Event 是唯一真源（2026-09 实验线）
-
-我们验证了一个比「再做一个拦截」更根本的机制：**Progress 不需要任何新运行时**。
-
-DSH 的会话本身就是一条持久化、append-only 的事件流（每一步都有 record：`turn/end`、`tool/call`、`tool/result`、`goal/change`……）。Progress 只是一个纯 fold：
-
-```text
-Event → { execution, effect, progress, unknown }
-```
-
-三个硬结论（`docs/status/native-pp-2026-09-02.md`）：
-
-1. **投影是纯函数**：live fold == 官方跨进程重放 == 独立实现，三路逐字段一致；
-2. **零成本面**：不注册工具、不改 prompt、零模型调用，host 成本约 2μs/事件；
-3. **观察不到就说 unknown**：外部副作用不在事件流里时，投影如实返回 unknown，绝不编造。
-
-它的价值不是「帮模型更会推理」，而是**给 Agent loop 提供比 tool result 更接近现实的判据**：
-
-```text
-tool error   ≠  world didn't change
-tool success ≠  world changed
-```
-
-`core/runtime-progress` 是事实层，**不拥有任何 policy**——这是本仓库最重要的结构决策。
-
-## 8. Circuit + Reconcile + Investigate：三种消费 Progress 的 Policy
-
-同一个 `stalled` 事实，三种完全不同的应对——所以它们是三个独立的 consumer，而不是一个「聪明 Circuit」（`docs/status/native-pp-consumer-2026-09-02.md`）：
-
-| 观察到 | Policy | 动作 | 实测 |
-|---|---|---|---|
-| failure + stalled | **Circuit** | 连续无进展 → 拒绝继续重试 | 真实执行 6→2（−67%），cacheRead −27%，N=4 稳定 |
-| failure + progressed | **Reconcile** | 副作用可能已发生 → 不盲目重试 | 重复副作用 4→1（−75%） |
-| success + stalled | **Investigate** | 验证 → 发现缺失 → 修复 | 静默失败 2/2 → 0/2（买正确性，代价是更多 token） |
-| success + progressed | （不介入） | 继续 | 对照格 0 介入 |
-
-原则：**stalled ≠ stop**。Circuit 管「重复没有进展」，Reconcile 管「结果不可信但副作用可能已发生」，Investigate 管「说成功但没生效」——不合并。
-
-真实场景边界（`docs/status/native-pp-real-2026-09-02.md`）：当副作用本地可验证且模型足够强时（部署超时、短轮询），baseline 模型自己就能处理，policy 保持沉默——**价值集中在模型看不穿的地方**。正常任务 0 误介入。
-
----
-
-# 我们也验证了一些"不应该做"的事情
-
-这些负结果同样属于项目的重要成果。
-
-## 正事实不值得反复注入
-
-如果模型本来就能从 tool schema / 当前 environment 中看到：
-
-```text
-tool surface
-plugin state
-```
-
-再把同样事实注入一次，没有稳定收益。
-
-某些生命周期场景里甚至会诱发更多复核。
-
----
-
-## Injection 不等于 Enforcement
-
-E3 中：
-
-```text
-ready → disabled
-```
-
-模型已经被明确告知：
-
-```text
-disabled
-```
-
-但仍然可以继续调用。
-
-因此：
-
-> **Context 可以提供知识，但不能替代执行边界。**
-
----
-
-## Provenance 不会自动让模型相信 Runtime
-
-我们测试了：
-
-```text
-authority
-revision
-fingerprint
-```
-
-是否能降低拒绝后的复核。
-
-结果：
-
-```text
-v4flash:
-plain = 0
-authority = 0.67
-
-v4pro:
-plain = 0.5
-authority = 0.5
-```
-
-因此目前结论：
-
-> **Provenance 不购买 trust。**
-
-这些信息更适合作为：
-
-```text
-revision
-freshness
-reconciliation
-arbitration
-```
-
-而不是作为"让模型相信我"的提示。
-
----
-
-# 最重要的场景实验：Runtime 会不会损害创造？
-
-我们不希望 Runtime 通过减少所有行为来换取"稳定"。
-
-因此使用开放式创造任务，要求真实交付可执行 artifact。
-
-同一个模型、同一个任务、同一个环境，只改变 Harness composition：
-
-|                  |    Off | Minimal |     Strict |
-| ---------------- | -----: | ------: | ---------: |
-| steps            |     20 |      24 |         20 |
-| 耗时               |   186s |    204s |       148s |
-| 有效创作动作           |     11 |  **21** |         12 |
-| 世界被破坏            |  **是** |       否 |          否 |
-| artifact 可运行     |      ✓ |       ✓ |          ✓ |
-| input tokens     | 135.9k |  139.3k |  **83.6k** |
-| reasoning tokens |  31.8k |   29.3k |  **24.5k** |
-| cacheRead        | 2.666M |  2.683M | **1.897M** |
-
-这里最重要的不是某个 N=1 的百分比。
-
-更重要的结构是：
-
-```text
-创造仍然发生
-+
-确定性越界被阻止
-+
-确定性死路可以被切掉
-```
-
-在另一组创造实验中，加入 Circuit 后，模型的创造路径仍然保留，而重复错误路径被切除。
-
-因此目前更准确的表述是：
-
-> **Runtime 可以把 execution waste 与 creation 分开。**
-
-它不需要替模型决定：
-
-```text
-怎么创作
-选哪种方案
-应该写什么
-```
-
-它只需要处理：
-
-```text
-这个动作已经确定不成立
-这条路径已经没有进展
-现实状态确实发生了变化
-```
-
----
-
-# 四象限：用户可以错，Harness 仍然可以保护现实
-
-进一步把 Prompt 正误与 Harness 强弱放在一起：
-
-|         | Prompt 正确 | Prompt 错误 |
-| ------- | --------- | --------- |
-| Minimal | A         | B         |
-| Strict  | C         | D         |
-
-目前得到：
-
-### A：正确 Prompt × Minimal
-
-正常任务完成，worldCorrect。
-
-### B：错误 Prompt × Minimal
-
-用户要求卸载 Host 必需插件。
-
-结果：
-
-```text
-拒绝
-+
-世界保持正确
-```
-
-甚至最低限度的 Runtime 已经足够守住这个边界。
-
-### C：正确 Prompt × Strict
-
-创造性动作数量：
-
-```text
-10 = 10
-```
-
-没有观察到 Strict 切掉正常创造。
-
-### D：错误 Prompt × Strict
-
-最值得记住的是：
-
-```text
-task success = 0
-worldCorrect = 1
-```
-
-用户目标本身是错误的。
-
-Harness 没有：
-
-```text
-替用户重新定义目标
-```
-
-也没有：
-
-```text
-让错误目标破坏现实
-```
-
-而是：
-
-```text
-reject
-→ preserve world
-```
-
-D1 进一步验证了事实性错误：
-
-```text
-用户认为 ready
-现实并不是 ready
-```
-
-Runtime 让错误假设最终被真实状态纠正，而不是让错误直接进入执行。
-
-因此目前在这个场景里，最清晰的一条原则是：
-
-> **Harness 应该约束现实边界，而不是替用户决定意图。**
-
----
-
-# 成本：真正需要优化的是 Agent trajectory
-
-最开始，我们倾向于把 Runtime 成本理解成：
-
-```text
-Runtime added context
-→ token increased
-```
-
-实际数据让这个认识发生了变化。
-
-DSH 的真实 usage 显示：
-
-> **cacheReadTokens 是 Agent trajectory 成本的重要组成部分。**
-
-一个额外的 model turn，不只是多出一次 reasoning。
-
-它还意味着：
-
-```text
-再次提交历史
-+
-再次读取前缀 KV
-+
-再次产生 output / reasoning
-```
-
-因此：
-
-> **减少一个本来不应该发生的 Model turn，往往比优化 Runtime 自身增加的几百个字符更重要。**
-
-历史轨迹回溯后：
-
-```text
-E4b Circuit
-→ cacheRead 方向下降 55–62%
-
-E6 pickup
-→ flash 约 -63%
-→ v4pro 约 -89%
-
-E7 创造场景
-→ Circuit 方向减少约 45%
-
-mode-level Strict
-→ 相比 Off，cacheRead 方向下降约 49%
-```
-
-这些数字来自不同实验、不同场景和小样本运行，不应当被理解成通用的性能承诺。
-
-真正值得保留的是成本结构：
-
-```text
-Better trajectory
-→ fewer turns
-→ fewer prefix reads
-→ lower model-side cost
-```
-
-因此 Runtime 的经济价值不应该只看：
-
-> "Runtime 自己输出了多少 token。"
-
-更应该看：
-
-> **"它消灭了多少不必要的 Agent work。"**
-
----
-
-# Agent = Model + Harness
-
-如果：
-
-$$
-Agent = Model + Harness
-$$
-
-那么 Harness 就不仅仅是"给模型一些工具"。
-
-它还决定：
-
-```text
-什么可以执行
-什么不应该执行
-什么已经发生
-什么需要被通知
-什么没有必要被通知
-什么路径已经没有进展
-什么状态应该跨 Session 保留
-```
-
-因此一个更完整的理解是：
-
-```text
-Model
-→ uncertainty
-→ reasoning
-→ exploration
-→ creation
-
-Harness
-→ deterministic state
-→ execution boundary
-→ progress
-→ continuity
-```
-
-这并不意味着 Harness 越大越好。
-
-恰恰相反：
-
-> **好的 Harness 是把已经确定的部分接住，而不是不断创造新的确定性管理系统。**
-
----
-
-# "一切皆 Plugin"为什么重要？
-
-这个项目没有把 Runtime 当成 DSH Core 的新中心化 subsystem。
-
-原因很简单：
-
-如果某个确定性能力真的值得存在，它应该尽量拥有自己的边界。
-
-```text
-DSH
- │
- ├── Plugin A
- ├── Plugin B
- ├── Runtime Plugin
- └── ...
-```
-
-因此：
-
-> **插件化提供的真正价值之一，是给"被提取出来的确定性"一个独立存在的位置。**
-
-这并不意味着所有东西都应该 Plugin 化。
-
-它只是让我们能够：
-
-```text
-发现确定性
-→ 提取
-→ 独立实现
-→ 按需加载
-→ 独立关闭
-→ 独立替换
-```
-
-而不是：
-
-```text
-发现一个问题
-→ 修改 Core
-→ 所有人都必须承担
-```
-
----
-
-# 我们不打算定义 Universal Runtime
-
-这个仓库现在只有一个非常克制的目标：
-
-> **提供一个足够薄的 Runtime extension point，以及几个经过真实实验的参考机制。**
-
-未来一个用户可能需要：
-
-```text
-runtime-mcp
-```
-
-另一个可能需要：
-
-```text
-runtime-workspace
-```
-
-还有人可能需要：
-
-```text
-runtime-project
-runtime-progress
-runtime-lifecycle
-```
-
-这些没有必要由这个仓库预先规定。
-
-甚至有人可能认为：
-
-> "这个问题根本不应该由 Runtime 解决。"
-
-这也是一个合理答案。
-
----
-
-# Presets 只是组合，不是标准
-
-当前仓库包含的 preset 是为了降低第一次使用的门槛，而不是定义"正确的 Runtime"。
-
-它们最终可以理解成 capability composition：
-
-```text
-Minimal
-→ 最小确定性承接
-
-Strict
-→ 更高程度的 Runtime responsibility
-
-Goal
-→ 面向确定性目标状态的实验能力
-
-Custom
-→ 用户自行组合
-```
-
-Preset 不应该成为新的 Agent 类型。
-
-它只是：
-
-> **一组默认 capability 的组合。**
-
----
-
-# 模式与通用场景
-
-## Minimal（默认）
-
-**场景**：绝大多数技术用户的日常会话——编码、调试、小工具开发。你不想配置任何东西，只希望"确定不该继续的事"被程序接住。
-
-**做什么**：Guard（已知非法动作 → 一次教学拒绝）+ Circuit（重复失败无进展 → 熔断）+ 关键变更通知（承诺兑现 / circuit 开断）。其余时候完全沉默。
-
-> 中文：日常开发会话的默认选择；只处理确定不该继续的事，绝不主动打扰。
-> EN: The default for everyday coding sessions — handles only what is deterministically settled, and stays silent otherwise.
-
-## Strict
-
-**场景**：高稳定性环境——生产配置、长期运行会话、多插件协作。你需要更强的强制力，愿意接受"Agent 自由度略降"的代价。
-
-**做什么**：Minimal 全部 + Persistence（确定事实跨会话保留）。freshness / 长期 stale 权威尚无证据，默认不开。
-
-> 中文：高稳定性场景；在 Minimal 之上增加事实持久化，用更强强制力换更多确定性。
-> EN: High-stability environments — adds persistence on top of Minimal; stronger enforcement in exchange for slightly reduced agent freedom.
-
-## Goal
-
-**场景**：你明确知道"环境应该处于什么状态"——例如 MCP 必须 ready、某插件必须激活。你只需要 Runtime 保证这个目标状态，而不是替你完成任何策略性工作。
-
-**做什么**：窄版 Goal = announce（转移发生时通告）+ guard（未满足时拒绝）。运行时执行式修复（reconcile）属 Experimental，默认关闭；凡需要"选哪个方案"的，回 Agent。
-
-> 中文：当你有一个明确的环境目标状态时使用；只通告与守卫，不执行修复，不做策略选择。
-> EN: For an explicit target environment state — announce + guard only; never repairs, never chooses strategy (that stays with the Agent).
-
-## Custom
-
-**场景**：开发者想自己组合能力，或用配置文件精确控制。
-
-**做什么**：Guard / Circuit / Critical delta / Persistence / Query / Goal 六项自由勾选（设置页），或直接手写 `settings.yaml` 的 `runtime-seam.capabilities`（见 `docs/custom-config.md`）。
-
-> 中文：自行组合能力；UI 勾选与手写 settings.yaml 等价。
-> EN: Compose your own capability set — UI checkboxes and hand-written settings.yaml are equivalent.
-
-## Off
-
-**场景**：基线对照，或你暂时不需要任何 Runtime。
-
-> 中文：完全不装载 Runtime；实验中的对照基线。
-> EN: No runtime at all — the experimental baseline.
-
----
-
-# 一个非常重要的原则：Runtime 大部分时间应该保持沉默
-
-Runtime state 的存在，不意味着 Runtime 必须持续向模型解释自己。
-
-因此我们倾向于：
-
-```text
-No change
-→ Silence
-
-Known invalid
-→ Guard
-
-Future deterministic transition
-→ Commitment + Delta
-
-Repeated no-progress
-→ Circuit
-```
-
-换句话说：
-
-> **Runtime 可以拥有很多内部状态，但不应该拥有与之等量的模型可见状态。**
-
-这也是为什么：
-
-```text
-Persistence ≠ Exposure
-Authority ≠ Intervention
-Execution ≠ Report
-```
-
-这些边界如此重要。
-
----
-
-# Prompt 也应该有自己的责任边界
-
-很多成熟的 Agent 工程实践已经开始强调：
-
-```text
-Intent
-Goal
-Deliverable
-Acceptance
-```
-
-这些信息非常重要。
-
-这个项目并不认为应该把 Prompt 写得更弱。
-
-相反：
-
-> **任务目标、交付物、验收条件越清楚越好。**
-
-但 Prompt 定义的是：
-
-```text
-我想做什么
-```
-
-而 Harness 可以负责：
-
-```text
-现实是什么
-什么动作允许进入现实
-现实什么时候变化
-什么时候已经没有继续尝试的意义
-```
-
-于是一个更干净的责任划分是：
-
-```text
-Human
-→ Intent / Goal / Acceptance
-
-Model
-→ Interpretation / Exploration / Creation
-
-Harness
-→ Deterministic reality
-
-Host
-→ Non-negotiable system boundaries
-```
-
----
-
-# 错误是允许存在的
-
-用户可以写错。
-
-模型可以判断错。
-
-Plugin 也可以实现错。
-
-一个好的 Harness 并不意味着它能够替所有人"找到真正正确的意图"。
-
-它更应该保证：
-
-> **错误停留在它应该停留的责任层，不要穿透到一个可以被确定性防止的现实边界。**
+Runtime 从这些已经发生的事情里得到自己需要的判断，再决定是否需要介入。
 
 因此：
 
 ```text
-User intent
-可以错
-
-Model reasoning
-可以错
-
-Deterministic world
-不能因为前两者出错而被任意破坏
+tool error   ≠   effect didn't happen
+tool success ≠   effect happened
 ```
 
-这也是四象限实验中 D 的核心观察。
+这两个区别在简单任务里很难察觉，但在异步任务、部署、插件、外部服务和动态 Runtime 中会越来越重要。
 
 ---
 
-# 实验方法
+## Event 是事实来源
 
-这个仓库的实验并不是为了先证明一个理论，再强行寻找场景。
+DSH 的 Session Event 可以看作运行过程的一本账。
 
-更接近这样的循环：
+它记录：
 
-```text
-真实 DSH 问题
-       ↓
-真实 trajectory
-       ↓
-观察摩擦
-       ↓
-找到其中已经确定的部分
-       ↓
-提出最小机制
-       ↓
-A/B / controlled experiment
-       ↓
-保留 / 淘汰
-```
+> 什么事情发生了，以及发生的顺序。
 
-例如 E7 一开始只关注：
+需要知道当前状态时，可以从事件得到当前事实；需要知道刚才发生了什么变化，也可以从事件中得到。
 
-```text
-flaky retry
-```
-
-但逐事件读取轨迹后又发现：
-
-```text
-deny
-→ retry
-→ deny
-→ retry
-```
-
-于是产生了第二类 no-progress pattern。
-
-这类发现是实验的一部分。
-
-因此：
-
-> **Trajectory 不只是实验结果，也是下一次实验的输入。**
-
----
-
-# 证据与限制
-
-这个仓库包含完整的实验材料、历史轨迹和真实 token 使用数据。
-
-目前已经完成：
-
-```text
-100+ session runs
-2 models
-真实 DSH Host
-隔离 profile
-真实 usage reconstruction
-```
-
-但很多行为实验的单个场景仍然是小样本。
-
-因此我们明确区分：
-
-### 机制级结论
+因此 Runtime 不需要再维护一套与 DSH 平行的“世界状态”。
 
 例如：
 
 ```text
-Guard can block before execution.
-Circuit can prevent repeated execution.
-State changes can trigger Delta.
+Event
+  ↓
+当前事实
+  ↓
+最近变化
+  ↓
+Progress
 ```
 
-这些是最强证据。
+Progress 本身不是另一份状态。
 
-### 场景级观察
+它只是回答：
 
-例如：
+> **这一步有没有真正让事情往前走？**
 
-```text
-Strict 在这个创造场景中缩短 trajectory。
-Pickup 在这个跨 Session 场景中明显降低 payload。
-```
-
-这些是有价值的真实工程结果，但不应该被外推成普遍规律。
-
-### 尚未建立的结论
-
-我们不会因为某个实验结果漂亮，就宣布：
-
-```text
-Runtime always improves agents.
-Strict is always better.
-More state is always useful.
-More provenance creates more trust.
-```
-
-恰恰相反，实验已经给出了这些方向的反例。
+如果事实不足，也可以明确得到 `unknown`，而不是猜一个答案。
 
 ---
 
-# 社区问题
+## 几个很小的能力
 
-这个项目来自真实的 DeepSeek Harness 摩擦。
+### Guard
 
-当前实验对应的社区问题包括但不限于：
+执行之前处理确定性的边界问题。
 
-```text
-MCP stale / expired sessions
-Plugin lifecycle drift
-Workspace / ownership boundaries
-Repeated deterministic failures
-Tool retry loops
-Long-session execution waste
-Cross-session project state
-Plugin load-time failure isolation
-```
+> **这件事现在能不能做？**
 
-具体 issue/discussion 映射见：
+例如一个动作明确不应该进入执行阶段，就在执行之前拦住。
 
-```text
-evidence/community-map.md
-```
+### Progress
 
-这里不把某个 Plugin 宣传成这些问题的唯一解。
+执行之后观察实际变化。
 
-目标只是：
+> **刚才到底有没有进展？**
 
-> **把真实问题与已经验证过的 Harness capability 对齐。**
+它不负责停止、重试或修复，只提供判断。
 
----
+### Circuit
 
-# Plugin Contribution
+如果一个动作持续失败，而且世界一直没有新的进展：
 
-如果想贡献一个 Runtime / Harness capability，首先回答：
+> **不要一直重复做同一件事。**
 
-```text
-1. 这个能力解决什么真实的 DSH 问题？
+### Reconcile
 
-2. 哪一部分已经是 deterministic 的？
+如果执行结果和现实状态可能不一致：
 
-3. 为什么这一部分不应该继续由模型负责？
+> **先确认现实，再决定下一步。**
 
-4. Runtime 应该在什么时候介入？
+例如工具返回失败，但外部状态已经变化，就不应该直接重新执行。
 
-5. 什么情况下应该保持 silence？
+### Delta
 
-6. Runtime state 如何判断 stale / changed？
+只有真正值得关注的变化出现时，才告诉模型。
 
-7. Plugin 自己失败时，能否不拖垮 Host？
-
-8. Plugin 能否被 disable / uninstall / recover？
-```
-
-最重要的一问：
-
-> **这个抽象是不是由真实摩擦逼出来的？**
-
-如果只是：
-
-> "也许以后会需要。"
-
-那么最好先不要加入新的核心抽象。
-
-完整清单见 `docs/contribution.md`。
+Runtime 不需要不断播报“现在还是这样”。
 
 ---
 
-# Plugin 安全边界
+## 一个简单的例子
 
-Runtime Plugin 也属于 DSH Plugin。
+Agent 执行：
 
-因此：
+> “把插件切到 fast 模式。”
 
-> **Runtime 自己不能成为新的单点故障。**
+它修改了配置，构建也成功了。
 
-至少应该考虑：
+但运行中的插件实际上还在旧模式。
 
-```text
-boot-time failure
-dependency mismatch
-headless environment
-disable / uninstall
-state isolation
-workspace boundary
-credential handling
-unrelated plugin survival
-```
-
-特别是：
-
-> **Runtime 不是解决所有 Plugin failure 的地方。**
-
-如果问题发生在：
+普通流程很容易得到：
 
 ```text
-Plugin discovery
-Plugin activation
-Host boot
+修改成功
+→ build 成功
+→ 完成
 ```
 
-那么它可能属于 Host / Plugin lifecycle，而不是 Runtime。
+Runtime-aware 的流程可以继续观察实际状态：
 
-这类问题应该在 Plugin contract、Host isolation 和开发工具链中解决。
+```text
+执行成功
+→ 没有看到预期变化
+→ investigate
+→ 发现仍是旧状态
+→ reload
+→ 再确认
+→ ready
+```
+
+这里 Runtime 没有替模型做创造。
+
+它只是避免把：
+
+> **“工具完成了”**
+
+误认为：
+
+> **“事情完成了”。**
 
 ---
 
-# 当前仓库结构
+## Runtime 应该尽量安静
 
-```text
-dsh-runtime/
-├── README.md
-├── README.zh-CN.md
-│
-├── core/
-│   └── runtime-seam/
-│
-├── presets/
-│   ├── minimal/
-│   ├── strict/
-│   ├── goal/
-│   └── custom/
-│
-├── plugins/
-│   └── runtime-progress/
-│
-├── experiments/
-│   ├── harness/
-│   └── data/
-│
-├── evidence/
-│   └── community-map.md
-│
-├── docs/
-│   ├── adr/
-│   ├── status/
-│   └── bugs/
-│
-└── scripts/
-```
+Runtime 不是一个新的“大管家”。
 
-其中：
+一个重要原则是：
 
-```text
-core/
-```
+> **模型自己看得清的地方，不需要 Runtime 出手。**
 
-应尽可能稳定。
+正常 Coding 任务中，Runtime 应该可以完全不介入。
 
-而：
+只有当 Harness 能明确看到一些模型不容易可靠判断的事情时，才值得介入。
 
-```text
-plugins/
-experiments/
-evidence/
-```
-
-应该允许随着真实使用不断增长。
+因此 Runtime 更像是一层很薄的保护，而不是一套新的 Agent。
 
 ---
 
-# 当前状态
+## 模式
 
-这是一个**实验性项目**。
+不同任务可以选择不同程度的 Runtime 介入：
 
-目前已经完成：
+| 模式           | 适合            |
+| ------------ | ------------- |
+| **Off**      | 完全不介入         |
+| **Minimal**  | 创造型任务，尽量少打扰   |
+| **Balanced** | 日常 Coding     |
+| **Strict**   | 更重视执行结果和外部副作用 |
+| **Custom**   | 自己组合需要的能力     |
 
-* Runtime seam 原型；
-* Minimal / Strict / Goal / Custom preset 骨架；
-* Guard / Circuit / State / Delta / Persistence 等实验；
-* flash + v4pro 的关键机制交叉验证；
-* 真实 token / cacheRead 回溯；
-* 四象限 Prompt × Harness 场景实验；
-* 实验材料与本地环境信息脱敏；
-* Plugin failure pitfalls 与 contribution boundary。
+也可以直接从场景开始：
 
-后续重点不是继续证明"Runtime 存不存在价值"。
+**Creative · Coding · External Actions · Safe**
 
-而是：
-
-> **把已经有证据的机制打磨成可以真正被加载、组合、关闭和替换的 Plugin。**
+模式只是选择不同的 Runtime 能力组合，不会改变模型本身。
 
 ---
+
+## 为什么不是更多 Skill？
+
+有些东西确实适合写进 Skill。
+
+比如：
+
+> 一种工作习惯、一种偏好、一种场景下更好的做法。
+
+但有些东西不属于这个层面：
+
+> 文件到底有没有写进去？
+> 插件到底有没有加载？
+> 一个操作到底有没有发生？
+> 用户到底有没有真正批准？
+
+这些事情，如果 Harness 能够确定，就不应该只靠模型记住一段文字。
+
+一个简单的原则：
+
+> **需要理解的事情交给模型。**
+>
+> **可以确定的事情交给 Harness。**
+>
+> **无法确认的事情，就承认不知道。**
+
+---
+
+## Evidence
+
+这个项目不是只停留在设计上，目前已经完成了一组 DSH 实际实验。
+
+在确定性的场景中：
+
+* 重复无进展：真实执行次数下降 **67%**
+* 非原子失败：重复副作用下降 **75%**
+* 成功但未生效：世界正确率从 **0/2 提升到 2/2**
+* 正常 Coding：**0 次误介入**
+* 异步 polling：在当前场景和模型下没有明显优势
+
+这些结果说明 Runtime 的价值不是“任何地方都更强”。
+
+更接近：
+
+> **模型自己看得清的地方，它不打扰；模型看不清现实的地方，它补上一点确定性。**
+
+完整实验过程、原始数据和限制条件见 [`docs/`](docs/)。
+
+---
+
+## Project Status
+
+当前项目仍然是一个实验驱动的小型 Runtime capability 集合。
+
+它不会试图成为新的 Agent Framework，也不会自己重新实现 DSH 的底层 Runtime。
+
+能力应该从真实问题中长出来：
+
+```text
+真实问题
+  ↓
+找到可以确定的事实
+  ↓
+最小 Runtime 能力
+  ↓
+实际验证
+  ↓
+重复出现
+  ↓
+再考虑抽象
+```
+
+**先解决一个具体的问题，而不是先设计一个完整系统。**
+
+---
+
+## Repository
+
+这个仓库目前主要面向：
+
+* DSH Runtime capability 实验
+* Runtime / Event / Progress 研究
+* 真实 Agent trajectory 验证
+* DSH 插件组合与场景实验
+
+安装和启用方式以各 capability 的文档为准；这个仓库本身不是一个需要单独启动的 Agent 应用。
+
+---
+
+## License
+
+见 [LICENSE](LICENSE)。
+
 
 # 最后：为什么是 Plugin？
 
