@@ -1,0 +1,57 @@
+/**
+ * pack-release.mjs — build self-contained, standalone-installable tgzs.
+ *
+ * The monorepo's file:../runtime-progress workspace dep only resolves inside a
+ * full checkout. For anyone who just wants to install, this script produces
+ * release/ tgzs with ZERO cross-package file: deps:
+ *   - dsh-runtime-progress: packed as-is (no dependencies);
+ *   - dsh-runtime-circuit|reconcile|investigate: the progress lib is bundled
+ *     inside (import rewritten to the bundled copy) — one tgz, installable
+ *     anywhere with `dsh plugin add <tgz>`.
+ *
+ * Usage: node scripts/pack-release.mjs  (output: release/)
+ */
+import { mkdirSync, rmSync, copyFileSync, readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { execSync } from "node:child_process";
+
+const REPO = join(fileURLToPath(new URL("..", import.meta.url)));
+const OUT = join(REPO, "release");
+const PROGRESS_LIB = join(REPO, "core", "runtime-progress", "lib", "index.js");
+
+rmSync(OUT, { recursive: true, force: true });
+mkdirSync(OUT, { recursive: true });
+
+function pack(cwd) {
+  execSync("pnpm pack --pack-destination " + JSON.stringify(OUT), { cwd, stdio: "inherit" });
+}
+
+// 1) fact layer: pack as-is (zero dependencies).
+pack(join(REPO, "core", "runtime-progress"));
+
+// 1b) seam: pack as-is (registry dep @deepseek-ai/schemastery resolves from npm).
+pack(join(REPO, "core", "runtime-seam"));
+
+// 2) policies: bundle the progress lib, drop the file: dep.
+for (const pkg of ["runtime-circuit", "runtime-reconcile", "runtime-investigate"]) {
+  const src = join(REPO, "core", pkg);
+  const tmp = join(OUT, `.tmp-${pkg}`);
+  mkdirSync(join(tmp, "lib", "runtime-progress"), { recursive: true });
+
+  const pkgJson = JSON.parse(readFileSync(join(src, "package.json"), "utf8"));
+  delete pkgJson.dependencies;
+  pkgJson.description = `${pkgJson.description} (self-contained release bundle: dsh-runtime-progress included)`;
+  writeFileSync(join(tmp, "package.json"), `${JSON.stringify(pkgJson, null, 2)}\n`);
+
+  const lib = readFileSync(join(src, "lib", "index.js"), "utf8");
+  const bundled = lib.replaceAll('from "dsh-runtime-progress"', 'from "./runtime-progress/index.js"');
+  writeFileSync(join(tmp, "lib", "index.js"), bundled);
+  copyFileSync(PROGRESS_LIB, join(tmp, "lib", "runtime-progress", "index.js"));
+  copyFileSync(join(src, "cordis.patch.yml"), join(tmp, "cordis.patch.yml"));
+
+  pack(tmp);
+  rmSync(tmp, { recursive: true, force: true });
+}
+
+console.log(`release tarballs written to ${OUT}`);
