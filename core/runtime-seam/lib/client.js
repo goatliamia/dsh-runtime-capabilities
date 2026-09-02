@@ -1,9 +1,13 @@
 // dsh-runtime-seam client half (self-registering bundle).
 // 三个入口（全部主题 token 化、文案中文化）：
-//   - conversation.input.left：Runtime 控制（模式速览 + 介入原因弹层）
-//   - conversation.input.dock：Runtime Goal 条（仿官方目标条：常驻可见、可增删）
-//   - settings.section：Runtime 设置页（场景预设 + 模式选择 + 分组能力勾选 + 目标 + 介入日志 + 本次会话摘要）
-// 设计依据：docs/18-runtime-frontend-design.md（2026-09-02）
+//   - conversation.input.left：Runtime 控制（事前/事后速览 + 介入原因弹层）
+//   - settings.section：Runtime 设置页（场景预设 + 事前开关 + 事后模式 +
+//     自定义勾选 + 目标 + 介入日志 + 本次会话摘要）
+// 设计依据：docs/18-runtime-frontend-design.md（2026-09-03 双轴改版）：
+//   事前 PRE（一个开关）：continuation —— 唯一确定的下一步由 Runtime 执行，
+//     模型只消化结果。独立于事后模式。
+//   事后 POST（模式选择器）：Off/Minimal/Balanced/Strict/Custom，
+//     对应 guard/circuit/reconcile/investigate 职责组合。
 window.__ModuleLoader__.load({
   id: "dsh-runtime-seam",
   factory: (require) => {
@@ -11,36 +15,28 @@ window.__ModuleLoader__.load({
     const { useEffect, useState } = React;
     const el = React.createElement;
 
-    const MODES = ["off", "minimal", "balanced", "strict", "custom"];
-    const MODE_LABEL = { off: "Off", minimal: "Minimal", balanced: "Balanced", strict: "Strict", custom: "Custom" };
-    // Scene presets are shortcuts over modes (docs/18 §3 layer 0).
+    const POST_MODES = ["off", "minimal", "balanced", "strict", "custom"];
+    const POST_LABEL = { off: "Off", minimal: "Minimal", balanced: "Balanced", strict: "Strict", custom: "Custom" };
+    // Scene presets are shortcuts over BOTH axes (docs/18 §3 layer 0).
     const SCENES = [
-      { key: "creative", label: "Creative", desc: "少打扰，明确问题才介入", preset: "minimal" },
-      { key: "coding", label: "Coding", desc: "重视验证与重复失败", preset: "balanced" },
-      { key: "external", label: "External Actions", desc: "重视副作用与超时确认", preset: "balanced" },
-      { key: "safe", label: "Safe", desc: "宁愿多验证，不轻易当完成", preset: "strict" },
+      { key: "creative", label: "Creative", desc: "少打扰：事前不接管、事后仅拦必拦", preset: "minimal", continuation: false },
+      { key: "coding", label: "Coding", desc: "确定步骤交给 Runtime，事后重视验证", preset: "balanced", continuation: true },
+      { key: "external", label: "External Actions", desc: "重视副作用与超时确认", preset: "balanced", continuation: false },
+      { key: "safe", label: "Safe", desc: "宁愿多验证，不轻易当完成", preset: "strict", continuation: true },
     ];
-    // Grouped capability toggles (docs/18 §3 layer 2). Progress detection is
-    // the always-on fact layer, not a policy toggle.
-    const CAPABILITY_GROUPS = [
-      { title: "Execution（执行前 / 执行中）", items: [
-        { key: "guard", label: "Guard（已知非法的动作）" },
-        { key: "circuit", label: "Circuit（连续无进展熔断）" },
-        { key: "reconcile", label: "Reconcile（副作用可能已发生时不盲目重试）" },
-      ]},
-      { title: "Effect（执行后）", items: [
-        { key: "progress", label: "Progress detection（事件投影）", factLayer: true },
-        { key: "investigate", label: "Success verification（成功但未生效 → 验证修复）" },
-      ]},
-      { title: "Context（告诉模型什么）", items: [
-        { key: "delta", label: "Critical delta（只通知承诺过的变更）" },
-        { key: "exposure", label: "Runtime snapshot（全量上下文，实验未显示优势）" },
-      ]},
-      { title: "基础（既有能力，保留）", items: [
-        { key: "persistence", label: "Persistence（事实跨会话持久化）" },
-        { key: "query", label: "Query（权威应答）" },
-        { key: "goal", label: "Goal（目标跟踪）" },
-      ]},
+    // POST-axis capability toggles (docs/18 §3 layer 2).
+    const POST_ITEMS = [
+      { key: "guard", label: "Guard（已知非法的动作）" },
+      { key: "circuit", label: "Circuit（连续无进展熔断）" },
+      { key: "reconcile", label: "Reconcile（副作用可能已发生时不盲目重试）" },
+      { key: "investigate", label: "Verify & repair（成功但未生效 → 验证修复）" },
+    ];
+    const BASE_ITEMS = [
+      { key: "delta", label: "Critical delta（只通知承诺过的变更）" },
+      { key: "exposure", label: "Runtime snapshot（全量上下文，实验未显示优势）" },
+      { key: "persistence", label: "Persistence（事实跨会话持久化）" },
+      { key: "query", label: "Query（权威应答）" },
+      { key: "goal", label: "Goal（目标跟踪）" },
     ];
 
     const font = { fontFamily: "inherit", fontSize: "12px", color: "var(--dsw-alias-label-primary)" };
@@ -84,6 +80,15 @@ window.__ModuleLoader__.load({
       border: "1px solid var(--dsw-alias-border-l1)",
       background: "var(--dsw-alias-bg-layer-1)",
       marginBottom: 10,
+    };
+    const axisCard = {
+      ...font,
+      fontSize: "13px",
+      padding: "10px 12px",
+      borderRadius: "10px",
+      border: "1px solid var(--dsw-alias-border-l1)",
+      background: "var(--dsw-alias-bg-layer-1)",
+      marginBottom: 12,
     };
 
     function useActivity() {
@@ -152,75 +157,106 @@ window.__ModuleLoader__.load({
       return el("div", null, entries.slice(0, 20).map(ActivityLine));
     }
 
-    // ---- 输入行左侧 Runtime 控制 ----
+    // ---- 输入行左侧 Runtime 控制（双轴速览） ----
     function RuntimeButton() {
       const { data } = useActivity();
       const [open, setOpen] = useState(false);
       const preset = data?.preset ?? "…";
+      const continuation = data?.capabilities?.continuation === true;
       return el("div", { style: { position: "relative" } },
         el("button", { style: button, title: "Runtime", onClick: () => setOpen((v) => !v) },
-          "Runtime · " + (MODE_LABEL[preset] ?? preset)),
+          "Runtime · 前" + (continuation ? "✓" : "—") + " · 后" + (POST_LABEL[preset] ?? preset)),
         open ? el("div", { style: popover },
           el("div", { style: summaryCard }, summaryOf(data?.activity)),
           el("div", { style: sectionTitle }, "为什么 Runtime 介入？"),
           el(ActivityList, { entries: data?.activity })) : null);
     }
 
-    // ---- 设置页 ----
-    function CapabilityToggle({ caps, reload }) {
-      const toggle = (key, current) => {
-        const next = { ...caps };
-        if (key === "delta") next.delta = current === "critical" ? "none" : "critical";
-        else if (key === "exposure") next.exposure = current === "silent" ? "snapshot" : "silent";
-        else next[key] = !current;
-        postJson("/api/runtime-seam/config", { preset: "custom", capabilities: next }).then(reload);
-      };
+    // ---- 设置页：事前开关 ----
+    function PreAxis({ caps, reload }) {
+      const enabled = caps.continuation === true;
+      return el("div", { style: axisCard },
+        el("div", { style: { ...row, justifyContent: "space-between" } },
+          el("div", null,
+            el("div", { style: sectionTitle }, "事前 · Pre（替模型走确定性的一步）"),
+            el("div", { style: secondary },
+              "当事实与契约把下一步压缩到唯一时，Runtime 直接执行（走正常权限/守卫/取消边界），模型只消化已发生的结果。无把握时一律不接管。")),
+          el("label", { style: { ...row, cursor: "pointer" } },
+            el("span", { style: secondary }, enabled ? "开" : "关"),
+            el("input", {
+              type: "checkbox",
+              checked: enabled,
+              onChange: () => postJson("/api/runtime-seam/config", { continuation: !enabled }).then(reload),
+              style: { accentColor: "var(--dsw-alias-brand-primary)" },
+            }))),
+        el("div", { style: { ...secondary, marginTop: 6 } },
+          "实验验证中：能力随 agent/continue seam 上线（docs/status/native-pp-rc*.md）。"));
+    }
+
+    // ---- 设置页：事后模式 + 自定义勾选 ----
+    function PostAxis({ caps, reload }) {
+      const preset = caps.__preset ?? "minimal";
       const enabledOf = (key) => {
         if (key === "delta") return caps.delta === "critical";
         if (key === "exposure") return caps.exposure !== "silent";
         return Boolean(caps[key]);
       };
-      return el("div", { style: { marginBottom: 10 } },
-        el("div", { style: sectionTitle }, "自定义能力（勾选即生效，可增可减）"),
-        CAPABILITY_GROUPS.map((group) => el("div", { key: group.title, style: { marginBottom: 8 } },
-          el("div", { style: { ...secondary, marginBottom: 2 } }, group.title),
-          group.items.map(({ key, label, factLayer }) => {
-            if (factLayer) {
-              return el("div", { key, style: { ...row, display: "flex", padding: "3px 0" } },
-                el("span", { style: { color: "var(--dsw-alias-state-success-primary)" } }, "✓"),
-                el("span", null, label),
-                el("span", { style: secondary }, "（事实层，常开，不消耗模型）"));
-            }
-            const enabled = enabledOf(key);
-            return el("label", { key, style: { ...row, display: "flex", padding: "3px 0", cursor: "pointer" } },
+      const togglePost = (key, current) => {
+        const next = { ...caps };
+        if (key === "delta") next.delta = current === "critical" ? "none" : "critical";
+        else if (key === "exposure") next.exposure = current === "silent" ? "snapshot" : "silent";
+        else next[key] = !current;
+        const patch = { guard: next.guard, circuit: next.circuit, reconcile: next.reconcile, investigate: next.investigate, persistence: next.persistence, query: next.query, goal: next.goal, delta: next.delta };
+        postJson("/api/runtime-seam/config", { preset: "custom", capabilities: patch }).then(reload);
+      };
+      const pickPreset = (key) => postJson("/api/runtime-seam/config", { preset: key }).then(reload);
+      return el("div", { style: axisCard },
+        el("div", { style: sectionTitle }, "事后 · Post（执行后纠偏与止损）"),
+        el("div", { style: secondary }, "观察事件流，在模型做错之后拦截、纠正与验证。默认沉默，只在必须时介入。"),
+        el("div", { style: { ...row, flexWrap: "wrap", marginTop: 8, marginBottom: 8 } },
+          POST_MODES.map((key) => el("button", {
+            key,
+            style: preset === key ? activeButton : button,
+            onClick: () => pickPreset(key),
+          }, POST_LABEL[key]))),
+        preset === "custom"
+          ? el("div", null, POST_ITEMS.map(({ key, label }) => el("label", { key, style: { ...row, display: "flex", padding: "3px 0", cursor: "pointer" } },
               el("input", {
                 type: "checkbox",
-                checked: enabled,
-                onChange: () => toggle(key, enabled),
+                checked: enabledOf(key),
+                onChange: () => togglePost(key, enabledOf(key)),
                 style: { accentColor: "var(--dsw-alias-brand-primary)" },
               }),
-              el("span", null, label));
-          }))));
+              el("span", null, label))))
+          : el("div", null, POST_ITEMS.map(({ key, label }) => el("div", { key, style: { ...row, justifyContent: "space-between", padding: "3px 0" } },
+              el("span", null, label),
+              el("span", { style: enabledOf(key) ? { color: "var(--dsw-alias-state-success-primary)" } : secondary }, enabledOf(key) ? "✓" : "—")))));
     }
 
-    function CapabilitySummary({ caps }) {
-      return el("div", { style: { marginBottom: 14 } },
-        CAPABILITY_GROUPS.map((group) => {
-          const items = group.items.map(({ key, label, factLayer }) => {
-            if (factLayer) {
-              return el("div", { key, style: { ...row, justifyContent: "space-between", padding: "3px 0" } },
-                el("span", null, label),
-                el("span", { style: { color: "var(--dsw-alias-state-success-primary)" } }, "✓ 常开"));
-            }
-            const enabled = key === "delta" ? caps.delta === "critical" : key === "exposure" ? caps.exposure !== "silent" : Boolean(caps[key]);
-            return el("div", { key, style: { ...row, justifyContent: "space-between", padding: "3px 0" } },
-              el("span", null, label),
-              el("span", { style: enabled ? { color: "var(--dsw-alias-state-success-primary)" } : secondary }, enabled ? "✓" : "—"));
-          });
-          return el("div", { key: group.title, style: { marginBottom: 6 } },
-            el("div", { style: { ...secondary, marginBottom: 2 } }, group.title),
-            items);
-        }));
+    function BaseAxis({ caps, reload }) {
+      const enabledOf = (key) => {
+        if (key === "delta") return caps.delta === "critical";
+        if (key === "exposure") return caps.exposure !== "silent";
+        return Boolean(caps[key]);
+      };
+      const toggle = (key, current) => {
+        const next = { ...caps };
+        if (key === "delta") next.delta = current === "critical" ? "none" : "critical";
+        else if (key === "exposure") next.exposure = current === "silent" ? "snapshot" : "silent";
+        else next[key] = !current;
+        const patch = { guard: next.guard, circuit: next.circuit, reconcile: next.reconcile, investigate: next.investigate, persistence: next.persistence, query: next.query, goal: next.goal, delta: next.delta };
+        postJson("/api/runtime-seam/config", { preset: "custom", capabilities: patch }).then(reload);
+      };
+      return el("div", { style: { marginBottom: 10 } },
+        el("div", { style: sectionTitle }, "基础（既有能力，保留）"),
+        BASE_ITEMS.map(({ key, label }) => el("label", { key, style: { ...row, display: "flex", padding: "3px 0", cursor: "pointer" } },
+          el("input", {
+            type: "checkbox",
+            checked: enabledOf(key),
+            onChange: () => toggle(key, enabledOf(key)),
+            style: { accentColor: "var(--dsw-alias-brand-primary)" },
+          }),
+          el("span", null, label))));
     }
 
     function GoalSection({ goals }) {
@@ -237,32 +273,24 @@ window.__ModuleLoader__.load({
     function RuntimeSettingsPage() {
       const { data, reload } = useActivity();
       const preset = data?.preset ?? "minimal";
-      const caps = data?.capabilities ?? {};
-      const sceneActive = (scene) => scene.preset === preset;
+      const caps = { ...(data?.capabilities ?? {}), __preset: preset };
+      const sceneActive = (scene) => scene.preset === preset && (scene.continuation === caps.continuation);
       return el("div", { style: { ...font, fontSize: "13px", maxWidth: 560 } },
         el("h3", null, "Runtime"),
         el("p", { style: secondary },
-          "选择你的 Agent 拥有的确定性能力。Runtime 不是第二个 Agent：默认沉默，只在必须时介入。"),
-        el("div", { style: { marginBottom: 4 } },
-          el("div", { style: sectionTitle }, "场景预设（选一个即可，其余交给默认）"),
-          el("div", { style: { ...row, flexWrap: "wrap", marginBottom: 12 } },
+          "选择你的 Agent 拥有的确定性能力。Runtime 不是第二个 Agent：默认沉默，只在必须时介入。事前与事后是两根独立的轴。"),
+        el("div", { style: { marginBottom: 12 } },
+          el("div", { style: sectionTitle }, "场景预设（同时设定事前开关与事后模式）"),
+          el("div", { style: { ...row, flexWrap: "wrap", marginBottom: 4 } },
             SCENES.map((scene) => el("button", {
               key: scene.key,
               style: sceneActive(scene) ? activeButton : button,
               title: scene.desc,
-              onClick: () => postJson("/api/runtime-seam/config", { preset: scene.preset }).then(reload),
+              onClick: () => postJson("/api/runtime-seam/config", { preset: scene.preset, continuation: scene.continuation }).then(reload),
             }, scene.label)))),
-        el("div", { style: { marginBottom: 4 } },
-          el("div", { style: sectionTitle }, "模式"),
-          el("div", { style: { ...row, flexWrap: "wrap", marginBottom: 14 } },
-            MODES.map((key) => el("button", {
-              key,
-              style: preset === key ? activeButton : button,
-              onClick: () => postJson("/api/runtime-seam/config", { preset: key }).then(reload),
-            }, MODE_LABEL[key])))),
-        preset === "custom"
-          ? el(CapabilityToggle, { caps, reload })
-          : el(CapabilitySummary, { caps }),
+        el(PreAxis, { caps, reload }),
+        el(PostAxis, { caps, reload }),
+        el(BaseAxis, { caps, reload }),
         el(GoalSection, { goals: data?.goals }),
         el("div", { style: { marginBottom: 10 } },
           el("div", { style: sectionTitle }, "Runtime 介入记录"),

@@ -147,6 +147,12 @@ Progress 本身不是另一份状态。
 
 Runtime 不需要不断播报“现在还是这样”。
 
+### Continuation（事前）
+
+当事实与契约把下一步压缩到唯一确定动作时，Runtime 直接执行——走正常的权限 / 守卫 / 取消边界——模型只消化已经发生的结果。
+
+没有把握时一律不接管。该能力已经实验验证（见下方 Evidence），随上游 `agent/continue` seam 上线。
+
 ---
 
 ## 一个简单的例子
@@ -209,17 +215,16 @@ Runtime 不是一个新的“大管家”。
 
 ## 模式
 
-不同任务可以选择不同程度的 Runtime 介入：
+设置页分为两根独立的轴：
 
-| 模式           | 适合            |
-| ------------ | ------------- |
-| **Off**      | 完全不介入         |
-| **Minimal**  | 创造型任务，尽量少打扰   |
-| **Balanced** | 日常 Coding     |
-| **Strict**   | 更重视执行结果和外部副作用 |
-| **Custom**   | 自己组合需要的能力     |
+| 轴 | 是什么 | 选择 |
+| -- | ----- | ---- |
+| **事前 Pre** | 一个开关——Continuation：事实 + 契约把下一步压缩到唯一时，替模型走这一步 | 开 / 关 |
+| **事后 Post** | 执行后纠偏与止损：guard、circuit、reconcile、verify & repair | **Off / Minimal / Balanced / Strict / Custom** |
 
-也可以直接从场景开始：
+两根轴不必落在同一个模式里：Post 模式选择事后职责组合，Pre 开关独立翻转。
+
+也可以直接从场景开始（一个同时设定两轴的快捷键）：
 
 **Creative · Coding · External Actions · Safe**
 
@@ -265,6 +270,7 @@ Runtime 不是一个新的“大管家”。
 * 成功但未生效：世界正确率从 **0/2 提升到 2/2**
 * 正常 Coding：**0 次误介入**
 * 异步 polling：在当前场景和模型下没有明显优势
+* 确定性 continuation（第 1-4 轮）：Runtime 接管唯一确定的下一步（**B 模型调用 15 vs A 19，−21%**），stale/cancel/guard/多选一律零误执行，事实缺失或误导时克制，instruction continuity 保持——模型消化已发生的事实并把动作诚实归给 runtime
 
 这些结果说明 Runtime 的价值不是“任何地方都更强”。
 
@@ -272,7 +278,7 @@ Runtime 不是一个新的“大管家”。
 
 > **模型自己看得清的地方，它不打扰；模型看不清现实的地方，它补上一点确定性。**
 
-完整实验过程、原始数据和限制条件见 [`docs/`](docs/)。
+完整实验过程、原始数据和限制条件见 [`docs/`](docs/)——尤其是 Runtime Continuation 线：[`docs/status/native-pp-rc-2026-09-02.md`](docs/status/native-pp-rc-2026-09-02.md)（命题）、[`native-pp-rc2-2026-09-02.md`](docs/status/native-pp-rc2-2026-09-02.md)（边界）、[`native-pp-rc3-2026-09-02.md`](docs/status/native-pp-rc3-2026-09-02.md)（instruction continuity）、[`native-pp-rc4-2026-09-03.md`](docs/status/native-pp-rc4-2026-09-03.md)（所有权边界），以及四轮汇总 [`native-pp-rc-summary-2026-09-03.md`](docs/status/native-pp-rc-summary-2026-09-03.md)。
 
 ---
 

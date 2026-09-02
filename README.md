@@ -148,6 +148,12 @@ Tell the model only when a change worth noticing actually appears.
 
 Runtime does not need to keep announcing "still the same as before".
 
+### Continuation (Pre)
+
+When the facts and a declared contract compress the next step to exactly one deterministic action, the Runtime executes it directly — through the normal permission / guard / cancellation boundary — and the model only digests what already happened.
+
+When it is not certain, it never takes over. This capability is experimentally validated (see Evidence below) and ships with the upstream `agent/continue` seam.
+
 ---
 
 ## A simple example
@@ -210,17 +216,16 @@ So Runtime is a thin layer of protection, not another Agent.
 
 ## Modes
 
-Different tasks can choose different levels of Runtime involvement:
+The settings page is split into two independent axes:
 
-| Mode         | Fits                         |
-| ------------ | ---------------------------- |
-| **Off**      | No intervention at all       |
-| **Minimal**  | Creative tasks, minimal noise |
-| **Balanced** | Everyday coding              |
-| **Strict**   | Care more about outcomes and external side effects |
-| **Custom**   | Combine the capabilities you want |
+| Axis | What it is | Choices |
+| ---- | ---------- | ------- |
+| **Pre (事前)** | One switch — `Continuation`: take over a deterministic next step when facts + contract make it unique | On / Off |
+| **Post (事后)** | Intervention after execution: guard, circuit, reconcile, verify & repair | **Off / Minimal / Balanced / Strict / Custom** |
 
-You can also start from a scene preset:
+The two axes do not have to live in the same mode: the Post mode selects which after-the-fact responsibilities the Runtime takes, and the Pre switch is flipped independently.
+
+You can also start from a scene preset (a shortcut that sets both axes at once):
 
 **Creative · Coding · External Actions · Safe**
 
@@ -266,6 +271,7 @@ In deterministic scenarios:
 * Success-but-not-effective: world correctness from **0/2 to 2/2**
 * Normal coding: **0 false interventions**
 * Async polling: no clear advantage in the tested scenario and model
+* Deterministic continuation (rounds 1-4): the runtime takes over the unique deterministic step (**B model calls 15 vs A 19, −21%**), never executes stale / cancelled / guarded / ambiguous actions, abstains when facts are missing or misleading, and keeps instruction continuity — the model digests the already-happened facts and attributes them to the runtime honestly
 
 These results mean Runtime's value is not "stronger everywhere".
 
@@ -273,7 +279,7 @@ Closer to the truth:
 
 > **Where the model can see clearly, it stays quiet; where the model cannot see reality, it adds a bit of certainty.**
 
-Full experiment process, raw data, and limitations: see [`docs/`](docs/).
+Full experiment process, raw data, and limitations: see [`docs/`](docs/) — in particular the Runtime Continuation line: [`docs/status/native-pp-rc-2026-09-02.md`](docs/status/native-pp-rc-2026-09-02.md) (proposition), [`native-pp-rc2-2026-09-02.md`](docs/status/native-pp-rc2-2026-09-02.md) (boundaries), [`native-pp-rc3-2026-09-02.md`](docs/status/native-pp-rc3-2026-09-02.md) (instruction continuity), [`native-pp-rc4-2026-09-03.md`](docs/status/native-pp-rc4-2026-09-03.md) (ownership boundary), and the four-round summary [`native-pp-rc-summary-2026-09-03.md`](docs/status/native-pp-rc-summary-2026-09-03.md).
 
 ---
 

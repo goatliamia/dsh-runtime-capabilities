@@ -22,20 +22,35 @@
 
 ## 3. 三层结构
 
+> **2026-09-03 双轴改版（已实现）**：第 0/1/2 层重构为两根独立轴——
+> **事前 PRE（一个开关）**：continuation，唯一确定的下一步由 Runtime 执行、模型只消化结果；无把握一律不接管（docs/status/native-pp-rc*.md 实测边界）。
+> **事后 POST（模式选择器）**：Off/Minimal/Balanced/Strict/Custom，对应 guard/circuit/reconcile/investigate 职责组合。
+> 两轴不必落在同一个模式里：preset 键只表示 POST 模式，continuation 键独立开关（settings.yaml 同构）。
+
 ### 第 0 层：场景预设（最常用的第一选择）
 
-放在 Mode 上方；用户通常只需要选一个场景。
+放在两轴上方；用户通常只需要选一个场景。场景是**双轴快捷键**（同时设定事前开关与事后模式）。
 
 | 场景 | 含义 | 背后组合 |
 |---|---|---|
-| **Creative** | 少打扰模型，遇到明确问题才介入 | minimal（guard + circuit 高阈值 + critical delta） |
-| **Coding** | 重视验证、重复失败与运行结果 | balanced（+ 成功未生效检查的轻量版） |
-| **External Actions** | 重视副作用与超时后确认 | balanced + reconcile（非原子保护必开） |
-| **Safe / Strict** | 宁愿多验证，也不轻易把成功当完成 | strict（+ investigate） |
+| **Creative** | 少打扰模型，遇到明确问题才介入 | 事前关 + minimal |
+| **Coding** | 确定步骤交给 Runtime，事后重视验证 | **事前开** + balanced |
+| **External Actions** | 重视副作用与超时后确认 | 事前关 + balanced（reconcile 必开） |
+| **Safe / Strict** | 宁愿多验证，也不轻易把成功当完成 | **事前开** + strict |
 
 > 与「创造模式」的关系：创造模式不该限制创造力，而是选择 Runtime「管得多不多」——场景预设就是这句话的 UI。
 
-### 第 1 层：模式（4 个，替换现在的 5 个按钮）
+### 第 1 层：事前（一个开关）
+
+```text
+事前 · Pre（替模型走确定性的一步）
+  [开关] Continuation
+  当事实与契约把下一步压缩到唯一时，Runtime 直接执行（走正常权限/守卫/取消边界），
+  模型只消化已发生的结果。无把握时一律不接管。
+  （实验验证中：能力随 agent/continue seam 上线）
+```
+
+### 第 2 层：事后（模式选择器 + 自定义勾选）
 
 `goal` 不再作为一级模式（Goal 段在前端独立存在）；新增 `balanced`。
 
@@ -48,26 +63,21 @@
 
 > ⚠️ 一处与结构规划 §5 的张力待用户拍板：结构规划里 minimal = guard + critical delta（无 circuit）；这里 minimal 带 circuit（今日数据：circuit 是最便宜的确定性介入，−67% 执行/−27% cacheRead）。**建议**：minimal 含 circuit（阈值 2 的纯失败熔断），结构规划里 minimal 的语义同步为本表。
 
-### 第 2 层：自定义（保留，分组，不改「介入程度」的定位）
-
-Custom 模式下按三组展示（现状是平铺 6 个，改为分组 + 新能力）：
+Custom 模式下按四组展示（共 9 项，硬上限：**不得**长成 30 个 checkbox）：
 
 ```text
-Execution（执行前/执行中）
+事后 POST（执行后纠偏与止损）
   ☑ Guard          已知非法动作拦截
   ☑ Circuit        连续无进展熔断
   ☐ Reconcile      副作用可能已发生时不盲目重试
+  ☐ Verify & repair 成功但未生效 → 验证并修复
 
-Effect（执行后）
-  ☑ Progress detection   从事件流投影 execution/effect
-  ☐ Success verification 成功但未生效 → 验证并修复
-
-Context（告诉模型什么）
+基础（既有能力，保留）
   ☑ Critical delta  只通知承诺过的变更
   ☐ Runtime snapshot  完整运行时快照（实验未显示优势，默认关）
+  ☐ Persistence / ☑ Query / ☐ Goal
 ```
 
-- 共 8 项，硬上限：**不得**长成 30 个 checkbox；
 - Goal 段与介入日志保留在设置页（现状已有，直接沿用）。
 
 ### 第 3 层：Activity（比设置页更重要）
@@ -125,3 +135,13 @@ verified 1 successful-looking but unapplied change
 其余全部按设计落地：场景预设 4 键（Creative/Coding/External Actions/Safe，纯快捷方式，post 对应 preset 不持久化 scene 状态）、模式 5 键（Off/Minimal/Balanced/Strict/Custom，Goal 不再是一级模式但 Goal 段保留）、「这次帮你做了什么」摘要卡（客户端从 activity 聚合，不做新端点——host 侧唯一改动是 config 白名单加 reconcile/investigate 两键）。
 
 浏览器内视觉验证未做（需 web profile + 人工确认槽位渲染），留待用户打开设置页验收。
+
+## 8. 实现记录（2026-09-03：事前/事后双轴改版）
+
+按用户定调（「事前就一个、直接打开；事后复杂；预设与自定义必留；两轴不必同一个模式」）重构为双轴：
+
+- **事前 PRE = 单个开关 `continuation`**（独立于事后模式；settings.yaml 顶层键；实验验证中，随 agent/continue seam 上线）；
+- **事后 POST = 模式选择器**（Off/Minimal/Balanced/Strict/Custom，preset 键语义不变，Goal 保留为 legacy preset 值）；
+- **场景预设 = 双轴快捷键**（Creative: 前关+minimal；Coding: 前开+balanced；External: 前关+balanced；Safe: 前开+strict）；
+- 改动面：`core.mjs`（PRESETS 全加 continuation 键 + POST_PRESET_NAMES 导出）、`index.js`（settings schema + readConfig 双轴合并 + config POST 支持独立翻转与场景双轴）、`client.js`（设置页三区：场景/事前开关卡/事后模式卡 + 基础勾选；输入行按钮显示「前✓/— · 后Mode」）、`presets/*.settings.yaml.example`（统一 runtime-seam 命名空间 + 双轴注释）、本文 §3 层级表同步；
+- 验证：三文件 node --check 通过；隔离 profile t-w web 冒烟——页面 200、`/plugins/dsh-runtime-seam/client.js` 语法有效且含双轴代码、activity/config API 带浏览器头实测（continuation 独立翻转 ✓、场景双轴 POST ✓、403 守卫按设计拒绝非浏览器请求 ✓）。视觉验收仍留待用户打开设置页人工确认。

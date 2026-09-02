@@ -32,6 +32,7 @@ const ACTIVITY_CAP = 200;
 
 const SETTINGS_SCHEMA = Schema.object({
   preset: Schema.union(PRESET_NAMES.map((value) => Schema.const(value))).default("minimal"),
+  continuation: Schema.boolean().default(false),
   authority: Schema.boolean().default(false),
   circuitThreshold: Schema.number().default(2),
   capabilities: Schema.dict(Schema.any()).default({}),
@@ -107,9 +108,12 @@ export function apply(ctx, _config) {
     }
     const preset = settings.preset ?? "minimal";
     const customCaps = settings.capabilities ?? {};
+    // PRE (continuation) is an independent axis: it rides on whatever POST
+    // preset is selected and can also be flipped inside custom mode.
+    const continuationOverride = typeof settings.continuation === "boolean" ? { continuation: settings.continuation } : {};
     return {
       settings,
-      capabilities: resolvePreset(preset, preset === "custom" ? customCaps : {}),
+      capabilities: resolvePreset(preset, preset === "custom" ? { ...customCaps, ...continuationOverride } : continuationOverride),
     };
   };
 
@@ -440,8 +444,15 @@ export function apply(ctx, _config) {
               return writeJson(res, 200, { ok: true, data: { preset: "custom", capabilities: patch } });
             }
             if (typeof body.preset === "string" && PRESET_NAMES.includes(body.preset)) {
-              await ctx.settings.update("runtime-seam", { preset: body.preset });
-              return writeJson(res, 200, { ok: true, data: { preset: body.preset } });
+              const update = { preset: body.preset };
+              if (typeof body.continuation === "boolean") update.continuation = body.continuation;
+              await ctx.settings.update("runtime-seam", update);
+              return writeJson(res, 200, { ok: true, data: update });
+            }
+            // PRE-axis flip without changing the POST mode.
+            if (typeof body.continuation === "boolean" && body.preset === undefined) {
+              await ctx.settings.update("runtime-seam", { continuation: body.continuation });
+              return writeJson(res, 200, { ok: true, data: { continuation: body.continuation } });
             }
             return writeJson(res, 400, { ok: false, error: "invalid-preset" });
           } catch {

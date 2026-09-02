@@ -134,21 +134,30 @@ export class CircuitTracker {
 // ---- presets: responsibility combinations, not strength levels ----
 // 2026-09-02 reframe (docs/17, docs/18): presets select WHICH deterministic
 // responsibilities the Runtime takes, not "how strict" it is.
+// 2026-09-03 two-axis reframe (docs/18 update):
+//   PRE  (事前)  continuation  单一开关：唯一确定的下一步由 Runtime 执行
+//   POST (事后)  guard/circuit/reconcile/investigate 模式选择器
+//   基础          delta/persistence/goal/query/exposure
+// PRE 与 POST 是独立轴（不必落在同一个模式里）：preset 键只表示 POST 模式，
+// continuation 键独立开关。POST 职责：
 //   guard       已知非法动作拦截（执行前：能不能做）
 //   circuit     连续无进展熔断（消费 progress 的 stalled）
 //   reconcile   副作用可能已发生时不盲目重试（failure + progressed）
 //   investigate 成功但未生效 → 验证修复（success + stalled）
 //   delta       critical-delta-first 上下文（placement 实验定稿：不折腾）
 export const PRESETS = Object.freeze({
-  off: Object.freeze({ guard: false, circuit: false, reconcile: false, investigate: false, delta: "none", persistence: false, goal: false, query: false, exposure: "silent" }),
-  minimal: Object.freeze({ guard: true, circuit: true, reconcile: false, investigate: false, delta: "critical", persistence: false, goal: false, query: true, exposure: "silent" }),
-  balanced: Object.freeze({ guard: true, circuit: true, reconcile: true, investigate: false, delta: "critical", persistence: false, goal: false, query: true, exposure: "silent" }),
-  strict: Object.freeze({ guard: true, circuit: true, reconcile: true, investigate: true, delta: "critical", persistence: true, goal: false, query: true, exposure: "silent" }),
-  goal: Object.freeze({ guard: true, circuit: true, reconcile: false, investigate: false, delta: "critical", persistence: true, goal: true, query: true, exposure: "silent" }),
+  off: Object.freeze({ continuation: false, guard: false, circuit: false, reconcile: false, investigate: false, delta: "none", persistence: false, goal: false, query: false, exposure: "silent" }),
+  minimal: Object.freeze({ continuation: false, guard: true, circuit: true, reconcile: false, investigate: false, delta: "critical", persistence: false, goal: false, query: true, exposure: "silent" }),
+  balanced: Object.freeze({ continuation: false, guard: true, circuit: true, reconcile: true, investigate: false, delta: "critical", persistence: false, goal: false, query: true, exposure: "silent" }),
+  strict: Object.freeze({ continuation: false, guard: true, circuit: true, reconcile: true, investigate: true, delta: "critical", persistence: true, goal: false, query: true, exposure: "silent" }),
+  goal: Object.freeze({ continuation: false, guard: true, circuit: true, reconcile: false, investigate: false, delta: "critical", persistence: true, goal: true, query: true, exposure: "silent" }),
   custom: null, // resolved from explicit capability overrides
 });
 
 export const PRESET_NAMES = ["off", "minimal", "balanced", "strict", "goal", "custom"];
+
+/** POST-axis mode names shown in the UI (goal stays a legacy preset value). */
+export const POST_PRESET_NAMES = ["off", "minimal", "balanced", "strict", "custom"];
 
 export function resolvePreset(preset, capabilities) {
   const base = PRESETS[preset] ?? PRESETS.minimal;

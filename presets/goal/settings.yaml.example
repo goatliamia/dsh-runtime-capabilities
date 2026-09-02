@@ -1,10 +1,9 @@
-# Goal — Runtime Goal 窄版 v1：Current + Desired + known transition
-# Runtime 只做 announce（转移发生时通告）与 guard（未满足时拒绝），
-# 不执行修复；runtime-executed reconcile 属 experimental。
-preset: goal
-authority: true
-circuitThreshold: 2
-experimental:
-  autoPickupInjection: false
-  broadExposure: false
-  reconcile: false
+# Goal — goal 能力开关（goal 段独立存在，不作为一级事后模式）。
+# Runtime Goal 窄版 v1：Current + Desired + known transition；只做 announce 与 guard。
+agent-presets:
+  default: goal
+runtime-seam:
+  preset: goal
+  continuation: false
+  authority: true
+  circuitThreshold: 2

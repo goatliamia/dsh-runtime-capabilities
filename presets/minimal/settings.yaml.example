@@ -1,5 +1,11 @@
-# Minimal — 默认组合（已验证硬能力）
-# 语义：只处理"确定不应该继续"的事；绝不替你规划、不持续观察、不灌输。
-preset: minimal
-authority: false            # E5：provenance 不买信任，默认不带
-circuitThreshold: 2         # E4b：同指纹失败 ≥2 → 熔断
+# Minimal — 事后最小（guard + circuit），事前关。
+# 双轴说明（docs/18，2026-09-03 改版）：
+#   事前 continuation 是独立开关：唯一确定的下一步由 Runtime 执行，模型只消化结果；
+#   事后 preset 选择 guard/circuit/reconcile/investigate 职责组合。
+agent-presets:
+  default: minimal
+runtime-seam:
+  preset: minimal
+  continuation: false
+  authority: false
+  circuitThreshold: 2
