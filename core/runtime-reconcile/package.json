@@ -10,7 +10,7 @@
   },
   "description": "Policy layer (consumer of dsh-runtime-progress): failure + progressed/unknown -> do not blindly retry. Non-atomic protection: a failed response may still mean the effect was applied, so repeats are denied through the native tools.guard. Distinct from Circuit: Circuit stops no-progress loops; Reconcile stops duplicate side effects.",
   "dependencies": {
-    "dsh-runtime-progress": "file:D:/projects/runtime/dsh-runtime/experiments/native-pp/dist/dsh-runtime-progress-0.1.0.tgz"
+    "dsh-runtime-progress": "file:../runtime-progress"
   },
   "dsh": {
     "bundle": {

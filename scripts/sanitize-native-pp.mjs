@@ -55,6 +55,11 @@ function sanitize(text) {
 
 const PORTABLE_DEP_OLD = /"dsh-runtime-progress": "file:[^"]*dsh-runtime-progress-0\.1\.0\.tgz"/g;
 const PORTABLE_DEP_NEW = '"dsh-runtime-progress": "file:../runtime-progress"';
+const PORTABLE_DEP_OLD_2 = /"dsh-native-pp-projection": "file:[^"]*dsh-native-pp-projection-0\.1\.0\.tgz"/g;
+const PORTABLE_DEP_NEW_2 = '"dsh-native-pp-projection": "file:../projection"';
+// Placeholders produced by an earlier pass of this script must be repaired,
+// not left behind (a file:<REPO> dependency is uninstallable).
+const PLACEHOLDER_DEP = /"file:<REPO>[^"]*"/g;
 
 function walk(dir, action) {
   for (const entry of readdirSync(dir)) {
@@ -67,6 +72,17 @@ function walk(dir, action) {
     }
     action(path);
   }
+}
+
+function normalizePackageJson(text) {
+  return text
+    .replace(PORTABLE_DEP_OLD, PORTABLE_DEP_NEW)
+    .replace(PORTABLE_DEP_OLD_2, PORTABLE_DEP_NEW_2)
+    .replace(PLACEHOLDER_DEP, (match) => {
+      if (match.includes("dsh-runtime-progress")) return '"file:../runtime-progress"';
+      if (match.includes("dsh-native-pp-projection")) return '"file:../projection"';
+      return match; // unknown placeholder: keep for manual review (verifier flags it)
+    });
 }
 
 let files = 0;
@@ -88,7 +104,7 @@ for (const target of targets) {
     if (!TEXT_EXT.has(target.slice(target.lastIndexOf(".")))) continue;
     files += 1;
     let text = readFileSync(target, "utf8");
-    if (target.endsWith("package.json")) text = text.replace(PORTABLE_DEP_OLD, PORTABLE_DEP_NEW);
+    if (target.endsWith("package.json")) text = normalizePackageJson(text);
     const out = sanitize(text);
     if (out !== text) {
       writeFileSync(target, out);
@@ -101,7 +117,7 @@ for (const target of targets) {
     if (!TEXT_EXT.has(ext)) return;
     files += 1;
     let text = readFileSync(path, "utf8");
-    if (path.endsWith("package.json")) text = text.replace(PORTABLE_DEP_OLD, PORTABLE_DEP_NEW);
+    if (path.endsWith("package.json")) text = normalizePackageJson(text);
     const out = sanitize(text);
     if (out !== text) {
       writeFileSync(path, out);
@@ -110,4 +126,33 @@ for (const target of targets) {
   });
 }
 
+// Final verification: no absolute file: deps, no <REPO> placeholders, no
+// session ids, no machine paths may remain anywhere in the scanned area.
+const BAD_PATTERNS = [
+  [/file:[A-Za-z]:/g, "absolute file: dependency"],
+  [/file:<REPO>/g, "<REPO> placeholder dependency"],
+  [/session-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi, "session id"],
+  [new RegExp(escapeRe(REPO_WIN), "g"), "repo absolute path"],
+];
+const residue = [];
+for (const target of targets) {
+  const stat = statSync(target);
+  const visit = (path) => {
+    const ext = path.slice(path.lastIndexOf("."));
+    if (!TEXT_EXT.has(ext)) return;
+    const text = readFileSync(path, "utf8");
+    for (const [pattern, label] of BAD_PATTERNS) {
+      if (pattern.test(text)) residue.push(`${label}: ${path}`);
+    }
+  };
+  if (!stat.isDirectory()) visit(target);
+  else walk(target, visit);
+}
+
 console.log(`sanitized: ${files} text files scanned, ${changed} rewritten in place`);
+if (residue.length > 0) {
+  console.error("VERIFY FAILED — residue left behind:");
+  for (const line of residue.slice(0, 20)) console.error(`  ${line}`);
+  process.exit(1);
+}
+console.log("verify: clean");

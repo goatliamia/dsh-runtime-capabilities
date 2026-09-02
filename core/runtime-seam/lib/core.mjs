@@ -129,14 +129,6 @@ export class CircuitTracker {
     }
     return { opened: false, tool, signature, count };
   }
-
-  isOpen(tool) {
-    return this.open.has(tool);
-  }
-
-  reset(tool) {
-    this.open.delete(tool);
-  }
 }
 
 // ---- presets: responsibility combinations, not strength levels ----

@@ -10,7 +10,7 @@
   },
   "description": "Policy layer (consumer of dsh-runtime-progress): success + stalled/unknown -> investigate -> verify -> repair. Turns a silent false success into an observable recovery. Deliberately separate from Circuit: stalled does NOT mean stop. Known cost profile: buys correctness, costs extra tokens (silent failure 2/2 -> 0/2).",
   "dependencies": {
-    "dsh-runtime-progress": "file:D:/projects/runtime/dsh-runtime/experiments/native-pp/dist/dsh-runtime-progress-0.1.0.tgz"
+    "dsh-runtime-progress": "file:../runtime-progress"
   },
   "dsh": {
     "bundle": {
