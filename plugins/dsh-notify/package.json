@@ -1,0 +1,24 @@
+{
+  "name": "dsh-notify",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "description": "Notify the user when a conversation finishes.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goatliamia/dsh-runtime-capabilities.git"
+  },
+  "keywords": [
+    "dsh-plugin"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

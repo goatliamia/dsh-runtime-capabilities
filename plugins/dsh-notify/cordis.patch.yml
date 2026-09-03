@@ -1,0 +1,4 @@
+# dsh-notify bundle patch.
+- insert:
+    - id: notify
+      name: 'dsh-notify'

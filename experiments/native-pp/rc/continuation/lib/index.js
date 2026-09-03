@@ -68,6 +68,16 @@ const CONTRACTS = {
     action: { name: "pwsh", arguments: { command: "& .\\healthcheck.ps1", description: "Run the post-reload health check" } },
     factScripts: { artifact: [], runtime: [] },
   },
+  "post-edit-syntax-check": {
+    id: "post-edit-syntax-check",
+    kind: "post",
+    // Real coding loop: after the plugin entry is edited, the unique
+    // deterministic next step is a syntax check. Facts: the editor wrote
+    // lib/index.js (tool/call record), and no node --check ran after it.
+    required: (proj) => proj.lastEditSeq !== null && proj.lastEditSeq > proj.lastCheckSeq,
+    action: { name: "pwsh", arguments: { command: "node --check lib/index.js", description: "Syntax-check the edited plugin entry" } },
+    factScripts: { artifact: [], runtime: [] },
+  },
 };
 
 /** Which contracts are active per scenario (scenario-scoped fixture worlds). */
@@ -81,6 +91,7 @@ const SCENARIO_CONTRACTS = {
   rchain: ["plugin-revision-mismatch", "post-reload-healthcheck"],
   rccont: ["plugin-revision-mismatch"],
   rcc4: ["plugin-revision-mismatch"],
+  rn: ["post-edit-syntax-check"],
   rccontrol: [],
 };
 
@@ -268,6 +279,8 @@ export function apply(ctx) {
     let runtime = null;
     const executions = new Set();
     const continuationSeq = new Map();
+    let lastEditSeq = null;
+    let lastCheckSeq = null;
     for (const event of events) {
       if (event.type === "runtime/continuation" && event.data?.contract !== undefined) {
         continuationSeq.set(String(event.data.contract), event.seq);
@@ -275,6 +288,14 @@ export function apply(ctx) {
       if (event.type === "tool/call" && event.data?.name === "pwsh") {
         for (const script of ["build.ps1", "verify.ps1", "reload.ps1", "reload-slow.ps1", "stale-bump.ps1", "stale-bump-artifact.ps1", "rollback.ps1", "healthcheck.ps1"]) {
           if (pwshRunsScript(event.data.arguments, script)) executions.add(script);
+        }
+        if (pwshRunsScript(event.data.arguments, "node") && /node\s+--check/.test(String(event.data.arguments))) {
+          lastCheckSeq = event.seq;
+        }
+      }
+      if (event.type === "tool/call" && event.data?.name === "str_replace_editor") {
+        if (/lib[\\/]index\.js/i.test(String(event.data.arguments ?? ""))) {
+          lastEditSeq = event.seq;
         }
       }
       if (event.type !== "tool/result") continue;
@@ -309,7 +330,7 @@ export function apply(ctx) {
         }
       }
     }
-    return { artifact, runtime, executions, continuationSeq };
+    return { artifact, runtime, executions, continuationSeq, lastEditSeq, lastCheckSeq };
   }
 
   /** Bounded wait on the staleness/cancel injection handshake (always settles). */
