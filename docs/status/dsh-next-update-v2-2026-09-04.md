@@ -19,7 +19,9 @@
 | Session persistence API → SessionHandle + 同 session 至多一进程持有（破坏性） | 高 | 任何碰 session append 的插件代码要迁移；"会话打不开"多一个锁的原因 |
 | 修复续传分片空值覆盖 callId/name → 无法重开的会话记录 | 中 | 与事故同族；上游在官方修"坏会话" |
 | 已知性能回退：部分历史会话加载变慢（下下版修） | 低 | 大会话迁移后加载慢是预期的 |
-| 实验性 Web Preview / Inspector | 中 | vhtml 重构 + DSH UI Design Mode 的地基，落地后单独评估 |
+| 实验性 Web Preview / Inspector | 低（本线） | 主要影响 visual-html 线（展示面迁移 + UI 检视层），其验收已交该线仓库，本线仅在发布后确认是否存在即可 |
+
+## 发布后照单执行（每项都不要再查一遍来源，指路见"证据位置"）
 | 其余（上传/渲染/UI/UX） | 低 | 无关 |
 
 ## 发布后照单执行（每项都不要再查一遍来源，指路见"证据位置"）
@@ -34,10 +36,8 @@
    → 若已接受：Line B 变零 patch（上游天然解决）
 ④ 有无"runtime-owned state"正式概念（非对话、可持久化、属于 Runtime 的状态分区）？
    → 有：第三条路成立（Session=Conversation+Runtime State），引擎改写检查结果为 runtime state
-⑤ 实验性 Web Preview 能否内嵌宿主用户 HTML？
-   → 能：vhtml 展示面从系统浏览器迁到 DSH 内嵌（档1/档2 的"更自由"正解）
-⑥ 实验性 Inspector 检视产出是否 slot/plugin identity？
-   → 是：DSH UI Design Mode 的 Inspect 层借官方通道，不用自搭 DOM→slot 探针
+⑤ Web Preview / Inspector 落地评估归 visual-html 线（该线仓库有独立验收）；本线只需确认二者出现在发布版
+⑥ （归 visual-html 线）
 ⑦ docs/bugs/005 帧不变量（首帧=一行 header、逐帧追加）在 v2 是否仍成立
 ⑧ 若仍需手术：Line B patch（validator 放行 runtime-continuation）目标行号按 v2 重定位；
    数据手术只用"帧边界保持法"（只重压含目标行的帧，bug 005），严禁整体重压
@@ -53,5 +53,4 @@
 ## 并行不受影响的工作
 
 - 仓库 master（355acb5 基座）：纯插件维持线，不动
-- vhtml：触发装载外壳（gate→延迟 MCP→dispose）随时可做，v2 不破坏；预览/检视核心等⑤⑥
-- DSH UI Design Mode：等待证事实 = web shell 的 slot 容器是否打标（决定 apply 对官方 UI 的精确度）
+- vhtml / DSH UI Design Mode：属 visual-html 线，交接与验收在 `goatliamia/visual-html-agent-editor` 仓库，勿在本线处理
